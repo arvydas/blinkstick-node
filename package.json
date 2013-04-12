@@ -1,0 +1,31 @@
+{
+  "name": "blinkstick",
+  "description": "Blickstick API for Node.js",
+  "keywords": [
+    "blinkstick",
+    "led"
+  ],
+  "author": {
+    "name": "Arvydas Juskevicius",
+    "url": "http://twitter.com/arvydev"
+  },
+  "contributors": [
+    {
+      "name": "Paul Cuthbertson",
+      "email": "npm@paulcuth.me.uk",
+      "url": "http://paulcuth.me.uk"
+    }
+  ],
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=0.8.x"
+  },
+  "main": "./blinkstick",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arvydas/blinkstick-node"
+  },
+  "dependencies": {
+    "usb": "0.2.0"
+  }
+}

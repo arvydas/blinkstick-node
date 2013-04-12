@@ -1,0 +1,27 @@
+{
+  "name": "blinkstick-example",
+  "description": "Example use of the BlinkStick API for Node.js",
+  "keywords": [
+    "blinkstick",
+    "example"
+  ],
+  "author": {
+    "name": "Arvydas Juskevicius",
+    "url": "http://twitter.com/arvydev"
+  },
+  "contributors": [
+    {
+      "name": "Paul Cuthbertson",
+      "email": "npm@paulcuth.me.uk",
+      "url": "http://paulcuth.me.uk"
+    }
+  ],
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=0.8.x"
+  },
+  "dependencies": {
+    "express": "3.1.1",
+    "socket.io": "0.9.14"
+  }
+}

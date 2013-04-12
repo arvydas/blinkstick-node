@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>BlinkStick Colour Picker</title>
+		<style>
+			input {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+
+			input::-webkit-color-swatch-wrapper {
+		        padding: 0;
+    		}			
+		</style>
+	</head>
+
+	<body>
+		<input type="color" id="colour" />
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io.connect(),
+				picker = document.getElementById('colour');
+
+			socket.on('colour', function (val) {
+				picker.value = val;
+			});
+
+			picker.addEventListener('input', function () {
+				socket.emit('colour', { hex: this.value });
+			});
+		</script>
+	</body>
+</html>
