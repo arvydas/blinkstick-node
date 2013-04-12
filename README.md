@@ -4,7 +4,7 @@ BlinkStick Node provides an interface to control Blinkstick devices connected to
 
 What is BlinkStick? It's a DIY USB RGB LED device. More info about it here:
 
-[http://www.blinkstick.com]
+[http://www.blinkstick.com](http://www.blinkstick.com)
 
 
 ##Prerequisites
@@ -45,5 +45,5 @@ Then, in a browser, navigate to the url given in the console.
 
 
 ##Maintainers
-Arvydas Juskevicius - [http://twitter.com/arvydev]
-Paul Cuthbertson - [http://twitter.com/paulcuth]
+* Arvydas Juskevicius - [http://twitter.com/arvydev](http://twitter.com/arvydev)
+* Paul Cuthbertson - [http://twitter.com/paulcuth](http://twitter.com/paulcuth)
