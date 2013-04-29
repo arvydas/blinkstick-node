@@ -3,7 +3,7 @@ var usb = require('usb'),
 	VENDOR_ID = 0x20a0,
 	PRODUCT_ID = 0x41e5,
 
-	COLOUR_KEYWORDS = {
+	COLOR_KEYWORDS = {
 		"aqua": "#00ffff",
 		"aliceblue": "#f0f8ff",
 		"antiquewhite": "#faebd7",
@@ -219,13 +219,13 @@ BlinkStick.prototype.getDescription = function () {
 
 
 /**
- * Set the colour to the device as RGB.
- * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS colour keyword OR hex colour, eg "#BADA55".
+ * Set the color to the device as RGB.
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
  * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
  * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
  * @param {Function} [callback] Callback, called when complete.
  */
-BlinkStick.prototype.setColour = function (red, green, blue, callback) {
+BlinkStick.prototype.setColor = function (red, green, blue, callback) {
 	var hex;
 	
 	if (typeof red == 'string') {
@@ -233,8 +233,8 @@ BlinkStick.prototype.setColour = function (red, green, blue, callback) {
 
 		if (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
 			hex = hex[0];
-		} else if (!(hex = COLOUR_KEYWORDS[red])) {
-			throw new ReferenceError('Invalid CSS colour keyword');
+		} else if (!(hex = COLOR_KEYWORDS[red])) {
+			throw new ReferenceError('Invalid CSS color keyword');
 		}
 	}
 
@@ -259,10 +259,10 @@ BlinkStick.prototype.setColour = function (red, green, blue, callback) {
 
 /**
  * Get the current color settings as RGB.
- * @param {Function} callback Callback to which to pass the colour values.
+ * @param {Function} callback Callback to which to pass the color values.
  * @returns {Array} Array of three numbers: R, G and B (0-255).
  */
-BlinkStick.prototype.getColour = function (callback) {
+BlinkStick.prototype.getColor = function (callback) {
 
 	this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
 		if (err) throw new Error('Failed to communicate with BlinkStick: ' + err.message);
@@ -275,12 +275,12 @@ BlinkStick.prototype.getColour = function (callback) {
 
 /**
  * Get the current color settings as hex string.
- * @param {Function} callback Callback to which to pass the colour string.
+ * @param {Function} callback Callback to which to pass the color string.
  * @returns {String} Hex string, eg "#BADA55".
  */
-BlinkStick.prototype.getColourString = function (callback) {
+BlinkStick.prototype.getColorString = function (callback) {
 
-	this.getColour(function (r, g, b) {
+	this.getColor(function (r, g, b) {
 		callback('#' + r.toString(16) + g.toString(16) + b.toString(16));
 	});
 };
@@ -366,12 +366,12 @@ BlinkStick.prototype.getColourString = function (callback) {
 /**
  * Turns the LED off.
  */
-BlinkStick.prototype.setRandomColour = function () {
+BlinkStick.prototype.setRandomColor = function () {
 	var args = [], 
 		i;
 
 	for (i = 0; i < 3; i++) args.push(Math.floor(Math.random() * 256));
-	this.setColour.apply(this, args);
+	this.setColor.apply(this, args);
 };
 
 
@@ -381,7 +381,7 @@ BlinkStick.prototype.setRandomColour = function () {
  * Turns the LED off.
  */
 BlinkStick.prototype.turnOff = function () {
-	this.setColour();
+	this.setColor();
 };
 
 
@@ -393,7 +393,7 @@ BlinkStick.prototype.turnOff = function () {
  * @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
  * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
  */
-BlinkStick.prototype.pulseColour = function (red, green, blue) {
+BlinkStick.prototype.pulseColor = function (red, green, blue) {
 	// TODO: Check if this works, else use callbacks to wait from messages to send.
 
 	red = Math.min(red, 255);
@@ -410,7 +410,7 @@ BlinkStick.prototype.pulseColour = function (red, green, blue) {
 		if (cg < green) cg++;
 		if (cb < blue) cb++;
 
-	    this.setColour(cr, cg, cb);
+	    this.setColor(cr, cg, cb);
 	}
 
 	while (cr > 0 || cg > 0 || cb > 0) {
@@ -418,7 +418,7 @@ BlinkStick.prototype.pulseColour = function (red, green, blue) {
 	    if (cb > 0) cb--;
 	    if (cg > 0) cg--;
 
-	    this.setColour(cr, cg, cb);
+	    this.setColor(cr, cg, cb);
 	}
 };
 
