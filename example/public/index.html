@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>BlinkStick Colour Picker</title>
+		<title>BlinkStick Color Picker</title>
 		<style>
 			input {
 				position: absolute;
@@ -20,19 +20,19 @@
 	</head>
 
 	<body>
-		<input type="color" id="colour" />
+		<input type="color" id="color" />
 
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 			var socket = io.connect(),
-				picker = document.getElementById('colour');
+				picker = document.getElementById('color');
 
-			socket.on('colour', function (val) {
+			socket.on('color', function (val) {
 				picker.value = val;
 			});
 
 			picker.addEventListener('input', function () {
-				socket.emit('colour', { hex: this.value });
+				socket.emit('color', { hex: this.value });
 			});
 		</script>
 	</body>

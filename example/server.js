@@ -7,7 +7,7 @@ var express = require('express'),
 	port = process.env.PORT || 3000,
 
 	blinkstick = require('../blinkstick.js'),
-    colour = '#000000',
+    color = '#000000',
 	device = blinkstick.findFirst();
 
 
@@ -21,18 +21,18 @@ server.listen(port);
 
 // Init WebSockets
 io.sockets.on('connection', function (socket) {
-	socket.emit('colour', colour);
+	socket.emit('color', color);
 
-	socket.on('colour', function (data) {
-		colour = data.hex;
-		device.setColour(colour);
+	socket.on('color', function (data) {
+		color = data.hex;
+		device.setColor(color);
 	});
 });
 
 
 // Init device
-device.getColourString(function (hex) {
-	colour = hex;
+device.getColorString(function (hex) {
+	color = hex;
 });
 
 process.on('exit', function () {

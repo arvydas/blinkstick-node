@@ -10,14 +10,14 @@ What is BlinkStick? It's a DIY USB RGB LED device. More info about it here:
 ##Prerequisites
 
 ###Node & npm
-Using [Homebrew](http://homebrew.org/):
+Using [Homebrew](http://mxcl.github.io/homebrew/):
 
 ```
 $> brew install node
 ```
 
 ###libusb
-Using [Homebrew](http://homebrew.org/):
+Using [Homebrew](http://mxcl.github.io/homebrew/):
 
 ```
 $> brew install libusb
