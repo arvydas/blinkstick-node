@@ -249,8 +249,7 @@ BlinkStick.prototype.setColor = function (red, green, blue, callback) {
 	}
 
 	this.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, red, green, blue]), function (err) {
-		if (err) throw new Error('Failed to communicate with BlinkStick: ' + err.message);
-		if (callback) callback();
+		if (callback) callback(err);
 	});
 };
 	
@@ -265,8 +264,7 @@ BlinkStick.prototype.setColor = function (red, green, blue, callback) {
 BlinkStick.prototype.getColor = function (callback) {
 
 	this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
-		if (err) throw new Error('Failed to communicate with BlinkStick: ' + err.message);
-		if (callback) callback(buffer[1], buffer[2], buffer[3]);
+		if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
 	});
 };
 
@@ -280,8 +278,8 @@ BlinkStick.prototype.getColor = function (callback) {
  */
 BlinkStick.prototype.getColorString = function (callback) {
 
-	this.getColor(function (r, g, b) {
-		callback('#' + r.toString(16) + g.toString(16) + b.toString(16));
+	this.getColor(function (err, r, g, b) {
+		callback(err, '#' + r.toString(16) + g.toString(16) + b.toString(16));
 	});
 };
 
@@ -394,8 +392,7 @@ BlinkStick.prototype.turnOff = function () {
  * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
  */
 BlinkStick.prototype.pulseColor = function (red, green, blue) {
-	// TODO: Check if this works, else use callbacks to wait from messages to send.
-
+	
 	red = Math.min(red, 255);
 	green = Math.min(green, 255);
 	blue = Math.min(blue, 255);
