@@ -40,11 +40,13 @@ To get the first blinkstick on your system:
 
     led = new blinkstick.findFirst();
 
+To get all the serial numbers for blinkstick(s) on your system:
+
+    serials = blinkstick.FindAllSerials();
+
 To get all the blinkstick(s) on your system:
 
-    leds = [];
-    serials = blinkstick.findAll();
-    for (i = 0; i < serials.length; i++) leds.push(blinkstick.findBySerial(serials[i]);
+    leds = blinkstick.findAll();
 
 To get the serial number, manufacturer, or description associated with a blinkstick:
 

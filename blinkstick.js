@@ -466,9 +466,25 @@ module.exports = {
 	
 	/**
 	 * Find all attached BlinkStick devices.
-	 * @returns {Array} serial numbers corresponding to BlinkSticks.
+	 * @returns {Array} BlinkSticks.
 	 */
 	findAll: function () {
+		var devices = findBlinkSticks(),
+		    sticks = [],
+		    i = [];
+
+		for (i = 0; i < devices.length; i++) sticks.push(new BlinkStick(devices[i].deviceDescriptor.iSerialNumber));
+	        return sticks;
+	},
+
+
+
+	
+	/**
+	 * Find all attached BlinkStick devices.
+	 * @returns {Array} serial numbers corresponding to BlinkSticks.
+	 */
+	findAllSerials: function () {
 		var devices = findBlinkSticks(),
 		    serials = [],
 		    i = [];
