@@ -234,7 +234,8 @@ BlinkStick.prototype.setColor = function (red, green, blue, callback) {
 		if (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
 			hex = hex[0];
 		} else if (!(hex = COLOR_KEYWORDS[red])) {
-			throw new ReferenceError('Invalid CSS color keyword');
+			if (callback) callback(new ReferenceError('Invalid CSS color keyword'));
+		        return;
 		}
 	}
 
