@@ -466,10 +466,15 @@ module.exports = {
 	
 	/**
 	 * Find all attached BlinkStick devices.
-	 * @returns {Array} BlickStick objects.
+	 * @returns {Array} serial numbers corresponding to BlinkSticks.
 	 */
 	findAll: function () {
-		return findBlinkSticks();
+		var devices = findBlinkSticks(),
+		    serials = [],
+		    i = [];
+
+		for (i = 0; i < devices.length; i++) serials.push(devices[i].deviceDescriptor.iSerialNumber);
+	        return serials;
 	},
 
 
@@ -478,12 +483,13 @@ module.exports = {
 	/**
 	 * Find BlinkStick device based on serial number.
 	 * @param {Number} serial Serial number.
-	 * @returns {Array} BlickStick objects.
+	 * @returns {BlinkStick|undefined}
 	 */
 	findBySerial: function (serial) {
-		return findBlinkSticks(function (device) {
+		var result = findBlinkSticks(function (device) {
 			return device.deviceDescriptor.iSerialNumber == serial;
 		});
+                if (result.length > 0) return new BlinkStick(result[0]);
 	}
 
 	
