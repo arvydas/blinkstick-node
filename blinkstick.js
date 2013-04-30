@@ -425,7 +425,7 @@ BlinkStick.prototype.turnOff = function () {
  * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
  */
 BlinkStick.prototype.pulseColor = function (red, green, blue) {
-	
+
 	red = Math.min(red, 255);
 	green = Math.min(green, 255);
 	blue = Math.min(blue, 255);
@@ -470,7 +470,7 @@ function findBlinkSticks (filter) {
 
 	for (i in devices) {
 		device = devices[i];
-		if (device.deviceDescriptor.idVendor == VENDOR_ID && device.deviceDescriptor.idProduct == PRODUCT_ID && filter(device)) result.push(device);
+		if (device.deviceDescriptor.idVendor === VENDOR_ID && device.deviceDescriptor.idProduct === PRODUCT_ID && filter(device)) result.push(new BlinkStick(device));
 	}
 
 	return result;
@@ -499,28 +499,24 @@ module.exports = {
 	 * @returns {Array} BlinkSticks.
 	 */
 	findAll: function () {
-		var devices = findBlinkSticks(),
-		    sticks = [],
-		    i = [];
-
-		for (i = 0; i < devices.length; i++) sticks.push(new BlinkStick(devices[i].deviceDescriptor.iSerialNumber));
-	        return sticks;
+		return findBlinkSticks();
 	},
 
 
 
 	
 	/**
-	 * Find all attached BlinkStick devices.
-	 * @returns {Array} serial numbers corresponding to BlinkSticks.
+	 * Returns the serial numbers of all attached BlinkStick devices.
+	 * @returns {Array} Serial numbers.
 	 */
 	findAllSerials: function () {
-		var devices = findBlinkSticks(),
-		    serials = [],
-		    i = [];
-
-		for (i = 0; i < devices.length; i++) serials.push(devices[i].deviceDescriptor.iSerialNumber);
-	        return serials;
+		var result = [];
+		
+		findBlinkSticks(function (device) { 
+			result.push(device.deviceDescriptor.iSerialNumber); 
+		});
+		
+		return result;
 	},
 
 
@@ -533,9 +529,10 @@ module.exports = {
 	 */
 	findBySerial: function (serial) {
 		var result = findBlinkSticks(function (device) {
-			return device.deviceDescriptor.iSerialNumber == serial;
+			return device.deviceDescriptor.iSerialNumber === serial;
 		});
-                if (result.length > 0) return new BlinkStick(result[0]);
+		
+		return result[0];
 	}
 
 	
