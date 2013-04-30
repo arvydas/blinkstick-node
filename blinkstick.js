@@ -289,83 +289,113 @@ BlinkStick.prototype.getColorString = function (callback) {
 
 
 
-/*
-    def get_info_block1(self):
-        """Get the infoblock1 of the device.
+/**
+ * Get an infoblock from a device.
+ * @private
+ * @static
+ * @param {BlinkStick} device Device from which to get the value.
+ * @param {Number} location Address to seek the data.
+ * @param {Function} callback Callback to which to pass the value.
+ */
+function getInfoBlock (device, location, callback) {
+	device.controlTransfer(0x80 | 0x20, 0x1, location, 0, 33, function (err, buffer) {
+		if (err) return callback(err);
 
-        This is a 32 byte array that can contain any data. It's supposed to 
-        hold the "Name" of the device making it easier to identify rather than
-        a serial number.
-        """
-        device_bytes = self.device.ctrl_transfer(0x80 | 0x20, 0x1, 0x0002, 0, 33)
-        result = ""
-        for i in device_bytes[1:]:
-            if i == 0:
-                break
-            result += chr(i)
-        return result
+		var result = '',
+			i, l;
 
-    def get_info_block2(self):
-        """Get the infoblock2 of the device.
+		for (i = 1, l = buffer.length; i < l; i++) {
+			if (i == 0) break;
+			result += String.fromCharCode(buffer[i]);
+		}
 
-        This is a 32 byte array that can contain any data.
-        """
-        device_bytes = self.device.ctrl_transfer(0x80 | 0x20, 0x1, 0x0003, 0, 33)
-        result = ""
-        for i in device_bytes[1:]:
-            if i == 0:
-                break
-            result += chr(i)
-        return result
-
-    def data_to_message(self, data):
-        """Helper method to convert a string to byte array of 32 bytes. 
-
-        Args: 
-            data (str): The data to convert to byte array
-
-        Returns:
-            byte[32]: array
-        
-        It fills the rest of bytes with zeros.
-        """
-        bytes = [1]
-        for c in data:
-            bytes.append(ord(c))
-
-        for i in range(32 - len(data)):
-            bytes.append(0)
-
-        return bytes
-
-    def set_info_block1(self, data):
-        """Sets the infoblock1 with specified string.
-        
-        It fills the rest of bytes with zeros.
-        """
-        self.device.ctrl_transfer(0x20, 0x9, 0x0002, 0, self.data_to_message(data))
-
-    def set_info_block2(self, data):
-        """Sets the infoblock2 with specified string.
-        
-        It fills the rest of bytes with zeros.
-        """
-        self.device.ctrl_transfer(0x20, 0x9, 0x0003, 0, self.data_to_message(data))
-
-    def set_random_color(self):
-        """Sets random color to the device."""
-        self.set_color(red=randint(0, 255), green=randint(0, 255), blue=randint(0, 255))
-*/
-
-
-
-
+		callback(null, result);
+	});
+};
 
 
 
 
 /**
- * Turns the LED off.
+ * Sets an infoblock on a device.
+ * @private
+ * @static
+ * @param {BlinkStick} device Device on which to set the value.
+ * @param {Number} location Address to seek the data.
+ * @param {String} data The value to push to the device. Should be <= 32 chars.
+ * @param {Function} callback Callback to which to pass the value.
+ */
+function setInfoBlock (device, location, data, callback) {	
+	var i,
+		l = Math.min(data.length, 33),
+		buffer = new Buffer(33);
+
+	buffer[0] = 0;
+	for (i = 0; i < l; i++) buffer[i + 1] = data.charCodeAt(i);
+	for (i = l; i < 33; i++) buffer[i + 1] = 0;
+
+	device.controlTransfer(0x20, 0x9, location, 0, buffer, callback);
+}
+
+
+
+
+/**
+ * Get the infoblock1 of the device.
+ * This is a 32 byte array that can contain any data. It's supposed to 
+ * hold the "Name" of the device making it easier to identify rather than
+ * a serial number.
+ *
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.getInfoBlock1 = function (callback) {
+	getInfoBlock(this.device, 0x0002, callback);
+};
+
+
+
+
+/**
+ * Get the infoblock2 of the device.
+ * This is a 32 byte array that can contain any data. 
+ *
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.getInfoBlock2 = function (callback) {
+	getInfoBlock(this.device, 0x0003, callback);
+};
+
+
+
+
+/**
+ * Sets the infoblock1 with specified string.
+ * It fills the rest of bytes with zeros.
+ *
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.setInfoBlock1 = function (data, callback) {
+	setInfoBlock(this.device, 0x0002, data, callback);
+};
+
+
+
+
+/**
+ * Sets the infoblock2 with specified string.
+ * It fills the rest of bytes with zeros.
+ *
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.setInfoBlock2 = function (data, callback) {
+	setInfoBlock(this.device, 0x0003, data, callback);
+};
+
+
+
+
+/**
+ * Sets the LED to a random color.
  */
 BlinkStick.prototype.setRandomColor = function () {
 	var args = [], 
