@@ -59,16 +59,16 @@ To set the color:
     // rgb is a '#RRGGBB' string
     // red/green/blue are each numbers in [0..255]
     // function is optional
-    led.setColour(rgb, function() { /* called when color is changed */ });
-    led.setColour(red, green, blue, function() { /* called when color is changed */ });
+    led.setColor(rgb, function() { /* called when color is changed */ });
+    led.setColor(red, green, blue, function() { /* called when color is changed */ });
 
-    led.setRandomColour();
+    led.setRandomColor();
 
-    led.turnOff();    // i.e., setColour(0, 0, 0)
+    led.turnOff();    // i.e., setColor(0, 0, 0)
 
 To get the color:
 
-    led.getColour(function(red, green, blue) { ... });
+    led.getColor(function(red, green, blue) { ... });
     led.getColorString(function(rgb) { ... });
 
 ##Running the example
