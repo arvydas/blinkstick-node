@@ -6,7 +6,7 @@ var express = require('express'),
 
 	port = process.env.PORT || 3000,
 
-	blinkstick = require('../blinkstick.js'),
+	blinkstick = require('blinkstick'),
     color = '#000000',
 	device = blinkstick.findFirst();
 
