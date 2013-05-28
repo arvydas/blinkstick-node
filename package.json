@@ -20,6 +20,11 @@
   "engines": {
     "node": ">=0.8.x"
   },
+  "scripts": {
+    "preupdate": "get-hidapi",
+    "preinstall": "get-hidapi",
+    "install": "install"
+  },
   "main": "./blinkstick",
   "repository": {
     "type": "git",
