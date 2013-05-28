@@ -27,7 +27,7 @@ var subscription = client.subscribe('/devices/' + access_code, function(message)
         device.turnOff();
     } else {
         console.log('Received color: ' + message.color);
-        device.setColour(message.color);
+        device.setColor(message.color);
     }
 });
  
