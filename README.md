@@ -42,7 +42,7 @@ To get the first blinkstick on your system:
 
 To get all the serial numbers for blinkstick(s) on your system:
 
-    serials = blinkstick.FindAllSerials();
+    serials = blinkstick.findAllSerials();
 
 To get all the blinkstick(s) on your system:
 
