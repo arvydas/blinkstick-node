@@ -150,7 +150,8 @@ var usb = require('usb'),
 		"snow": "#fffafa",
 		"tomato": "#ff6347",
 		"white": "#ffffff",
-		"yellow": "#ffff00"
+		"yellow": "#ffff00",
+		"warmwhite": "fdf5e6"	// Non-standard. Added to support CheerLights.
 	};
 
 
