@@ -16,7 +16,7 @@
       "url": "http://paulcuth.me.uk"
     }
   ],
-  "version": "0.1.0",
+  "version": "1.0.0",
   "engines": {
     "node": ">=0.8.x"
   },
@@ -26,6 +26,6 @@
     "url": "https://github.com/arvydas/blinkstick-node"
   },
   "dependencies": {
-    "usb": "0.2.0"
+    "usb": "0.3.5"
   }
 }
