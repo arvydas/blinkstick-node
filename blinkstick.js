@@ -258,6 +258,9 @@ BlinkStick.prototype.setColor = function (red, green, blue, callback) {
 };
 	
 
+BlinkStick.prototype.setMode = function (red, green, blue, callback) {
+
+};
 
 
 /**
@@ -315,7 +318,9 @@ function getInfoBlock (device, location, callback) {
 };
 
 
-
+function opt(options, name, defaultValue){
+     return options && options[name]!==undefined ? options[name] : defaultValue;
+}
 
 /**
  * Sets an infoblock on a device.
@@ -417,6 +422,80 @@ BlinkStick.prototype.turnOff = function () {
 };
 
 
+function interpretParameters(red, green, blue, options, callback)
+{
+	var hex;
+
+	if (typeof red == 'string') {
+    if (typeof green == 'object') {
+      options = green;
+      callback = blue;
+    } else {
+      callback = green;
+    }
+
+		if (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
+			hex = hex[0];
+		} else if (!(hex = COLOR_KEYWORDS[red])) {
+			if (callback) 
+        callback(new ReferenceError('Invalid CSS color keyword'));
+			return;
+		}
+	} else if (typeof(options) == 'function') {
+    callback = options;
+  }
+
+
+	if (hex) {
+		red = parseInt(hex.substr(1, 2), 16);
+		green = parseInt(hex.substr(3, 2), 16);
+		blue = parseInt(hex.substr(5, 2), 16);	
+		
+	} else {
+		red = red || 0;
+		green = green || 0;
+		blue = blue || 0;
+	}
+
+  red = Math.max(Math.min(red, 255), 0);
+  green = Math.max(Math.min(green, 255), 0);
+  blue = Math.max(Math.min(blue, 255), 0);
+
+  return {'red': red, 'green': green, 'blue': blue, 'options': options, 'callback': callback};
+}
+
+/**
+ * Blinks specified RGB color.
+ * @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
+ * @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
+ */
+BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
+  var params = interpretParameters(red, green, blue, options, callback);
+
+  var repeats = opt(params.options, 'repeats', 1)
+  var delay = opt(params.options, 'delay', 500)
+
+  var self = this;
+
+  var blinker = function (count) {
+    self.setColor(params.red, params.green, params.blue);
+
+    setTimeout(function() {
+      self.setColor(0, 0, 0);
+
+      setTimeout(function() {
+        if (count == repeats - 1) {
+          if (params.callback) params.callback();
+        } else {
+          blinker(count + 1);
+        }
+      }, delay);
+    }, delay);
+  }
+
+  blinker(0);
+};
 
 
 /**
@@ -471,7 +550,10 @@ function findBlinkSticks (filter) {
 
 	for (i in devices) {
 		device = devices[i];
-		if (device.deviceDescriptor.idVendor === VENDOR_ID && device.deviceDescriptor.idProduct === PRODUCT_ID && filter(device)) result.push(new BlinkStick(device));
+		if (device.deviceDescriptor.idVendor === VENDOR_ID && 
+        device.deviceDescriptor.idProduct === PRODUCT_ID && 
+          filter(device)) 
+      result.push(new BlinkStick(device));
 	}
 
 	return result;
