@@ -171,6 +171,8 @@ function BlinkStick (device) {
 
 		device.open ();
 		this.device = device;	
+
+    //this.requiresSoftwareColorPatch = this.getVersionMajor() == 1 && this.getVersionMinor() >= 1 && this.getVersionMinor() <= 3;
 	}
 }
 
@@ -195,6 +197,16 @@ BlinkStick.prototype.getSerial = function () {
 };
 
 
+BlinkStick.prototype.getVersionMajor = function () {
+  var serial = this.getSerial();
+  return parseInt(serial.substring(serial.length - 3, 1));
+};
+
+
+BlinkStick.prototype.getVersionMinor = function () {
+  var serial = this.getSerial();
+  return parseInt(serial.substring(serial.length - 1, 1));
+};
 
 
 /**
