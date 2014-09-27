@@ -172,7 +172,12 @@ function BlinkStick (device) {
 		device.open ();
 		this.device = device;	
 
-    //this.requiresSoftwareColorPatch = this.getVersionMajor() == 1 && this.getVersionMinor() >= 1 && this.getVersionMinor() <= 3;
+    var self = this;
+
+    this.getSerial(function (error, result) {
+      self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 && 
+        self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
+    });
 	}
 }
 
@@ -192,29 +197,35 @@ function BlinkStick (device) {
  * 
  * @returns {String} The device's serial number.
  */
-BlinkStick.prototype.getSerial = function () {
-	return this.device.iSerialNumber;
+BlinkStick.prototype.getSerial = function (callback) {
+  var self = this;
+  this.device.getStringDescriptor(3, function(error, result) {
+    self.serial = result;
+    if (callback) callback(error, result);
+  });
 };
 
 
 BlinkStick.prototype.getVersionMajor = function () {
-  var serial = this.getSerial();
-  return parseInt(serial.substring(serial.length - 3, 1));
+  return parseInt(this.serial.substring(this.serial.length - 3, this.serial.length - 2));
 };
 
 
 BlinkStick.prototype.getVersionMinor = function () {
-  var serial = this.getSerial();
-  return parseInt(serial.substring(serial.length - 1, 1));
+  return parseInt(this.serial.substring(this.serial.length - 1, this.serial.length));
 };
+
+
 
 
 /**
  * Returns the manufacturer of the device.
  * @returns {String} The device's manufacturer.
  */
-BlinkStick.prototype.getManufacturer = function () {
-	return this.device.iManufacturer;
+BlinkStick.prototype.getManufacturer = function (callback) {
+  this.device.getStringDescriptor(1, function(error, result) {
+    if (callback) callback(error, result);
+  });
 };
 
 
@@ -224,8 +235,10 @@ BlinkStick.prototype.getManufacturer = function () {
  * Returns the description of the device.
  * @returns {String} The device's description.
  */
-BlinkStick.prototype.getDescription = function () {
-	return this.device.iProduct;	// TODO: Is this the correct response?
+BlinkStick.prototype.getDescription = function (callback) {
+  this.device.getStringDescriptor(2, function(error, result) {
+    if (callback) callback(error, result);
+  });
 };
 
 
@@ -236,39 +249,66 @@ BlinkStick.prototype.getDescription = function () {
  * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
  * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
  * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options {"channel": 0, "index": 0}
  * @param {Function} [callback] Callback, called when complete.
  */
-BlinkStick.prototype.setColor = function (red, green, blue, callback) {
-	var hex;
-	
-	if (typeof red == 'string') {
-		callback = green;
+BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
+  var params = interpretParameters(red, green, blue, options, callback);
 
-		if (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
-			hex = hex[0];
+  var self = this;
+  /*
+  if (_RequiresSoftwareColorPatch)
+  {
+      byte cr, cg, cb;
+      if (GetColor(out cr, out cg, out cb))
+      {
+          if (r == cg && g == cr && b == cb)
+          {
+              if (cr > 0)
+              {
+                  stream.SetFeature(new byte[4] { 1, (byte)(cr - 1), cg, cb });
+              }
+              else if (cg > 0)
+              {
+                  stream.SetFeature(new byte[4] { 1, cr, (byte)(cg - 1), cb });
+              }
+          }
+      }
+  }
+  */
 
-		} else if (!(hex = COLOR_KEYWORDS[red])) {
-			if (callback) callback(new ReferenceError('Invalid CSS color keyword'));
-			return;
-		}
-	}
+  var sendColorInternal = function (r, g, b, callback) {
+    self.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, r, g, b]), callback);
+  };
 
-	if (hex) {
-		red = parseInt(hex.substr(1, 2), 16);
-		green = parseInt(hex.substr(3, 2), 16);
-		blue = parseInt(hex.substr(5, 2), 16);	
-		
-	} else {
-		red = red || 0;
-		green = green || 0;
-		blue = blue || 0;
-	}
+  if (this.requiresSoftwareColorPatch) {
+    this.getColor(function (err, cr, cg, cb) {
+      if (params.red == cg && params.green == cr && params.blue == cb)
+      {
+          if (cr > 0)
+          {
+            cr = cr - 1;
+          }
+          else if (cg > 0)
+          {
+            cg = cg - 1;
+          }
 
-	this.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, red, green, blue]), function (err) {
-		if (callback) callback(err);
-	});
+          sendColorInternal(cr, cg, cb, function () {
+            sendColorInternal(params.red, params.green, params.blue, params.callback);
+          });
+      }
+      else
+      {
+        sendColorInternal(params.red, params.green, params.blue, params.callback);
+      }
+    });
+  } else {
+    sendColorInternal(params.red, params.green, params.blue, params.callback);
+  }
 };
-	
+
+
 
 BlinkStick.prototype.setMode = function (red, green, blue, callback) {
 

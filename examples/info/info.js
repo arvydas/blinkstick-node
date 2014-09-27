@@ -2,6 +2,16 @@ var blinkstick = require('blinkstick'),
   device = blinkstick.findFirst();
 
 if (device) {
-  console.log("Serial:", device.getSerial());
-  console.log("Manufacturer:", device.getManufacturer());
+  device.getDescription(function(error, result) {
+    console.log("Description: " + result);
+
+    device.getManufacturer(function(error, result) {
+      console.log("Manufacturer: " + result);
+
+      device.getSerial(function(error, result) {
+        console.log("Serial: " + result);
+        console.log("Requires software color patch: " + device.requiresSoftwareColorPatch);
+      });
+    });
+  });
 }
