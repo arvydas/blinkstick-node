@@ -466,9 +466,11 @@ function interpretParameters(red, green, blue, options, callback)
 
 /**
  * Blinks specified RGB color.
- * @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
  * @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
  * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   options additional options {"repeats": 1, "delay": 500}
+ * @param {Function} callback Callback to which to pass the value.
  */
 BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
   var params = interpretParameters(red, green, blue, options, callback);
@@ -495,6 +497,63 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
   }
 
   blinker(0);
+};
+
+/**
+ * Morphs to specified RGB color from current color.
+ * @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
+ * @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   options additional options {"repeats": 1, "delay": 500}
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
+  var params = interpretParameters(red, green, blue, options, callback);
+
+  var duration = opt(params.options, 'duration', 1000)
+  var steps = opt(params.options, 'steps', 50)
+
+  var self = this;
+
+  this.getColor(function(err, cr, cg, cb) {
+
+    var morpher = function (count) {
+
+      self.setColor(
+          parseInt(cr + (params.red - cr) / steps * count), 
+          parseInt(cg + (params.green - cg) / steps * count), 
+          parseInt(cb + (params.blue - cb) / steps * count));
+
+      setTimeout(function() {
+        if (count == steps) {
+          if (params.callback) params.callback();
+        } else {
+          morpher(count + 1);
+        }
+      }, parseInt(duration/steps));
+    }
+
+    morpher(1);
+  });
+};
+
+
+/**
+ * Pulses specified RGB color.
+ * @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
+ * @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   options additional options {"repeats": 1, "delay": 500}
+ * @param {Function} callback Callback to which to pass the value.
+ */
+BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
+  var params = interpretParameters(red, green, blue, options, callback);
+
+  var self = this;
+
+  self.morph(params.red, params.green, params.blue, params.options, function() {
+    self.morph(0, 0, 0, params.options, params.callback);
+  });
 };
 
 
