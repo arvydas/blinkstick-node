@@ -291,11 +291,13 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 
 
 BlinkStick.prototype.setMode = function (mode, callback) {
-  self.device.controlTransfer(0x20, 0x9, 0x0004, 0, new Buffer([4, mode]), callback);
+  this.device.controlTransfer(0x20, 0x9, 0x0004, 0, new Buffer([4, mode]), callback);
 };
 
-BlinkStick.prototype.getMode = function (mode, callback) {
-  self.device.controlTransfer(0x20, 0x9, 0x0004, 0, new Buffer([4, mode]), callback);
+BlinkStick.prototype.getMode = function (callback) {
+  this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0004, 0, 33, function (err, buffer) {
+    if (callback) callback(err, buffer[1]);
+  });
 };
 
 
