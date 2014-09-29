@@ -256,26 +256,6 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
   var params = interpretParameters(red, green, blue, options, callback);
 
   var self = this;
-  /*
-  if (_RequiresSoftwareColorPatch)
-  {
-      byte cr, cg, cb;
-      if (GetColor(out cr, out cg, out cb))
-      {
-          if (r == cg && g == cr && b == cb)
-          {
-              if (cr > 0)
-              {
-                  stream.SetFeature(new byte[4] { 1, (byte)(cr - 1), cg, cb });
-              }
-              else if (cg > 0)
-              {
-                  stream.SetFeature(new byte[4] { 1, cr, (byte)(cg - 1), cb });
-              }
-          }
-      }
-  }
-  */
 
   var sendColorInternal = function (r, g, b, callback) {
     self.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, r, g, b]), callback);
