@@ -324,7 +324,7 @@ BlinkStick.prototype.getColor = function (callback) {
 BlinkStick.prototype.getColorString = function (callback) {
 
 	this.getColor(function (err, r, g, b) {
-		callback(err, '#' + r.toString(16) + g.toString(16) + b.toString(16));
+		callback(err, '#' + decimalToHex(r, 2) + decimalToHex(g, 2) + decimalToHex(b, 2) );
 	});
 };
 
