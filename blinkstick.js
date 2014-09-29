@@ -327,11 +327,22 @@ BlinkStick.prototype.getMode = function (callback) {
  * @param {Function} callback Callback to which to pass the color values.
  * @returns {Array} Array of three numbers: R, G and B (0-255).
  */
-BlinkStick.prototype.getColor = function (callback) {
+BlinkStick.prototype.getColor = function (index, callback) {
+  if (typeof(index) == 'function') {
+    callback = index;
+    index = 0
+  }
 
-	this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
-		if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
-	});
+  if (index == 0) {
+    this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
+      if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
+    });
+  } else {
+    this.getColors(index, function(err, buffer) {
+      if (callback) callback(err, buffer[index * 3 + 1], buffer[index * 3], buffer[index * 3 + 2]);
+    });
+  }
+};
 
 
 BlinkStick.prototype.getColors = function (count, callback) {
@@ -364,9 +375,13 @@ function decimalToHex(d, padding) {
  * @param {Function} callback Callback to which to pass the color string.
  * @returns {String} Hex string, eg "#BADA55".
  */
-BlinkStick.prototype.getColorString = function (callback) {
+BlinkStick.prototype.getColorString = function (index, callback) {
+  if (typeof(index) == 'function') {
+    callback = index;
+    index = 0
+  }
 
-	this.getColor(function (err, r, g, b) {
+	this.getColor(index, function (err, r, g, b) {
 		callback(err, '#' + decimalToHex(r, 2) + decimalToHex(g, 2) + decimalToHex(b, 2) );
 	});
 };
