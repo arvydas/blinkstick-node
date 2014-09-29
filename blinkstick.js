@@ -258,7 +258,11 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
   var self = this;
 
   var sendColorInternal = function (r, g, b, callback) {
-    self.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, r, g, b]), callback);
+    if (params.options.channel == 0 && params.options.index == 0) {
+      self.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, r, g, b]), callback);
+    } else {
+      self.device.controlTransfer(0x20, 0x9, 0x0005, 0, new Buffer([5, params.options.channel, params.options.index, r, g, b]), callback);
+    }
   };
 
   if (this.requiresSoftwareColorPatch) {
@@ -510,6 +514,12 @@ function interpretParameters(red, green, blue, options, callback)
 		green = green || 0;
 		blue = blue || 0;
 	}
+
+  if (options === undefined) {
+    options = {}
+  }
+  options.channel = opt(options, 'channel', 0)
+  options.index = opt(options, 'index', 0)
 
   red = Math.max(Math.min(red, 255), 0);
   green = Math.max(Math.min(green, 255), 0);
