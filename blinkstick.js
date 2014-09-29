@@ -248,13 +248,13 @@ function _determineReportId(ledCount)
   var maxLeds = 64;
 
   if (ledCount <= 8 * 3) {
-    reporId = 6;
+    reportId = 6;
     maxLeds = 8;
   } else if (ledCount <= 16 * 3) {
-    reporId = 7;
+    reportId = 7;
     maxLeds = 16;
   } else if (ledCount <= 32 * 3) {
-    reporId = 8;
+    reportId = 8;
     maxLeds = 32;
   }
 
