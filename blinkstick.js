@@ -1,6 +1,12 @@
-var usb = require('usb'),
+var isWin = /^win/.test(process.platform);
 
-	VENDOR_ID = 0x20a0,
+if (isWin) {
+	var usb = require('./platform/windows/HID.node');
+} else {
+	var usb = require('usb');
+}
+
+var	VENDOR_ID = 0x20a0,
 	PRODUCT_ID = 0x41e5,
 
 	COLOR_KEYWORDS = {
@@ -162,23 +168,39 @@ var usb = require('usb'),
  * @constructor
  * @param {Object} device The USB device as returned from "usb" package.
  */
-function BlinkStick (device) {
+function BlinkStick (device, serialNumber, manufacturer, product) {
 
-	if (device) {
-		process.on('exit', function() {
-			device.close();
-		});	
+	if (isWin) {
+		if (device) {
+			this.device = new usb.HID(device);
+			this.serial = serialNumber;
+			this.manufacturer = manufacturer;
+			this.product = product;
 
-		device.open ();
-		this.device = device;	
+			var self = this;
 
-    var self = this;
+			process.on('exit', function() {
+				self.device.close();
+			});	
+		}
+	} else {
+		if (device) {
+			process.on('exit', function() {
+				device.close();
+			});	
 
-    this.getSerial(function (error, result) {
-      self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 && 
-        self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
-    });
+			device.open ();
+			this.device = device;	
+
+			var self = this;
+
+		}
 	}
+
+	this.getSerial(function (error, result) {
+	  self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 && 
+		self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
+	});
 }
 
 
@@ -198,11 +220,15 @@ function BlinkStick (device) {
  * @returns {String} The device's serial number.
  */
 BlinkStick.prototype.getSerial = function (callback) {
-  var self = this;
-  this.device.getStringDescriptor(3, function(error, result) {
-    self.serial = result;
-    if (callback) callback(error, result);
-  });
+	if (isWin) {
+		if (callback) callback(null, this.serial);
+	} else {
+		var self = this;
+		this.device.getStringDescriptor(3, function(error, result) {
+			self.serial = result;
+			if (callback) callback(error, result);
+		});
+	}
 };
 
 
@@ -223,9 +249,13 @@ BlinkStick.prototype.getVersionMinor = function () {
  * @returns {String} The device's manufacturer.
  */
 BlinkStick.prototype.getManufacturer = function (callback) {
-  this.device.getStringDescriptor(1, function(error, result) {
-    if (callback) callback(error, result);
-  });
+	if (isWin) {
+		if (callback) callback(null, this.manufacturer);
+	} else {
+		this.device.getStringDescriptor(1, function(error, result) {
+			if (callback) callback(error, result);
+		});
+	}
 };
 
 
@@ -236,9 +266,13 @@ BlinkStick.prototype.getManufacturer = function (callback) {
  * @returns {String} The device's description.
  */
 BlinkStick.prototype.getDescription = function (callback) {
-  this.device.getStringDescriptor(2, function(error, result) {
-    if (callback) callback(error, result);
-  });
+	if (isWin) {
+		if (callback) callback(null, this.product);
+	} else {
+		this.device.getStringDescriptor(2, function(error, result) {
+			if (callback) callback(error, result);
+		});
+	}
 };
 
 
@@ -276,9 +310,9 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 
   var sendColorInternal = function (r, g, b, callback) {
     if (params.options.channel == 0 && params.options.index == 0) {
-      self.device.controlTransfer(0x20, 0x9, 0x0001, 0, new Buffer([0, r, g, b]), callback);
+	  self.setFeatureReport(1, [1, r, g, b], callback);
     } else {
-      self.device.controlTransfer(0x20, 0x9, 0x0005, 0, new Buffer([5, params.options.channel, params.options.index, r, g, b]), callback);
+	  self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
     }
   };
 
@@ -312,13 +346,20 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 
 
 BlinkStick.prototype.setMode = function (mode, callback) {
-  this.device.controlTransfer(0x20, 0x9, 0x0004, 0, new Buffer([4, mode]), callback);
+  this.setFeatureReport(0x0004, [4, mode], callback);
 };
 
 BlinkStick.prototype.getMode = function (callback) {
-  this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0004, 0, 33, function (err, buffer) {
-    if (callback) callback(err, buffer[1]);
-  });
+	try
+	{
+		this.getFeatureReport(4, 33, function (err, buffer) {
+			if (callback) callback(err, buffer[1]);
+		});
+	}
+	catch (err)
+	{
+		if (callback) callback(err, 0);
+	}
 };
 
 
@@ -334,7 +375,7 @@ BlinkStick.prototype.getColor = function (index, callback) {
   }
 
   if (index == 0) {
-    this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
+    this.getFeatureReport(0x0001, 33, function (err, buffer) {
       if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
     });
   } else {
@@ -353,7 +394,7 @@ BlinkStick.prototype.getColors = function (count, callback) {
 
   params = _determineReportId(count);
 
-  this.device.controlTransfer(0x80 | 0x20, 0x1, params.reportId, 0, params.maxLeds * 3 + 1, function (err, buffer) {
+  this.getFeatureReport(params.reportId, params.maxLeds * 3 + 2, function (err, buffer) {
     if (callback) callback(err, buffer.slice(2, buffer.length -1));
   });
 };
@@ -377,7 +418,7 @@ BlinkStick.prototype.setColors = function (channel, data, callback) {
     report.push(0);
   }
 
-  this.device.controlTransfer(0x20, 0x9, params.reportId, 0, new Buffer(report), callback);
+  this.setFeatureReport(params.reportId, report, callback);
 };
 
 function decimalToHex(d, padding) {
@@ -419,7 +460,7 @@ BlinkStick.prototype.getColorString = function (index, callback) {
  * @param {Function} callback Callback to which to pass the value.
  */
 function getInfoBlock (device, location, callback) {
-	device.controlTransfer(0x80 | 0x20, 0x1, location, 0, 33, function (err, buffer) {
+	getFeatureReport(location, 33, function (err, buffer) {
 		if (err) return callback(err);
 
 		var result = '',
@@ -457,7 +498,7 @@ function setInfoBlock (device, location, data, callback) {
 	for (i = 0; i < l; i++) buffer[i + 1] = data.charCodeAt(i);
 	for (i = l; i < 33; i++) buffer[i + 1] = 0;
 
-	device.controlTransfer(0x20, 0x9, location, 0, buffer, callback);
+	setFeatureReport(location, buffer, callback);
 }
 
 
@@ -733,23 +774,55 @@ BlinkStick.prototype.pulseColor = function (red, green, blue) {
 function findBlinkSticks (filter) {
 	if (filter === undefined) filter = function () { return true; };
 
-	var devices = usb.getDeviceList(),
-		device,
-		result = [],
-		i;
+	var result = [], device, i;
 
-	for (i in devices) {
-		device = devices[i];
-		if (device.deviceDescriptor.idVendor === VENDOR_ID && 
-        device.deviceDescriptor.idProduct === PRODUCT_ID && 
-          filter(device)) 
-      result.push(new BlinkStick(device));
+	if (isWin) {
+		var devices = usb.devices();
+
+		for (i in devices) {
+			device = devices[i];
+
+			if (device.vendorId === VENDOR_ID && 
+				device.productId === PRODUCT_ID && 
+				filter(device)) 
+			{
+				result.push(new BlinkStick(device.path, device.serialNumber, device.manufacturer, device.product));
+			}
+		} 
+
+	} else {
+		var devices = usb.getDeviceList();
+
+		for (i in devices) {
+			device = devices[i];
+			if (device.deviceDescriptor.idVendor === VENDOR_ID && 
+			device.deviceDescriptor.idProduct === PRODUCT_ID && 
+			  filter(device)) 
+		  result.push(new BlinkStick(device));
+		}
 	}
 
 	return result;
 }
 
 
+BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
+	if (isWin) {
+	    this.device.sendFeatureReport(data);
+		if (callback) { callback(); };
+	} else {
+        this.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), callback);
+	}
+}
+
+BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
+	if (isWin) {
+		var buffer = this.device.getFeatureReport(reportId, length);
+		if (callback) callback(null, buffer);
+	} else {
+		this.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, callback);
+	}
+}
 
 
 module.exports = {
@@ -760,8 +833,14 @@ module.exports = {
 	 * @returns {BlinkStick|undefined} The first BlinkStick, if found.
 	 */
 	findFirst: function () {
-		var device = usb.findByIds(VENDOR_ID, PRODUCT_ID);
-		if (device) return new BlinkStick(device);
+		if (isWin) {
+			var devices = findBlinkSticks();
+			
+			return devices.length > 0 ? devices[0] : null;
+		} else {
+			var device = usb.findByIds(VENDOR_ID, PRODUCT_ID);
+			if (device) return new BlinkStick(device);
+		}
 	},
 
 
