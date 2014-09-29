@@ -1,3 +1,9 @@
+/**
+ * Provides access to BlinkStick devices
+ *
+ * @module blinkstick
+ */
+
 var isWin = /^win/.test(process.platform);
 
 if (isWin) {
@@ -164,7 +170,7 @@ COLOR_KEYWORDS = {
 
 
 /**
- * A BlinkStick device.
+ * Initialize new BlinkStick device
  *
  * @class BlinkStick
  * @constructor
@@ -215,18 +221,27 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
 
 
 /**
-* Returns the serial number of device.
-*
-* BSnnnnnn-1.0
-* ||  |    | |- Software minor version
-* ||  |    |--- Software major version
-* ||  |-------- Denotes sequential number
-* ||----------- Denotes BlinkStick device
-*
-* Software version defines the capabilities of the device
-*
-* @returns {String} The device's serial number.
-*/
+ * Returns the serial number of device.
+ *
+ * <pre>
+ * BSnnnnnn-1.0
+ * ||  |    | |- Software minor version
+ * ||  |    |--- Software major version
+ * ||  |-------- Denotes sequential number
+ * ||----------- Denotes BlinkStick device
+ * </pre>
+ *
+ * Software version defines the capabilities of the device
+ *
+ * Usage:
+ *
+ * @example
+ *     getSerial(function(err, serial) {
+ *         console.log(serial);
+ *
+ * @method getSerial
+ * @param {function} callback Callback to receive serial number
+ */
 BlinkStick.prototype.getSerial = function (callback) {
     if (isWin) {
         if (callback) callback(null, this.serial);
@@ -240,11 +255,27 @@ BlinkStick.prototype.getSerial = function (callback) {
 };
 
 
+
+
+/**
+ * Get the major version from serial number
+ *
+ * @method getVersionMajor
+ * @returns {Number} Major version number from serial
+ */
 BlinkStick.prototype.getVersionMajor = function () {
     return parseInt(this.serial.substring(this.serial.length - 3, this.serial.length - 2));
 };
 
 
+
+
+/**
+ * Get the minor version from serial number
+ *
+ * @method getVersionMinor
+ * @returns {Number} Minor version number from serial
+ */
 BlinkStick.prototype.getVersionMinor = function () {
     return parseInt(this.serial.substring(this.serial.length - 1, this.serial.length));
 };
@@ -253,9 +284,18 @@ BlinkStick.prototype.getVersionMinor = function () {
 
 
 /**
-* Returns the manufacturer of the device.
-* @returns {String} The device's manufacturer.
-*/
+ * Get the manufacturer of the device
+ *
+ * Usage:
+ *
+ * @example
+ *     getManufacturer(function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getManufacturer
+ * @param {function} callback Callback to receive manufacturer name
+ */
 BlinkStick.prototype.getManufacturer = function (callback) {
     if (isWin) {
         if (callback) callback(null, this.manufacturer);
@@ -270,8 +310,17 @@ BlinkStick.prototype.getManufacturer = function (callback) {
 
 
 /**
-* Returns the description of the device.
-* @returns {String} The device's description.
+ * Get the description of the device
+ *
+ * Usage:
+ *
+ * @example
+ *     getDescription(function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getDescription
+ * @param {function} callback Callback to receive description
 */
 BlinkStick.prototype.getDescription = function (callback) {
     if (isWin) {
@@ -284,6 +333,15 @@ BlinkStick.prototype.getDescription = function (callback) {
 };
 
 
+
+
+/**
+ * Determines report ID and number of LEDs for the report
+ *
+ * @private
+ * @method _determineReportId
+ * @returns {object} data.reportId and data.ledCount
+*/
 function _determineReportId(ledCount)
 {
     var reportId = 9;
@@ -303,14 +361,26 @@ function _determineReportId(ledCount)
     return { 'reportId': reportId, 'maxLeds': maxLeds };
 }
 
+
+
+
 /**
-* Set the color to the device as RGB.
-* @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
-* @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
-* @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
-* @param {Hash}   [options] additional options {"channel": 0, "index": 0}
-* @param {Function} [callback] Callback, called when complete.
-*/
+ * Set the color of LEDs
+ *
+ * @example
+ *     setColor(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ *
+ *     setColor(color, [options], [callback]); // use '#rrggbb' format
+ *
+ *     setColor(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
+ *
+ * @method setColor
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
+ * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options {"channel": 0, "index": 0}. Channel is represented as 0=R, 1=G, 2=B
+ * @param {Function} [callback] Callback, called when complete.
+ */
 BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
@@ -352,18 +422,76 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 };
 
 
+
+
+/**
+ * Set inverse mode for IKEA DIODER in conjunction with BlinkStick v1.0
+ *
+ * @method setInverse
+ * @param {Boolean} inverse Set true for inverse mode and false otherwise
+ */
 BlinkStick.prototype.setInverse = function (inverse) {
     this.inverse = inverse;
 };
 
+
+
+
+/**
+ * Get inverse mode setting for IKEA DIODER in conjunction with BlinkStick v1.0
+ *
+ * @method getInverse
+ * @returns {Boolean} true for enabled inverse mode and false otherwise
+ */
 BlinkStick.prototype.getInverse = function (inverse) {
     return this.inverse;
 };
 
+
+
+
+/**
+ * Set mode for BlinkStick Pro
+ *
+ * - 0 = Normal
+ * - 1 = Inverse
+ * - 2 = WS2812
+ *
+ * You can read more about BlinkStick modes by following this link:
+ *
+ * http://www.blinkstick.com/help/tutorials/blinkstick-pro-modes
+ *
+ * @method setMode
+ * @param {Number} mode Set the desired mode for BlinkStick Pro
+ */
 BlinkStick.prototype.setMode = function (mode, callback) {
     this.setFeatureReport(0x0004, [4, mode], callback);
 };
 
+
+
+
+/**
+ * Get mode for BlinkStick Pro
+ *
+ * - 0 = Normal
+ * - 1 = Inverse
+ * - 2 = WS2812
+ *
+ * You can read more about BlinkStick modes by following this link:
+ *
+ * http://www.blinkstick.com/help/tutorials/blinkstick-pro-modes
+ *
+ * Usage:
+ *
+ * @example
+ *     getMode(function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getMode
+ * @param {callback} callback receive mode with callback
+ */
 BlinkStick.prototype.getMode = function (callback) {
     try
     {
@@ -378,11 +506,29 @@ BlinkStick.prototype.getMode = function (callback) {
 };
 
 
+
+
 /**
-* Get the current color settings as RGB.
-* @param {Function} callback Callback to which to pass the color values.
-* @returns {Array} Array of three numbers: R, G and B (0-255).
-*/
+ * Get the current color visible on BlinkStick
+ *
+ * Function supports the following overloads:
+ *
+ * <pre>
+ * getColor(callback); //index defaults to 0
+ *
+ * getColor(index, callback); 
+ * </pre>
+ *
+ * @example
+ *     getColor(0, function(err, r, g, b) {
+ *         console.log(r, g, b);
+ *     });
+ *
+ * @method getColor
+ * @param {Number=0} index The index of the LED 
+ * @param {Function} callback Callback to which to pass the color values.
+ * @returns {Number, Number, Number} Callback returns three numbers: R, G and B [0..255].
+ */
 BlinkStick.prototype.getColor = function (index, callback) {
     if (typeof(index) == 'function') {
         callback = index;
@@ -401,12 +547,24 @@ BlinkStick.prototype.getColor = function (index, callback) {
 };
 
 
-BlinkStick.prototype.getColors = function (count, callback) {
-    if (typeof(index) == 'function') {
-        callback = index;
-        index = 0
-    }
 
+
+/**
+ * Get the current color frame on BlinkStick Pro
+ *
+ * Usage:
+ *
+ * @example
+ *     getColors(8, function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getColors
+ * @param {Number} count How many LEDs should return
+ * @param {Function} callback Callback to which to pass the color values.
+ * @returns {Array} Callback returns an array of LED data in the following format: [g0, r0, b0, g1, r1, b1...]
+ */
+BlinkStick.prototype.getColors = function (count, callback) {
     params = _determineReportId(count);
 
     this.getFeatureReport(params.reportId, params.maxLeds * 3 + 2, function (err, buffer) {
@@ -415,6 +573,22 @@ BlinkStick.prototype.getColors = function (count, callback) {
 };
 
 
+
+
+/**
+ * Set the color frame on BlinkStick Pro
+ *
+ * @example
+ *     var data = [255, 0, 0, 0, 255, 0];
+ *
+ *     setColors(0, data, function(err) {
+ *     });
+ *
+ * @method setColors
+ * @param {Number} channel Channel is represented as 0=R, 1=G, 2=B
+ * @param {Array} data LED data in the following format: [g0, r0, b0, g1, r1, b1...]
+ * @param {Function} callback Callback when the operation completes
+ */
 BlinkStick.prototype.setColors = function (channel, data, callback) {
     params = _determineReportId(data.length);
 
@@ -436,6 +610,18 @@ BlinkStick.prototype.setColors = function (channel, data, callback) {
     this.setFeatureReport(params.reportId, report, callback);
 };
 
+
+
+
+/**
+ * Converts decimal number to hex with zero padding
+ *
+ * @private
+ * @method decimalToHex
+ * @param {Number} d Decimal number to convert
+ * @param {Number} padding How many zeros to use for padding
+ * @returns {String} Decimal number converted to hex string
+*/
 function decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
@@ -448,10 +634,30 @@ function decimalToHex(d, padding) {
 }
 
 /**
-* Get the current color settings as hex string.
-* @param {Function} callback Callback to which to pass the color string.
-* @returns {String} Hex string, eg "#BADA55".
-*/
+ * Get the current color as hex string.
+ *
+ * Function supports the following overloads:
+ *
+ * <pre>
+ * getColorString(callback); //index defaults to 0
+ *
+ * getColorString(index, callback);
+ * </pre>
+ *
+ * @example
+ *     getColorString(0, function(err, color) {
+ *         console.log(color);
+ *     });
+ *
+ *     getColorString(function(err, color) {
+ *         console.log(color);
+ *     });
+ *
+ * @method getColorString
+ * @param {Number} index The index of the LED to retrieve data
+ * @param {Function} callback Callback to which to pass the color string.
+ * @returns {String} Hex string, eg "#BADA55".
+ */
 BlinkStick.prototype.getColorString = function (index, callback) {
     if (typeof(index) == 'function') {
         callback = index;
@@ -467,13 +673,15 @@ BlinkStick.prototype.getColorString = function (index, callback) {
 
 
 /**
-* Get an infoblock from a device.
-* @private
-* @static
-* @param {BlinkStick} device Device from which to get the value.
-* @param {Number} location Address to seek the data.
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Get an infoblock from a device.
+ *
+ * @private
+ * @static
+ * @method getInfoBlock
+ * @param {BlinkStick} device Device from which to get the value.
+ * @param {Number} location Address to seek the data.
+ * @param {Function} callback Callback to which to pass the value.
+ */
 function getInfoBlock (device, location, callback) {
     getFeatureReport(location, 33, function (err, buffer) {
         if (err) return callback(err);
@@ -491,19 +699,33 @@ function getInfoBlock (device, location, callback) {
 };
 
 
+
+
+/**
+ * Get default value from options
+ *
+ * @private
+ * @static
+ * @method opt
+ * @param {Hash} options Option hash to operate on
+ * @param {String} name The name of the parameter
+ * @param {Object} defaultValue Default value if name is not found in option hash
+ */
 function opt(options, name, defaultValue){
     return options && options[name]!==undefined ? options[name] : defaultValue;
 }
 
 /**
-* Sets an infoblock on a device.
-* @private
-* @static
-* @param {BlinkStick} device Device on which to set the value.
-* @param {Number} location Address to seek the data.
-* @param {String} data The value to push to the device. Should be <= 32 chars.
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Sets an infoblock on a device.
+ *
+ * @private
+ * @static
+ * @method setInfoBlock
+ * @param {BlinkStick} device Device on which to set the value.
+ * @param {Number} location Address to seek the data.
+ * @param {String} data The value to push to the device. Should be <= 32 chars.
+ * @param {Function} callback Callback to which to pass the value.
+ */
 function setInfoBlock (device, location, data, callback) {
     var i,
     l = Math.min(data.length, 33),
@@ -520,13 +742,21 @@ function setInfoBlock (device, location, data, callback) {
 
 
 /**
-* Get the infoblock1 of the device.
-* This is a 32 byte array that can contain any data. It's supposed to
-* hold the "Name" of the device making it easier to identify rather than
-* a serial number.
-*
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Get the infoblock1 of the device.
+ * This is a 32 byte array that can contain any data. It's supposed to
+ * hold the "Name" of the device making it easier to identify rather than
+ * a serial number.
+ *
+ * Usage:
+ *
+ * @example
+ *     getInfoBlock1(function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getInfoBlock1
+ * @param {Function} callback Callback to which to pass the value.
+ */
 BlinkStick.prototype.getInfoBlock1 = function (callback) {
     getInfoBlock(this.device, 0x0002, callback);
 };
@@ -535,11 +765,19 @@ BlinkStick.prototype.getInfoBlock1 = function (callback) {
 
 
 /**
-* Get the infoblock2 of the device.
-* This is a 32 byte array that can contain any data.
-*
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Get the infoblock2 of the device.
+ * This is a 32 byte array that can contain any data.
+ *
+ * Usage:
+ *
+ * @example
+ *     getInfoBlock2(function(err, data) {
+ *         console.log(data);
+ *     });
+ *
+ * @method getInfoBlock2
+ * @param {Function} callback Callback to which to pass the value.
+ */
 BlinkStick.prototype.getInfoBlock2 = function (callback) {
     getInfoBlock(this.device, 0x0003, callback);
 };
@@ -548,11 +786,19 @@ BlinkStick.prototype.getInfoBlock2 = function (callback) {
 
 
 /**
-* Sets the infoblock1 with specified string.
-* It fills the rest of bytes with zeros.
-*
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Sets the infoblock1 with specified string.
+ * It fills the rest of bytes with zeros.
+ *
+ * Usage:
+ *
+ * @example
+ *     setInfoBlock1("abcdefg", function(err) {
+ *     });
+ *
+ * @method setInfoBlock1
+ * @param {String} data Data value for InfoBlock
+ * @param {Function} callback Callback when the operation completes
+ */
 BlinkStick.prototype.setInfoBlock1 = function (data, callback) {
     setInfoBlock(this.device, 0x0002, data, callback);
 };
@@ -561,11 +807,19 @@ BlinkStick.prototype.setInfoBlock1 = function (data, callback) {
 
 
 /**
-* Sets the infoblock2 with specified string.
-* It fills the rest of bytes with zeros.
-*
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Sets the infoblock2 with specified string.
+ * It fills the rest of bytes with zeros.
+ *
+ * Usage:
+ *
+ * @example
+ *     setInfoBlock2("abcdefg", function(err) {
+ *     });
+ *
+ * @method setInfoBlock2
+ * @param {String} data Data value for InfoBlock
+ * @param {Function} callback Callback when the operation completes
+ */
 BlinkStick.prototype.setInfoBlock2 = function (data, callback) {
     setInfoBlock(this.device, 0x0003, data, callback);
 };
@@ -574,8 +828,10 @@ BlinkStick.prototype.setInfoBlock2 = function (data, callback) {
 
 
 /**
-* Sets the LED to a random color.
-*/
+ * Sets the LED to a random color.
+ *
+ * @method setRandomColor
+ */
 BlinkStick.prototype.setRandomColor = function () {
     var args = [],
     i;
@@ -588,16 +844,47 @@ BlinkStick.prototype.setRandomColor = function () {
 
 
 /**
-* Turns the LED off.
-*/
+ * Turns the LED off.
+ *
+ * @method turnOff
+ */
 BlinkStick.prototype.turnOff = function () {
     this.setColor();
 };
 
+
+
+
+/**
+ * Generate random integer number within a range.
+ *
+ * @private
+ * @static
+ * @method randomIntInc
+ * @param {Number} low the low value of the number
+ * @param {Number} high the high value of the number
+ * @returns {Number} Random number in the range of [low..high] inclusive of low and high
+ */
 function randomIntInc (low, high) {
     return Math.floor(Math.random() * (high - low + 1) + low);
 }
 
+
+
+
+/**
+ * Automatically interpret parameters supplied for functions to generate
+ * overrides.
+ *
+ * @private
+ * @method interpretParameters
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
+ * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options
+ * @param {Function} [callback] Callback, called when complete.
+ * @returns {Hash} Conains sanitized RGB value, options and callback if they have been assigned
+ */
 BlinkStick.prototype.interpretParameters = function (red, green, blue, options, callback)
 {
     var hex;
@@ -657,14 +944,36 @@ BlinkStick.prototype.interpretParameters = function (red, green, blue, options, 
         return {'red': red, 'green': green, 'blue': blue, 'options': options, 'callback': callback};
 }
 
+
+
+
 /**
-* Blinks specified RGB color.
-* @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
-* @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
-* @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
-* @param {Hash}   options additional options {"repeats": 1, "delay": 500}
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Blinks specified RGB color.
+ *
+ * Function supports the following overloads:
+ *
+ * <pre>
+ * blink(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ *
+ * blink(color, [options], [callback]); // use '#rrggbb' format
+ *
+ * blink(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
+ * </pre>
+ *
+ * Options can contain the following parameters for hash:
+ *
+ * - channel=0: Channel is represented as 0=R, 1=G, 2=B
+ * - index=0: The index of the LED
+ * - repeats=1: How many times to blink
+ * - delay=1: Delay between on/off cycles in milliseconds
+ *
+ * @method blink
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
+ * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options {"channel": 0, "index": 0, "repeats": 1, "delay": 500}
+ * @param {Function} [callback] Callback when the operation completes
+ */
 BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
@@ -692,14 +1001,36 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
     blinker(0);
 };
 
+
+
+
 /**
-* Morphs to specified RGB color from current color.
-* @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
-* @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
-* @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
-* @param {Hash}   options additional options {"repeats": 1, "delay": 500}
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Morphs to specified RGB color from current color.
+ *
+ * Function supports the following overloads:
+ *
+ * <pre>
+ * morph(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ *
+ * morph(color, [options], [callback]); // use '#rrggbb' format
+ *
+ * morph(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
+ * </pre>
+ *
+ * Options can contain the following parameters for hash:
+ *
+ * - channel=0: Channel is represented as 0=R, 1=G, 2=B
+ * - index=0: The index of the LED
+ * - duration=1000: How long should the morph animation last in milliseconds
+ * - steps=50: How many steps for color changes
+ *
+ * @method morph
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
+ * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options {"channel": 0, "index": 0, "duration": 1000, "steps": 50}
+ * @param {Function} [callback] Callback when the operation completes
+ */
 BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
@@ -733,13 +1064,32 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
 
 
 /**
-* Pulses specified RGB color.
-* @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
-* @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
-* @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
-* @param {Hash}   options additional options {"repeats": 1, "delay": 500}
-* @param {Function} callback Callback to which to pass the value.
-*/
+ * Pulses specified RGB color.
+ *
+ * Function supports the following overloads:
+ *
+ * <pre>
+ * pulse(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ *
+ * pulse(color, [options], [callback]); // use '#rrggbb' format
+ *
+ * pulse(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
+ * </pre>
+ *
+ * Options can contain the following parameters for hash:
+ *
+ * - channel=0: Channel is represented as 0=R, 1=G, 2=B
+ * - index=0: The index of the LED
+ * - duration=1000: How long should the pulse animation last in milliseconds
+ * - steps=50: How many steps for color changes
+ *
+ * @method pulse
+ * @param {Number|String} red Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg "#BADA55".
+ * @param {Number} [green] Green color intensity 0 is off, 255 is full green intensity.
+ * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
+ * @param {Hash}   [options] additional options {"channel": 0, "index": 0, "duration": 1000, "steps": 50}
+ * @param {Function} [callback] Callback when the operation completes
+ */
 BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
@@ -751,45 +1101,12 @@ BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
 };
 
 
-/**
-* Pulses specified RGB color.
-* @param {Number} red Red color intensity 0 is off, 255 is full red intensity.
-* @param {Number} green Green color intensity 0 is off, 255 is full green intensity.
-* @param {Number} blue Blue color intensity 0 is off, 255 is full blue intensity.
-*/
-BlinkStick.prototype.pulseColor = function (red, green, blue) {
-
-    red = Math.min(red, 255);
-    green = Math.min(green, 255);
-    blue = Math.min(blue, 255);
-
-    var cr = 0,
-    cg = 0,
-    cb = 0,
-    i, l;
-
-    for (i = 0, l = Math.max(red, green, blue); i < l; i++) {
-        if (cr < red) cr++;
-        if (cg < green) cg++;
-        if (cb < blue) cb++;
-
-        this.setColor(cr, cg, cb);
-    }
-
-    while (cr > 0 || cg > 0 || cb > 0) {
-        if (cr > 0) cr--;
-        if (cb > 0) cb--;
-        if (cg > 0) cg--;
-
-        this.setColor(cr, cg, cb);
-    }
-};
-
-
 
 
 /**
 * Find BlinkSticks using a filter.
+*
+* @method findBlinkSticks
 * @param {Function} [filter] Filter function.
 * @returns {Array} BlickStick objects.
 */
@@ -846,11 +1163,23 @@ BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
     }
 }
 
+/**
+Publicly available functions to find BlinkSticks on the computer.
 
+@class blinkstick
+@static
+**/
 module.exports = {
 
     /**
      * Find first attached BlinkStick.
+     *
+     * @example
+     *     var blinkstick = require('blinkstick');
+     *     b = blinkstick.findFirst();
+     *
+     * @static
+     * @method findFirst
      * @returns {BlinkStick|undefined} The first BlinkStick, if found.
      */
     findFirst: function () {
@@ -869,6 +1198,13 @@ module.exports = {
 
     /**
      * Find all attached BlinkStick devices.
+     *
+     * @example
+     *     var blinkstick = require('blinkstick');
+     *     blinksticks = blinkstick.findAll();
+     *
+     * @static
+     * @method findAll
      * @returns {Array} BlinkSticks.
      */
     findAll: function () {
@@ -880,11 +1216,15 @@ module.exports = {
 
     /**
      * Returns the serial numbers of all attached BlinkStick devices.
+     *
+     * @static
+     * @method findAllSerials
      * @returns {Array} Serial numbers.
      */
     findAllSerials: function () {
         var result = [];
 
+        //TODO: BROKEN
         findBlinkSticks(function (device) {
             result.push(device.deviceDescriptor.iSerialNumber);
         });
@@ -897,6 +1237,9 @@ module.exports = {
 
     /**
      * Find BlinkStick device based on serial number.
+     *
+     * @static
+     * @method findBySerial
      * @param {Number} serial Serial number.
      * @returns {BlinkStick|undefined}
      */
@@ -908,6 +1251,4 @@ module.exports = {
         return result[0];
     }
 
-
 };
-
