@@ -165,9 +165,15 @@ var	VENDOR_ID = 0x20a0,
 
 /**
  * A BlinkStick device.
+ *
+ * @class BlinkStick
  * @constructor
  * @param {Object} device The USB device as returned from "usb" package.
+ * @param {String} [serialNumber] Serial number of the device. Used only in Windows.
+ * @param {String} [manufacturer] Manufacturer of the device. Used only in Windows.
+ * @param {String} [product] Product name of the device. Used only in Windows. 
  */
+
 function BlinkStick (device, serialNumber, manufacturer, product) {
 
 	if (isWin) {
@@ -210,15 +216,15 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
 
 /**
  * Returns the serial number of device.
- * 
+ *
  * BSnnnnnn-1.0
  * ||  |    | |- Software minor version
  * ||  |    |--- Software major version
  * ||  |-------- Denotes sequential number
  * ||----------- Denotes BlinkStick device
- * 
+ *
  * Software version defines the capabilities of the device
- * 
+ *
  * @returns {String} The device's serial number.
  */
 BlinkStick.prototype.getSerial = function (callback) {
