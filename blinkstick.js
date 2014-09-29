@@ -514,11 +514,11 @@ BlinkStick.prototype.getMode = function (callback) {
  *
  * Function supports the following overloads:
  *
- * <pre>
- * getColor(callback); //index defaults to 0
+ * @example
+ *     //Available overloads
+ *     getColor(callback); //index defaults to 0
  *
- * getColor(index, callback); 
- * </pre>
+ *     getColor(index, callback);
  *
  * @example
  *     getColor(0, function(err, r, g, b) {
@@ -639,11 +639,11 @@ function decimalToHex(d, padding) {
  *
  * Function supports the following overloads:
  *
- * <pre>
- * getColorString(callback); //index defaults to 0
+ * @example
+ *     //Available overloads
+ *     getColorString(callback); //index defaults to 0
  *
- * getColorString(index, callback);
- * </pre>
+ *     getColorString(index, callback);
  *
  * @example
  *     getColorString(0, function(err, color) {
@@ -953,13 +953,13 @@ BlinkStick.prototype.interpretParameters = function (red, green, blue, options, 
  *
  * Function supports the following overloads:
  *
- * <pre>
- * blink(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ * @example
+ *     //Available overloads
+ *     blink(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
  *
- * blink(color, [options], [callback]); // use '#rrggbb' format
+ *     blink(color, [options], [callback]); // use '#rrggbb' format
  *
- * blink(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
- * </pre>
+ *     blink(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
  *
  * Options can contain the following parameters for object:
  *
@@ -1010,13 +1010,13 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
  *
  * Function supports the following overloads:
  *
- * <pre>
- * morph(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ * @example
+ *     //Available overloads
+ *     morph(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
  *
- * morph(color, [options], [callback]); // use '#rrggbb' format
+ *     morph(color, [options], [callback]); // use '#rrggbb' format
  *
- * morph(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
- * </pre>
+ *     morph(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
  *
  * Options can contain the following parameters for object:
  *
@@ -1069,13 +1069,13 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
  *
  * Function supports the following overloads:
  *
- * <pre>
- * pulse(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
+ * @example
+ *     //Available overloads
+ *     pulse(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
  *
- * pulse(color, [options], [callback]); // use '#rrggbb' format
+ *     pulse(color, [options], [callback]); // use '#rrggbb' format
  *
- * pulse(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
- * </pre>
+ *     pulse(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names
  *
  * Options can contain the following parameters for object:
  *
