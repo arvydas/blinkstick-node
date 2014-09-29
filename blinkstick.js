@@ -590,10 +590,10 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
   var self = this;
 
   var blinker = function (count) {
-    self.setColor(params.red, params.green, params.blue);
+    self.setColor(params.red, params.green, params.blue, params.options);
 
     setTimeout(function() {
-      self.setColor(0, 0, 0);
+      self.setColor(0, 0, 0, params.options);
 
       setTimeout(function() {
         if (count == repeats - 1) {
@@ -624,14 +624,15 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
 
   var self = this;
 
-  this.getColor(function(err, cr, cg, cb) {
+  this.getColor(params.options.index, function(err, cr, cg, cb) {
 
     var morpher = function (count) {
 
       self.setColor(
           parseInt(cr + (params.red - cr) / steps * count), 
           parseInt(cg + (params.green - cg) / steps * count), 
-          parseInt(cb + (params.blue - cb) / steps * count));
+          parseInt(cb + (params.blue - cb) / steps * count),
+          params.options);
 
       setTimeout(function() {
         if (count == steps) {
