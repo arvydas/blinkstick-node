@@ -197,6 +197,8 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
 		}
 	}
 
+  this.inverse = false;
+
 	this.getSerial(function (error, result) {
 	  self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 && 
 		self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
@@ -304,15 +306,15 @@ function _determineReportId(ledCount)
  * @param {Function} [callback] Callback, called when complete.
  */
 BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
-  var params = interpretParameters(red, green, blue, options, callback);
+  var params = this.interpretParameters(red, green, blue, options, callback);
 
   var self = this;
 
   var sendColorInternal = function (r, g, b, callback) {
     if (params.options.channel == 0 && params.options.index == 0) {
-	  self.setFeatureReport(1, [1, r, g, b], callback);
+      self.setFeatureReport(1, [1, r, g, b], callback);
     } else {
-	  self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
+      self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
     }
   };
 
@@ -344,6 +346,13 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 };
 
 
+BlinkStick.prototype.setInverse = function (inverse) {
+  this.inverse = inverse;
+};
+
+BlinkStick.prototype.getInverse = function (inverse) {
+  return this.inverse;
+};
 
 BlinkStick.prototype.setMode = function (mode, callback) {
   this.setFeatureReport(0x0004, [4, mode], callback);
@@ -583,7 +592,7 @@ function randomIntInc (low, high) {
     return Math.floor(Math.random() * (high - low + 1) + low);
 }
 
-function interpretParameters(red, green, blue, options, callback)
+BlinkStick.prototype.interpretParameters = function (red, green, blue, options, callback)
 {
 	var hex;
 
@@ -632,6 +641,13 @@ function interpretParameters(red, green, blue, options, callback)
   green = Math.max(Math.min(green, 255), 0);
   blue = Math.max(Math.min(blue, 255), 0);
 
+  if (this.inverse)
+  {
+    red = 255 - red;
+    green = 255 - green;
+    blue = 255 - blue;
+  }
+
   return {'red': red, 'green': green, 'blue': blue, 'options': options, 'callback': callback};
 }
 
@@ -644,7 +660,7 @@ function interpretParameters(red, green, blue, options, callback)
  * @param {Function} callback Callback to which to pass the value.
  */
 BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
-  var params = interpretParameters(red, green, blue, options, callback);
+  var params = this.interpretParameters(red, green, blue, options, callback);
 
   var repeats = opt(params.options, 'repeats', 1)
   var delay = opt(params.options, 'delay', 500)
@@ -679,7 +695,7 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
  * @param {Function} callback Callback to which to pass the value.
  */
 BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
-  var params = interpretParameters(red, green, blue, options, callback);
+  var params = this.interpretParameters(red, green, blue, options, callback);
 
   var duration = opt(params.options, 'duration', 1000)
   var steps = opt(params.options, 'steps', 50)
@@ -719,7 +735,7 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
  * @param {Function} callback Callback to which to pass the value.
  */
 BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
-  var params = interpretParameters(red, green, blue, options, callback);
+  var params = this.interpretParameters(red, green, blue, options, callback);
 
   var self = this;
 
