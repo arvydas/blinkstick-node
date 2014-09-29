@@ -359,6 +359,27 @@ BlinkStick.prototype.getColors = function (count, callback) {
 };
 
 
+BlinkStick.prototype.setColors = function (channel, data, callback) {
+  params = _determineReportId(data.length);
+
+  var i = 0;
+
+  report = [params.reportId, channel];
+
+  data.forEach(function(item) {
+    if (i < params.maxLeds * 3) {
+      report.push(item);
+      i += 1;
+    }
+  });
+
+  for (var j = i; j < params.maxLeds * 3; j++) {
+    report.push(0);
+  }
+
+  this.device.controlTransfer(0x20, 0x9, params.reportId, 0, new Buffer(report), callback);
+};
+
 function decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
