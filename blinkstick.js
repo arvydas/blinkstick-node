@@ -369,6 +369,7 @@ function _determineReportId(ledCount)
  * Set the color of LEDs
  *
  * @example
+ *     //Available overloads
  *     setColor(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity
  *
  *     setColor(color, [options], [callback]); // use '#rrggbb' format
@@ -1220,17 +1221,29 @@ module.exports = {
      *
      * @static
      * @method findAllSerials
+     * @param {Function} callback Callback when all serials have been collected
      * @returns {Array} Serial numbers.
      */
-    findAllSerials: function () {
+    findAllSerials: function (callback) {
         var result = [];
 
-        //TODO: BROKEN
-        findBlinkSticks(function (device) {
-            result.push(device.deviceDescriptor.iSerialNumber);
-        });
+        var devices = findBlinkSticks();
+        var i = 0;
 
-        return result;
+        var finder = function() {
+
+            if (i == devices.length) {
+                if (callback) callback(result);
+            } else {
+                devices[i].getSerial(function (err, serial) {
+                    result.push(serial);
+                    i += 1;
+                    finder();
+                });
+            }
+        }
+
+        finder();
     },
 
 
@@ -1242,14 +1255,31 @@ module.exports = {
      * @static
      * @method findBySerial
      * @param {Number} serial Serial number.
-     * @returns {BlinkStick|undefined}
+     * @param {Function} callback Callback when BlinkStick has been found
      */
-    findBySerial: function (serial) {
-        var result = findBlinkSticks(function (device) {
-            return device.deviceDescriptor.iSerialNumber === serial;
-        });
+    findBySerial: function (serial, callback) {
+        var result = [];
 
-        return result[0];
+        var devices = findBlinkSticks();
+        var i = 0;
+
+        var finder = function() {
+
+            if (i == devices.length) {
+                if (callback) callback();
+            } else {
+                devices[i].getSerial(function (err, serialNumber) {
+                    if (serialNumber == serial) {
+                        if (callback) callback(devices[i]);
+                    } else {
+                        i += 1;
+                        finder();
+                    }
+                });
+            }
+        }
+
+        finder();
     }
 
 };
