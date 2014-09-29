@@ -459,6 +459,9 @@ BlinkStick.prototype.turnOff = function () {
 	this.setColor();
 };
 
+function randomIntInc (low, high) {
+    return Math.floor(Math.random() * (high - low + 1) + low);
+}
 
 function interpretParameters(red, green, blue, options, callback)
 {
@@ -472,7 +475,11 @@ function interpretParameters(red, green, blue, options, callback)
       callback = green;
     }
 
-		if (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
+		if (red == 'random') {
+      red = randomIntInc(0, 255);
+      green = randomIntInc(0, 255);
+      blue = randomIntInc(0, 255);
+    } else if  (hex = red.match(/^\#[A-Za-z0-9]{6}$/)) {
 			hex = hex[0];
 		} else if (!(hex = COLOR_KEYWORDS[red])) {
 			if (callback) 
