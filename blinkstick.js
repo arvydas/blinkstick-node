@@ -242,7 +242,24 @@ BlinkStick.prototype.getDescription = function (callback) {
 };
 
 
+function _determineReportId(ledCount)
+{
+  var reportId = 9;
+  var maxLeds = 64;
 
+  if (ledCount <= 8 * 3) {
+    reporId = 6;
+    maxLeds = 8;
+  } else if (ledCount <= 16 * 3) {
+    reporId = 7;
+    maxLeds = 16;
+  } else if (ledCount <= 32 * 3) {
+    reporId = 8;
+    maxLeds = 32;
+  }
+
+  return { 'reportId': reportId, 'maxLeds': maxLeds };
+}
 
 /**
  * Set the color to the device as RGB.
@@ -315,6 +332,19 @@ BlinkStick.prototype.getColor = function (callback) {
 	this.device.controlTransfer(0x80 | 0x20, 0x1, 0x0001, 0, 33, function (err, buffer) {
 		if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
 	});
+
+
+BlinkStick.prototype.getColors = function (count, callback) {
+  if (typeof(index) == 'function') {
+    callback = index;
+    index = 0
+  }
+
+  params = _determineReportId(count);
+
+  this.device.controlTransfer(0x80 | 0x20, 0x1, params.reportId, 0, params.maxLeds * 3 + 1, function (err, buffer) {
+    if (callback) callback(err, buffer.slice(2, buffer.length -1));
+  });
 };
 
 
