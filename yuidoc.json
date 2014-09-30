@@ -3,6 +3,7 @@
     "description": "Provides access to BlinkStick devices using Node.js",
     "version": "1.0.0",
     "url": "http://www.blinkstick.com/",
+    "logo": "http://www.blinkstick.com/images/logos/blinkstick-nodejs-small.png",
     "options": {
         "outdir": "../build/apidocs"
     }
