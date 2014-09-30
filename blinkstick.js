@@ -239,6 +239,7 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
  * @example
  *     getSerial(function(err, serial) {
  *         console.log(serial);
+ *     });
  *
  * @method getSerial
  * @param {function} callback Callback to receive serial number
@@ -1178,7 +1179,7 @@ module.exports = {
      *
      * @example
      *     var blinkstick = require('blinkstick');
-     *     b = blinkstick.findFirst();
+     *     var led = blinkstick.findFirst();
      *
      * @static
      * @method findFirst
@@ -1203,7 +1204,7 @@ module.exports = {
      *
      * @example
      *     var blinkstick = require('blinkstick');
-     *     blinksticks = blinkstick.findAll();
+     *     var leds = blinkstick.findAll();
      *
      * @static
      * @method findAll
