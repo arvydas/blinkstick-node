@@ -1,0 +1,1000 @@
+{
+    "project": {
+        "name": "BlinkStick API for Node.js",
+        "description": "Provides access to BlinkStick devices using Node.js",
+        "version": "1.0.0",
+        "url": "http://www.blinkstick.com/",
+        "logo": "http://www.blinkstick.com/images/logos/blinkstick-nodejs-small.png"
+    },
+    "files": {
+        "blinkstick-node/node_modules/blinkstick/blinkstick.js": {
+            "name": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "modules": {
+                "blinkstick": 1
+            },
+            "classes": {
+                "BlinkStick": 1,
+                "blinkstick": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "blinkstick": {
+            "name": "blinkstick",
+            "submodules": {},
+            "classes": {
+                "BlinkStick": 1,
+                "blinkstick": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1169,
+            "description": "Provides access to BlinkStick devices"
+        }
+    },
+    "classes": {
+        "BlinkStick": {
+            "name": "BlinkStick",
+            "shortname": "BlinkStick",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "blinkstick",
+            "namespace": "",
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 173,
+            "description": "Initialize new BlinkStick device",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "device",
+                    "description": "The USB device as returned from \"usb\" package.",
+                    "type": "Object"
+                },
+                {
+                    "name": "serialNumber",
+                    "description": "Serial number of the device. Used only in Windows.",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "manufacturer",
+                    "description": "Manufacturer of the device. Used only in Windows.",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "product",
+                    "description": "Product name of the device. Used only in Windows.",
+                    "type": "String",
+                    "optional": true
+                }
+            ]
+        },
+        "blinkstick": {
+            "name": "blinkstick",
+            "shortname": "blinkstick",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "blinkstick",
+            "namespace": "",
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1169,
+            "description": "Publicly available functions to find BlinkSticks on the computer.",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 224,
+            "description": "Returns the serial number of device.\n\n<pre>\nBSnnnnnn-1.0\n||  |    | |- Software minor version\n||  |    |--- Software major version\n||  |-------- Denotes sequential number\n||----------- Denotes BlinkStick device\n</pre>\n\nSoftware version defines the capabilities of the device\n\nUsage:",
+            "example": [
+                "\n    getSerial(function(err, serial) {\n        console.log(serial);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getSerial",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback to receive serial number",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 262,
+            "description": "Get the major version from serial number",
+            "itemtype": "method",
+            "name": "getVersionMajor",
+            "return": {
+                "description": "Major version number from serial",
+                "type": "Number"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 275,
+            "description": "Get the minor version from serial number",
+            "itemtype": "method",
+            "name": "getVersionMinor",
+            "return": {
+                "description": "Minor version number from serial",
+                "type": "Number"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 288,
+            "description": "Get the manufacturer of the device\n\nUsage:",
+            "example": [
+                "\n    getManufacturer(function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getManufacturer",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback to receive manufacturer name",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 314,
+            "description": "Get the description of the device\n\nUsage:",
+            "example": [
+                "\n    getDescription(function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getDescription",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback to receive description",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 340,
+            "description": "Determines report ID and number of LEDs for the report",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "_determineReportId",
+            "return": {
+                "description": "data.reportId and data.ledCount",
+                "type": "Object"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 369,
+            "description": "Set the color of LEDs",
+            "example": [
+                "\n    //Available overloads\n    setColor(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity\n\n    setColor(color, [options], [callback]); // use '#rrggbb' format\n\n    setColor(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names"
+            ],
+            "itemtype": "method",
+            "name": "setColor",
+            "params": [
+                {
+                    "name": "red",
+                    "description": "Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg \"#BADA55\".",
+                    "type": "Number|String"
+                },
+                {
+                    "name": "green",
+                    "description": "Green color intensity 0 is off, 255 is full green intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "blue",
+                    "description": "Blue color intensity 0 is off, 255 is full blue intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "additional options {\"channel\": 0, \"index\": 0}. Channel is represented as 0=R, 1=G, 2=B",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback, called when complete.",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 430,
+            "description": "Set inverse mode for IKEA DIODER in conjunction with BlinkStick v1.0",
+            "itemtype": "method",
+            "name": "setInverse",
+            "params": [
+                {
+                    "name": "inverse",
+                    "description": "Set true for inverse mode and false otherwise",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 443,
+            "description": "Get inverse mode setting for IKEA DIODER in conjunction with BlinkStick v1.0",
+            "itemtype": "method",
+            "name": "getInverse",
+            "return": {
+                "description": "true for enabled inverse mode and false otherwise",
+                "type": "Boolean"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 456,
+            "description": "Set mode for BlinkStick Pro\n\n- 0 = Normal\n- 1 = Inverse\n- 2 = WS2812\n\nYou can read more about BlinkStick modes by following this link:\n\nhttp://www.blinkstick.com/help/tutorials/blinkstick-pro-modes",
+            "itemtype": "method",
+            "name": "setMode",
+            "params": [
+                {
+                    "name": "mode",
+                    "description": "Set the desired mode for BlinkStick Pro",
+                    "type": "Number"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 477,
+            "description": "Get mode for BlinkStick Pro\n\n- 0 = Normal\n- 1 = Inverse\n- 2 = WS2812\n\nYou can read more about BlinkStick modes by following this link:\n\nhttp://www.blinkstick.com/help/tutorials/blinkstick-pro-modes\n\nUsage:",
+            "example": [
+                "\n    getMode(function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getMode",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "receive mode with callback",
+                    "type": "Callback"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 514,
+            "description": "Get the current color visible on BlinkStick\n\nFunction supports the following overloads:",
+            "example": [
+                "\n    //Available overloads\n    getColor(callback); //index defaults to 0\n\n    getColor(index, callback);",
+                "\n    getColor(0, function(err, r, g, b) {\n        console.log(r, g, b);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getColor",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "The index of the LED",
+                    "type": "Number=0"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the color values.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Callback returns three numbers: R, G and B [0..255].",
+                "type": "Number, Number, Number"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 555,
+            "description": "Get the current color frame on BlinkStick Pro\n\nUsage:",
+            "example": [
+                "\n    getColors(8, function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getColors",
+            "params": [
+                {
+                    "name": "count",
+                    "description": "How many LEDs should return",
+                    "type": "Number"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the color values.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Callback returns an array of LED data in the following format: [g0, r0, b0, g1, r1, b1...]",
+                "type": "Array"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 581,
+            "description": "Set the color frame on BlinkStick Pro",
+            "example": [
+                "\n    var data = [255, 0, 0, 0, 255, 0];\n\n    setColors(0, data, function(err) {\n    });"
+            ],
+            "itemtype": "method",
+            "name": "setColors",
+            "params": [
+                {
+                    "name": "channel",
+                    "description": "Channel is represented as 0=R, 1=G, 2=B",
+                    "type": "Number"
+                },
+                {
+                    "name": "data",
+                    "description": "LED data in the following format: [g0, r0, b0, g1, r1, b1...]",
+                    "type": "Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 619,
+            "description": "Converts decimal number to hex with zero padding",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "decimalToHex",
+            "params": [
+                {
+                    "name": "d",
+                    "description": "Decimal number to convert",
+                    "type": "Number"
+                },
+                {
+                    "name": "padding",
+                    "description": "How many zeros to use for padding",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "Decimal number converted to hex string",
+                "type": "String"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 639,
+            "description": "Get the current color as hex string.\n\nFunction supports the following overloads:",
+            "example": [
+                "\n    //Available overloads\n    getColorString(callback); //index defaults to 0\n\n    getColorString(index, callback);",
+                "\n    getColorString(0, function(err, color) {\n        console.log(color);\n    });\n\n    getColorString(function(err, color) {\n        console.log(color);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getColorString",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "The index of the LED to retrieve data",
+                    "type": "Number"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the color string.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Hex string, eg \"#BADA55\".",
+                "type": "String"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 678,
+            "description": "Get an infoblock from a device.",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "method",
+            "name": "getInfoBlock",
+            "params": [
+                {
+                    "name": "device",
+                    "description": "Device from which to get the value.",
+                    "type": "BlinkStick"
+                },
+                {
+                    "name": "location",
+                    "description": "Address to seek the data.",
+                    "type": "Number"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the value.",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 707,
+            "description": "Get default value from options",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "method",
+            "name": "opt",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Option object to operate on",
+                    "type": "Object"
+                },
+                {
+                    "name": "name",
+                    "description": "The name of the parameter",
+                    "type": "String"
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "Default value if name is not found in option object",
+                    "type": "Object"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 721,
+            "description": "Sets an infoblock on a device.",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "method",
+            "name": "setInfoBlock",
+            "params": [
+                {
+                    "name": "device",
+                    "description": "Device on which to set the value.",
+                    "type": "BlinkStick"
+                },
+                {
+                    "name": "location",
+                    "description": "Address to seek the data.",
+                    "type": "Number"
+                },
+                {
+                    "name": "data",
+                    "description": "The value to push to the device. Should be <= 32 chars.",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the value.",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 747,
+            "description": "Get the infoblock1 of the device.\nThis is a 32 byte array that can contain any data. It's supposed to\nhold the \"Name\" of the device making it easier to identify rather than\na serial number.\n\nUsage:",
+            "example": [
+                "\n    getInfoBlock1(function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getInfoBlock1",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the value.",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 770,
+            "description": "Get the infoblock2 of the device.\nThis is a 32 byte array that can contain any data.\n\nUsage:",
+            "example": [
+                "\n    getInfoBlock2(function(err, data) {\n        console.log(data);\n    });"
+            ],
+            "itemtype": "method",
+            "name": "getInfoBlock2",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback to which to pass the value.",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 791,
+            "description": "Sets the infoblock1 with specified string.\nIt fills the rest of bytes with zeros.\n\nUsage:",
+            "example": [
+                "\n    setInfoBlock1(\"abcdefg\", function(err) {\n    });"
+            ],
+            "itemtype": "method",
+            "name": "setInfoBlock1",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Data value for InfoBlock",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 812,
+            "description": "Sets the infoblock2 with specified string.\nIt fills the rest of bytes with zeros.\n\nUsage:",
+            "example": [
+                "\n    setInfoBlock2(\"abcdefg\", function(err) {\n    });"
+            ],
+            "itemtype": "method",
+            "name": "setInfoBlock2",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "Data value for InfoBlock",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function"
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 833,
+            "description": "Sets the LED to a random color.",
+            "itemtype": "method",
+            "name": "setRandomColor",
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 849,
+            "description": "Turns the LED off.",
+            "itemtype": "method",
+            "name": "turnOff",
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 861,
+            "description": "Generate random integer number within a range.",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "itemtype": "method",
+            "name": "randomIntInc",
+            "params": [
+                {
+                    "name": "low",
+                    "description": "the low value of the number",
+                    "type": "Number"
+                },
+                {
+                    "name": "high",
+                    "description": "the high value of the number",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "Random number in the range of [low..high] inclusive of low and high",
+                "type": "Number"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 878,
+            "description": "Automatically interpret parameters supplied for functions to generate\noverrides.",
+            "access": "private",
+            "tagname": "",
+            "itemtype": "method",
+            "name": "interpretParameters",
+            "params": [
+                {
+                    "name": "red",
+                    "description": "Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg \"#BADA55\".",
+                    "type": "Number|String"
+                },
+                {
+                    "name": "green",
+                    "description": "Green color intensity 0 is off, 255 is full green intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "blue",
+                    "description": "Blue color intensity 0 is off, 255 is full blue intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "additional options",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback, called when complete.",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Conains sanitized RGB value, options and callback if they have been assigned",
+                "type": "Object"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 953,
+            "description": "Blinks specified RGB color.\n\nFunction supports the following overloads:",
+            "example": [
+                "\n    //Available overloads\n    blink(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity\n\n    blink(color, [options], [callback]); // use '#rrggbb' format\n\n    blink(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names\n\nOptions can contain the following parameters for object:\n\n- channel=0: Channel is represented as 0=R, 1=G, 2=B\n- index=0: The index of the LED\n- repeats=1: How many times to blink\n- delay=1: Delay between on/off cycles in milliseconds"
+            ],
+            "itemtype": "method",
+            "name": "blink",
+            "params": [
+                {
+                    "name": "red",
+                    "description": "Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg \"#BADA55\".",
+                    "type": "Number|String"
+                },
+                {
+                    "name": "green",
+                    "description": "Green color intensity 0 is off, 255 is full green intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "blue",
+                    "description": "Blue color intensity 0 is off, 255 is full blue intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "additional options {\"channel\": 0, \"index\": 0, \"repeats\": 1, \"delay\": 500}",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1010,
+            "description": "Morphs to specified RGB color from current color.\n\nFunction supports the following overloads:",
+            "example": [
+                "\n    //Available overloads\n    morph(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity\n\n    morph(color, [options], [callback]); // use '#rrggbb' format\n\n    morph(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names\n\nOptions can contain the following parameters for object:\n\n- channel=0: Channel is represented as 0=R, 1=G, 2=B\n- index=0: The index of the LED\n- duration=1000: How long should the morph animation last in milliseconds\n- steps=50: How many steps for color changes"
+            ],
+            "itemtype": "method",
+            "name": "morph",
+            "params": [
+                {
+                    "name": "red",
+                    "description": "Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg \"#BADA55\".",
+                    "type": "Number|String"
+                },
+                {
+                    "name": "green",
+                    "description": "Green color intensity 0 is off, 255 is full green intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "blue",
+                    "description": "Blue color intensity 0 is off, 255 is full blue intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "additional options {\"channel\": 0, \"index\": 0, \"duration\": 1000, \"steps\": 50}",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1069,
+            "description": "Pulses specified RGB color.\n\nFunction supports the following overloads:",
+            "example": [
+                "\n    //Available overloads\n    pulse(red, green, blue, [options], [callback]); // use [0..255] ranges for intensity\n\n    pulse(color, [options], [callback]); // use '#rrggbb' format\n\n    pulse(color_name, [options], [callback]); // use 'random', 'red', 'green', 'yellow' and other CSS supported names\n\nOptions can contain the following parameters for object:\n\n- channel=0: Channel is represented as 0=R, 1=G, 2=B\n- index=0: The index of the LED\n- duration=1000: How long should the pulse animation last in milliseconds\n- steps=50: How many steps for color changes"
+            ],
+            "itemtype": "method",
+            "name": "pulse",
+            "params": [
+                {
+                    "name": "red",
+                    "description": "Red color intensity 0 is off, 255 is full red intensity OR string CSS color keyword OR hex color, eg \"#BADA55\".",
+                    "type": "Number|String"
+                },
+                {
+                    "name": "green",
+                    "description": "Green color intensity 0 is off, 255 is full green intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "blue",
+                    "description": "Blue color intensity 0 is off, 255 is full blue intensity.",
+                    "type": "Number",
+                    "optional": true
+                },
+                {
+                    "name": "options",
+                    "description": "additional options {\"channel\": 0, \"index\": 0, \"duration\": 1000, \"steps\": 50}",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when the operation completes",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1109,
+            "description": "Find BlinkSticks using a filter.",
+            "itemtype": "method",
+            "name": "findBlinkSticks",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "Filter function.",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "BlickStick objects.",
+                "type": "Array"
+            },
+            "class": "BlinkStick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1177,
+            "description": "Find first attached BlinkStick.",
+            "example": [
+                "\n    var blinkstick = require('blinkstick');\n    var led = blinkstick.findFirst();"
+            ],
+            "static": 1,
+            "itemtype": "method",
+            "name": "findFirst",
+            "return": {
+                "description": "The first BlinkStick, if found.",
+                "type": "BlinkStick|undefined"
+            },
+            "class": "blinkstick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1202,
+            "description": "Find all attached BlinkStick devices.",
+            "example": [
+                "\n    var blinkstick = require('blinkstick');\n    var leds = blinkstick.findAll();"
+            ],
+            "static": 1,
+            "itemtype": "method",
+            "name": "findAll",
+            "return": {
+                "description": "BlinkSticks.",
+                "type": "Array"
+            },
+            "class": "blinkstick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1220,
+            "description": "Returns the serial numbers of all attached BlinkStick devices.",
+            "static": 1,
+            "itemtype": "method",
+            "name": "findAllSerials",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "Callback when all serials have been collected",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "Serial numbers.",
+                "type": "Array"
+            },
+            "class": "blinkstick",
+            "module": "blinkstick"
+        },
+        {
+            "file": "blinkstick-node/node_modules/blinkstick/blinkstick.js",
+            "line": 1253,
+            "description": "Find BlinkStick device based on serial number.",
+            "static": 1,
+            "itemtype": "method",
+            "name": "findBySerial",
+            "params": [
+                {
+                    "name": "serial",
+                    "description": "Serial number.",
+                    "type": "Number"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback when BlinkStick has been found",
+                    "type": "Function"
+                }
+            ],
+            "class": "blinkstick",
+            "module": "blinkstick"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:262"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:275"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:340"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:443"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:514"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:555"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:619"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:639"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:861"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:878"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1109"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1177"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1202"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1220"
+        }
+    ]
+}
