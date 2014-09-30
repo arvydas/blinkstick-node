@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>blinkstick - BlinkStick API for Node.js</title>
+    <title>BlinkStick - BlinkStick API for Node.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -43,7 +43,7 @@
             
                 <li><a href="../classes/BlinkStick.html">BlinkStick</a></li>
             
-                <li><a href="../classes/blinkstick.html">blinkstick</a></li>
+                <li><a href="../classes/ModuleExports.html">ModuleExports</a></li>
             
             </ul>
 
@@ -86,7 +86,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>blinkstick Class</h1>
+                        <h1>BlinkStick Class</h1>
 <div class="box meta">
     
 
@@ -94,7 +94,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l1169"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:1169</code></a>
+            Defined in: <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l173"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:173</code></a>
         </div>
     
 
@@ -110,10 +110,170 @@
 
 
 <div class="box intro">
-    <p>Publicly available functions to find BlinkSticks on the computer.</p>
+    <p>Initialize new BlinkStick device</p>
 
 </div>
 
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_BlinkStick" class="method item">
+    <h3 class="name"><code>BlinkStick</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>device</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[serialNumber]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[manufacturer]</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code class="optional">[product]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l173"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:173</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">device</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The USB device as returned from &quot;usb&quot; package.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[serialNumber]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Serial number of the device. Used only in Windows.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[manufacturer]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Manufacturer of the device. Used only in Windows.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[product]</code>
+                        <span class="type">String</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Product name of the device. Used only in Windows.</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+    </div>
 
 
 <div id="classdocs" class="tabview">
@@ -138,8 +298,64 @@
 
                     <ul class="index-list methods">
                         
+                            <li class="index-item method private">
+                                <a href="#method__determineReportId">_determineReportId</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
-                                <a href="#method_findAll">findAll</a>
+                                <a href="#method_blink">blink</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_decimalToHex">decimalToHex</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_findBlinkSticks">findBlinkSticks</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getColor">getColor</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getColors">getColors</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getColorString">getColorString</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getDescription">getDescription</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_getInfoBlock">getInfoBlock</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -148,7 +364,77 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_findAllSerials">findAllSerials</a>
+                                <a href="#method_getInfoBlock1">getInfoBlock1</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getInfoBlock2">getInfoBlock2</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getInverse">getInverse</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getManufacturer">getManufacturer</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getMode">getMode</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getSerial">getSerial</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getVersionMajor">getVersionMajor</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getVersionMinor">getVersionMinor</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_interpretParameters">interpretParameters</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_morph">morph</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_opt">opt</a>
 
                                 
                                     <span class="flag static">static</span>
@@ -157,459 +443,20 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_findBySerial">findBySerial</a>
+                                <a href="#method_pulse">pulse</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_randomIntInc">randomIntInc</a>
 
                                 
                                     <span class="flag static">static</span>
                                 
                                 
                             </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_findFirst">findFirst</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
-            
-
-            
-
-            
-
-            
-        </div>
-
-        
-            <div id="methods" class="api-class-tabpanel">
-                <h2 class="off-left">Methods</h2>
-
-                
-                    <div id="method_findAll" class="method item">
-    <h3 class="name"><code>findAll</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Array</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l1202"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:1202</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Find all attached BlinkStick devices.</p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Array</span>:
-                    
-                    <p>BlinkSticks.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>var blinkstick = require(&#39;blinkstick&#39;);
-var leds = blinkstick.findAll();</code></pre>
-
-            </div>
-        </div>
-    
-</div>
-
-                
-                    <div id="method_findAllSerials" class="method item">
-    <h3 class="name"><code>findAllSerials</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>callback</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Array</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l1220"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:1220</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Returns the serial numbers of all attached BlinkStick devices.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">callback</code>
-                        <span class="type">Function</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Callback when all serials have been collected</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Array</span>:
-                    
-                    <p>Serial numbers.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_findBySerial" class="method item">
-    <h3 class="name"><code>findBySerial</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>serial</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>callback</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l1253"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:1253</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Find BlinkStick device based on serial number.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">serial</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Serial number.</p>
-
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">callback</code>
-                        <span class="type">Function</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Callback when BlinkStick has been found</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_findFirst" class="method item">
-    <h3 class="name"><code>findFirst</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="../classes/BlinkStick.html" class="crosslink">BlinkStick</a> | Undefined</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/blinkstick-node_node_modules_blinkstick_blinkstick.js.html#l1177"><code>blinkstick-node&#x2F;node_modules&#x2F;blinkstick&#x2F;blinkstick.js:1177</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Find first attached BlinkStick.</p>
-
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="../classes/BlinkStick.html" class="crosslink">BlinkStick</a> | Undefined</span>:
-                    
-                    <p>The first BlinkStick, if found.</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <pre class="code prettyprint"><code>var blinkstick = require(&#39;blinkstick&#39;);
-var led = blinkstick.findFirst();</code></pre>
-
-            </div>
-        </div>
-    
-</div>
-
-                
-            </div>
-        
-
-        
-
-        
-
-        
-    </div>
-</div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="../assets/vendor/prettify/prettify-min.js"></script>
-<script>prettyPrint();</script>
-<script src="../assets/js/yui-prettify.js"></script>
-<script src="../assets/../api.js"></script>
-<script src="../assets/js/api-filter.js"></script>
-<script src="../assets/js/api-list.js"></script>
-<script src="../assets/js/api-search.js"></script>
-<script src="../assets/js/apidocs.js"></script>
-</body>
-</html>
-/li>
                         
                             <li class="index-item method">
                                 <a href="#method_setColor">setColor</a>

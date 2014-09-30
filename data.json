@@ -14,7 +14,7 @@
             },
             "classes": {
                 "BlinkStick": 1,
-                "blinkstick": 1
+                "ModuleExports": 1
             },
             "fors": {},
             "namespaces": {}
@@ -26,7 +26,7 @@
             "submodules": {},
             "classes": {
                 "BlinkStick": 1,
-                "blinkstick": 1
+                "ModuleExports": 1
             },
             "fors": {},
             "namespaces": {},
@@ -77,9 +77,9 @@
                 }
             ]
         },
-        "blinkstick": {
-            "name": "blinkstick",
-            "shortname": "blinkstick",
+        "ModuleExports": {
+            "name": "ModuleExports",
+            "shortname": "ModuleExports",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -875,7 +875,7 @@
                 "description": "The first BlinkStick, if found.",
                 "type": "BlinkStick|undefined"
             },
-            "class": "blinkstick",
+            "class": "ModuleExports",
             "module": "blinkstick"
         },
         {
@@ -892,7 +892,7 @@
                 "description": "BlinkSticks.",
                 "type": "Array"
             },
-            "class": "blinkstick",
+            "class": "ModuleExports",
             "module": "blinkstick"
         },
         {
@@ -913,7 +913,7 @@
                 "description": "Serial numbers.",
                 "type": "Array"
             },
-            "class": "blinkstick",
+            "class": "ModuleExports",
             "module": "blinkstick"
         },
         {
@@ -935,66 +935,9 @@
                     "type": "Function"
                 }
             ],
-            "class": "blinkstick",
+            "class": "ModuleExports",
             "module": "blinkstick"
         }
     ],
-    "warnings": [
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:262"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:275"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:340"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:443"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:514"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:555"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:619"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:639"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:861"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:878"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1109"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1177"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1202"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " blinkstick-node/node_modules/blinkstick/blinkstick.js:1220"
-        }
-    ]
+    "warnings": []
 }
