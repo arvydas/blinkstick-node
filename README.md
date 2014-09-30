@@ -1,9 +1,9 @@
-# BlinkStick Node
+![BlinkStick Node](http://www.blinkstick.com/images/logos/blinkstick-nodejs.png)
 
 BlinkStick Node provides an interface to control Blinkstick
 devices connected to your computer with Node.js.
 
-What is BlinkStick? It's a smart USB-controlled smart LED device. More info about it here:
+What is BlinkStick? It's a smart USB-controlled LED device. More info about it here:
 
 [http://www.blinkstick.com](http://www.blinkstick.com)
 
