@@ -35,7 +35,7 @@ to your PATH environment variable.
 ### Requirements for Linux
 
 ```
-$> sudo apt-get install libusb
+$> sudo apt-get install libusb nodejs npm
 ```
 
 ## Install BlinkStick node module
