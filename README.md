@@ -67,6 +67,16 @@ More details and examples available in the wiki:
 
 https://github.com/arvydas/blinkstick-node/wiki
 
+## Permission problems
+
+If you get an error message on Linux:
+
+    Error: LIBUSB_ERROR_ACCESS
+
+Please run the following command and restart your computer:
+
+    echo "SUBSYSTEM==\"usb\", ATTR{idVendor}==\"20a0\", ATTR{idProduct}==\"41e5\", MODE:=\"0666\"" | sudo tee /etc/udev/rules.d/85-blinkstick.rules
+
 ## Maintainers
 
 * Arvydas Juskevicius - [http://twitter.com/arvydev](http://twitter.com/arvydev)
