@@ -263,7 +263,7 @@ BlinkStick.prototype.getSerial = function (callback) {
  * Get the major version from serial number
  *
  * @method getVersionMajor
- * @returns {Number} Major version number from serial
+ * @return {Number} Major version number from serial
  */
 BlinkStick.prototype.getVersionMajor = function () {
     return parseInt(this.serial.substring(this.serial.length - 3, this.serial.length - 2));
@@ -276,7 +276,7 @@ BlinkStick.prototype.getVersionMajor = function () {
  * Get the minor version from serial number
  *
  * @method getVersionMinor
- * @returns {Number} Minor version number from serial
+ * @return {Number} Minor version number from serial
  */
 BlinkStick.prototype.getVersionMinor = function () {
     return parseInt(this.serial.substring(this.serial.length - 1, this.serial.length));
@@ -342,7 +342,7 @@ BlinkStick.prototype.getDescription = function (callback) {
  *
  * @private
  * @method _determineReportId
- * @returns {object} data.reportId and data.ledCount
+ * @return {object} data.reportId and data.ledCount
 */
 function _determineReportId(ledCount)
 {
@@ -444,7 +444,7 @@ BlinkStick.prototype.setInverse = function (inverse) {
  * Get inverse mode setting for IKEA DIODER in conjunction with BlinkStick v1.0
  *
  * @method getInverse
- * @returns {Boolean} true for enabled inverse mode and false otherwise
+ * @return {Boolean} true for enabled inverse mode and false otherwise
  */
 BlinkStick.prototype.getInverse = function (inverse) {
     return this.inverse;
@@ -530,7 +530,7 @@ BlinkStick.prototype.getMode = function (callback) {
  * @method getColor
  * @param {Number=0} index The index of the LED 
  * @param {Function} callback Callback to which to pass the color values.
- * @returns {Number, Number, Number} Callback returns three numbers: R, G and B [0..255].
+ * @return {Number, Number, Number} Callback returns three numbers: R, G and B [0..255].
  */
 BlinkStick.prototype.getColor = function (index, callback) {
     if (typeof(index) == 'function') {
@@ -565,7 +565,7 @@ BlinkStick.prototype.getColor = function (index, callback) {
  * @method getColors
  * @param {Number} count How many LEDs should return
  * @param {Function} callback Callback to which to pass the color values.
- * @returns {Array} Callback returns an array of LED data in the following format: [g0, r0, b0, g1, r1, b1...]
+ * @return {Array} Callback returns an array of LED data in the following format: [g0, r0, b0, g1, r1, b1...]
  */
 BlinkStick.prototype.getColors = function (count, callback) {
     params = _determineReportId(count);
@@ -623,7 +623,7 @@ BlinkStick.prototype.setColors = function (channel, data, callback) {
  * @method decimalToHex
  * @param {Number} d Decimal number to convert
  * @param {Number} padding How many zeros to use for padding
- * @returns {String} Decimal number converted to hex string
+ * @return {String} Decimal number converted to hex string
 */
 function decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
@@ -659,7 +659,7 @@ function decimalToHex(d, padding) {
  * @method getColorString
  * @param {Number} index The index of the LED to retrieve data
  * @param {Function} callback Callback to which to pass the color string.
- * @returns {String} Hex string, eg "#BADA55".
+ * @return {String} Hex string, eg "#BADA55".
  */
 BlinkStick.prototype.getColorString = function (index, callback) {
     if (typeof(index) == 'function') {
@@ -866,7 +866,7 @@ BlinkStick.prototype.turnOff = function () {
  * @method randomIntInc
  * @param {Number} low the low value of the number
  * @param {Number} high the high value of the number
- * @returns {Number} Random number in the range of [low..high] inclusive of low and high
+ * @return {Number} Random number in the range of [low..high] inclusive of low and high
  */
 function randomIntInc (low, high) {
     return Math.floor(Math.random() * (high - low + 1) + low);
@@ -886,7 +886,7 @@ function randomIntInc (low, high) {
  * @param {Number} [blue] Blue color intensity 0 is off, 255 is full blue intensity.
  * @param {Object}   [options] additional options
  * @param {Function} [callback] Callback, called when complete.
- * @returns {Object} Conains sanitized RGB value, options and callback if they have been assigned
+ * @return {Object} Conains sanitized RGB value, options and callback if they have been assigned
  */
 BlinkStick.prototype.interpretParameters = function (red, green, blue, options, callback)
 {
@@ -1111,7 +1111,7 @@ BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
 *
 * @method findBlinkSticks
 * @param {Function} [filter] Filter function.
-* @returns {Array} BlickStick objects.
+* @return {Array} BlickStick objects.
 */
 function findBlinkSticks (filter) {
     if (filter === undefined) filter = function () { return true; };
@@ -1169,7 +1169,7 @@ BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
 /**
 Publicly available functions to find BlinkSticks on the computer.
 
-@class blinkstick
+@class ModuleExports
 @static
 **/
 module.exports = {
@@ -1183,7 +1183,7 @@ module.exports = {
      *
      * @static
      * @method findFirst
-     * @returns {BlinkStick|undefined} The first BlinkStick, if found.
+     * @return {BlinkStick|undefined} The first BlinkStick, if found.
      */
     findFirst: function () {
         if (isWin) {
@@ -1208,7 +1208,7 @@ module.exports = {
      *
      * @static
      * @method findAll
-     * @returns {Array} BlinkSticks.
+     * @return {Array} BlinkSticks.
      */
     findAll: function () {
         return findBlinkSticks();
@@ -1223,7 +1223,7 @@ module.exports = {
      * @static
      * @method findAllSerials
      * @param {Function} callback Callback when all serials have been collected
-     * @returns {Array} Serial numbers.
+     * @return {Array} Serial numbers.
      */
     findAllSerials: function (callback) {
         var result = [];
