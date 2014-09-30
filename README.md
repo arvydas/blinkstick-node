@@ -7,7 +7,7 @@ What is BlinkStick? It's a smart USB-controlled LED device. More info about it h
 
 [http://www.blinkstick.com](http://www.blinkstick.com)
 
-## Resouces
+## Resources
 
 * [Code repository on GitHub](https://github.com/arvydas/blinkstick-node)
 * [API reference documentation](https://arvydas.github.io/blinkstick-node)
