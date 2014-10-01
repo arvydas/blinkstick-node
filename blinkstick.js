@@ -387,6 +387,11 @@ function _determineReportId(ledCount)
 BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
+    if (typeof(params) === 'undefined')
+    {
+        return;
+    }
+
     var self = this;
 
     var sendColorInternal = function (r, g, b, callback) {
@@ -980,6 +985,11 @@ BlinkStick.prototype.interpretParameters = function (red, green, blue, options, 
 BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
 
+    if (typeof(params) === 'undefined')
+    {
+        return;
+    }
+
     var repeats = opt(params.options, 'repeats', 1)
     var delay = opt(params.options, 'delay', 500)
 
@@ -1036,6 +1046,11 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
  */
 BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
+
+    if (typeof(params) === 'undefined')
+    {
+        return;
+    }
 
     var duration = opt(params.options, 'duration', 1000)
     var steps = opt(params.options, 'steps', 50)
@@ -1095,6 +1110,11 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
  */
 BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
     var params = this.interpretParameters(red, green, blue, options, callback);
+
+    if (typeof(params) === 'undefined')
+    {
+        return;
+    }
 
     var self = this;
 
