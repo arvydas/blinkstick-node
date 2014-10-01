@@ -1068,7 +1068,7 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
                 params.options);
 
                 setTimeout(function() {
-                    if (count == steps) {
+                    if (count >= steps) {
                         if (params.callback) params.callback();
                     } else {
                         morpher(count + 1);
