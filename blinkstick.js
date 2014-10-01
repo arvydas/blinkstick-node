@@ -938,13 +938,13 @@ BlinkStick.prototype.interpretParameters = function (red, green, blue, options, 
     blue = Math.max(Math.min(blue, 255), 0);
 
     if (this.inverse)
-        {
-            red = 255 - red;
-            green = 255 - green;
-            blue = 255 - blue;
-        }
+    {
+        red = 255 - red;
+        green = 255 - green;
+        blue = 255 - blue;
+    }
 
-        return {'red': red, 'green': green, 'blue': blue, 'options': options, 'callback': callback};
+    return {'red': red, 'green': green, 'blue': blue, 'options': options, 'callback': callback};
 }
 
 
