@@ -191,17 +191,9 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
             this.product = product;
 
             var self = this;
-
-            process.on('exit', function() {
-                self.device.close();
-            });
         }
     } else {
         if (device) {
-            process.on('exit', function() {
-                device.close();
-            });
-
             device.open ();
             this.device = device;
 
@@ -254,6 +246,25 @@ BlinkStick.prototype.getSerial = function (callback) {
             if (callback) callback(error, result);
         });
     }
+};
+
+
+
+
+/**
+ * Close BlinkStick device and stop all animations
+ *
+ * @method close
+ */
+BlinkStick.prototype.close = function (callback) {
+    try {
+        this.device.close();
+    } catch (ex) {
+        if (callback) callback(ex);
+        return;
+    }
+
+    if (callback) callback();
 };
 
 
