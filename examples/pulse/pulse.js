@@ -1,11 +1,17 @@
 var blinkstick = require('blinkstick'),
-  device = blinkstick.findFirst();
+    device = blinkstick.findFirst();
 
 if (device) {
-  device.pulse("red", function () {
-    device.pulse("green", function () {
-      device.pulse("blue", function () {
-      });
+    var finished = false;
+
+    device.pulse("red", function () {
+        device.pulse("green", function () {
+            device.pulse("blue", function () {
+                finished = true;
+            });
+        });
     });
-  });
+
+    var wait = function () { if (!finished) setTimeout(wait, 100)}
+    wait();
 }
