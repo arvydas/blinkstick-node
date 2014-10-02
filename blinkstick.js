@@ -1058,12 +1058,12 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
     var blinker = function (count) {
         self.setColor(params.red, params.green, params.blue, params.options, function (err) {
             if (typeof(err) !== 'undefined') {
-                if (params.callback) callback(err);
+                if (params.callback) params.callback(err);
             } else {
                 setTimeout(function() {
                     self.setColor(0, 0, 0, params.options, function (err) {
                         if (typeof(err) !== 'undefined') {
-                            if (params.callback) callback(err);
+                            if (params.callback) params.callback(err);
                         } else {
                             setTimeout(function() {
                                 if (count == repeats - 1) {
