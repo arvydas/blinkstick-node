@@ -20,6 +20,12 @@
   "engines": {
     "node": ">=0.8.x"
   },
+  "licenses": [
+   {
+       "type": "MIT",
+       "url": "https://raw.githubusercontent.com/arvydas/blinkstick-node/master/LICENSE"
+   }
+  ],
   "main": "./blinkstick",
   "repository": {
     "type": "git",

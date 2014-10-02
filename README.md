@@ -81,3 +81,9 @@ Please run the following command and restart your computer:
 
 * Arvydas Juskevicius - [http://twitter.com/arvydev](http://twitter.com/arvydev)
 * Paul Cuthbertson - [http://twitter.com/paulcuth](http://twitter.com/paulcuth)
+
+## Copyright and License
+
+Copyright (c) 2014 Agile Innovative Ltd and contributors
+
+Released under MIT license.
