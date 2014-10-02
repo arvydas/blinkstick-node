@@ -203,6 +203,7 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
     }
 
     this.inverse = false;
+    this.animationsEnabled = true;
 
     this.getSerial(function (err, result) {
         if (typeof(err) === 'undefined')
@@ -260,6 +261,8 @@ BlinkStick.prototype.getSerial = function (callback) {
  * @method close
  */
 BlinkStick.prototype.close = function (callback) {
+    this.stop();
+
     try {
         this.device.close();
     } catch (ex) {
@@ -271,6 +274,14 @@ BlinkStick.prototype.close = function (callback) {
 };
 
 
+/**
+ * Stop all animations
+ *
+ * @method stop
+ */
+BlinkStick.prototype.stop = function () {
+    this.animationsEnabled = false;
+};
 
 
 /**
@@ -1064,12 +1075,20 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
             if (typeof(err) !== 'undefined') {
                 if (params.callback) params.callback(err);
             } else {
+                if (!self.animationsEnabled) return;
+
                 setTimeout(function() {
+                    if (!self.animationsEnabled) return;
+
                     self.setColor(0, 0, 0, params.options, function (err) {
                         if (typeof(err) !== 'undefined') {
                             if (params.callback) params.callback(err);
                         } else {
+                            if (!self.animationsEnabled) return;
+
                             setTimeout(function() {
+                                if (!self.animationsEnabled) return;
+
                                 if (count == repeats - 1) {
                                     if (params.callback) params.callback();
                                 } else {
@@ -1135,6 +1154,8 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
             if (params.callback) callback(err);
         } else {
             var morpher = function (count) {
+                if (!self.animationsEnabled) return;
+
                 var nextRed = parseInt(cr + (params.red - cr) / steps * count),
                     nextGreen = parseInt(cg + (params.green - cg) / steps * count),
                     nextBlue = parseInt(cb + (params.blue - cb) / steps * count);
@@ -1143,7 +1164,11 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
                     if (typeof(err) !== 'undefined') {
                         if (params.callback) callback(err);
                     } else{
+                        if (!self.animationsEnabled) return;
+
                         setTimeout(function() {
+                            if (!self.animationsEnabled) return;
+
                             if (count >= steps) {
                                 if (params.callback) params.callback();
                             } else {
@@ -1199,6 +1224,8 @@ BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
     var self = this;
 
     self.morph(params.red, params.green, params.blue, params.options, function(err) {
+        if (!self.animationsEnabled) return;
+
         if (typeof(err) !== 'undefined') {
             if (params.callback) params.callback(err);
         } else {
