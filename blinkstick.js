@@ -271,6 +271,8 @@ BlinkStick.prototype.close = function (callback) {
 };
 
 
+
+
 /**
  * Stop all animations
  *
@@ -279,6 +281,8 @@ BlinkStick.prototype.close = function (callback) {
 BlinkStick.prototype.stop = function () {
     this.animationsEnabled = false;
 };
+
+
 
 
 /**
@@ -1275,6 +1279,16 @@ function findBlinkSticks (filter) {
 }
 
 
+
+
+/**
+* Set feature report to the device.
+*
+* @method setFeatureReport
+* @param {Number} reportId Report ID to receive
+* @param {Array} data Data to send to the device
+* @param {Function} callback Function called when report sent
+*/
 BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
     var retries = 0;
     var error;
@@ -1319,6 +1333,17 @@ BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
     retryTransfer();
 };
 
+
+
+
+/**
+* Get feature report from the device.
+*
+* @method getFeatureReport
+* @param {Number} reportId Report ID to receive
+* @param {Number} length Expected length of the report
+* @param {Function} callback Function called when report received
+*/
 BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
     var retries = 0;
     var error;
@@ -1366,7 +1391,7 @@ BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
 /**
 Publicly available functions to find BlinkSticks on the computer.
 
-@class ModuleExports
+@class module
 @static
 **/
 module.exports = {
