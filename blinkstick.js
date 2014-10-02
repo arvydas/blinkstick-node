@@ -1253,29 +1253,91 @@ function findBlinkSticks (filter) {
 
 
 BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
-    try {
-        if (isWin) {
-            this.device.sendFeatureReport(data);
-            if (callback) { callback(); };
-        } else {
-            this.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), callback);
+    var retries = 0;
+    var error;
+    var self = this;
+
+    var retryTransfer = function () {
+        retries = retries + 1;
+
+        if (retries > 5) {
+            if (callback) callback(error);
+            return;
         }
-    } catch (ex) {
-        if (callback) callback(ex);
+
+        try {
+            if (isWin) {
+                self.device.sendFeatureReport(data);
+                if (callback) { callback(); };
+            } else {
+                self.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), function (err) {
+                    if (typeof(err) === 'undefined') {
+                        if (callback) callback();
+                    } else {
+                        if (typeof(error) === 'undefined') {
+                            //Store only the first error
+                            error = err;
+                        }
+
+                        retryTransfer();
+                    }
+                });
+            }
+        } catch (ex) {
+            if (typeof(error) === 'undefined') {
+                //Store only the first error
+                error = ex;
+            }
+
+            retryTransfer();
+        }
     }
+
+    retryTransfer();
 }
 
 BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
-    try {
-        if (isWin) {
-            var buffer = this.device.getFeatureReport(reportId, length);
-            if (callback) callback(undefined, buffer);
-        } else {
-            this.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, callback);
+    var retries = 0;
+    var error;
+    var self = this;
+
+    var retryTransfer = function () {
+        retries = retries + 1;
+
+        if (retries > 5) {
+            if (callback) callback(error);
+            return;
         }
-    } catch (ex) {
-        if (callback) callback(ex);
+
+        try {
+            if (isWin) {
+                var buffer = self.device.getFeatureReport(reportId, length);
+                if (callback) callback(undefined, buffer);
+            } else {
+                self.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, function (err, data) {
+                    if (typeof(err) === 'undefined') {
+                        if (callback) callback(err, data);
+                    } else {
+                        if (typeof(error) === 'undefined') {
+                            //Store only the first error
+                            error = err;
+                        }
+
+                        retryTransfer();
+                    }
+                });
+            }
+        } catch (ex) {
+            if (typeof(error) === 'undefined') {
+                //Store only the first error
+                error = ex;
+            }
+
+            retryTransfer();
+        }
     }
+
+    retryTransfer();
 }
 
 /**
