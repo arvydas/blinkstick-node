@@ -1199,7 +1199,7 @@ BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
     var self = this;
 
     self.morph(params.red, params.green, params.blue, params.options, function(err) {
-        if (err) {
+        if (typeof(err) !== 'undefined') {
             if (params.callback) params.callback(err);
         } else {
             self.morph(0, 0, 0, params.options, params.callback);
