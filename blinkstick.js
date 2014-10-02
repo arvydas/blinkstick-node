@@ -579,7 +579,11 @@ BlinkStick.prototype.getColor = function (index, callback) {
         this.getFeatureReport(0x0001, 33, function (err, buffer) {
             if (callback) {
                 if (typeof(err) === 'undefined') {
-                    callback(err, buffer[1], buffer[2], buffer[3]);
+                    if (buffer) {
+                        callback(err, buffer[1], buffer[2], buffer[3]);
+                    } else {
+                        callback(err, 0, 0, 0);
+                    }
                 } else {
                     callback(err);
                 }
