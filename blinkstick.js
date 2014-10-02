@@ -204,9 +204,12 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
 
     this.inverse = false;
 
-    this.getSerial(function (error, result) {
-        self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 &&
-            self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
+    this.getSerial(function (err, result) {
+        if (typeof(err) === 'undefined')
+        {
+            self.requiresSoftwareColorPatch = self.getVersionMajor() == 1 &&
+                self.getVersionMinor() >= 1 && self.getVersionMinor() <= 3;
+        }
     });
 }
 
@@ -238,12 +241,12 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
  */
 BlinkStick.prototype.getSerial = function (callback) {
     if (isWin) {
-        if (callback) callback(null, this.serial);
+        if (callback) callback(undefined, this.serial);
     } else {
         var self = this;
-        this.device.getStringDescriptor(3, function(error, result) {
+        this.device.getStringDescriptor(3, function(err, result) {
             self.serial = result;
-            if (callback) callback(error, result);
+            if (callback) callback(err, result);
         });
     }
 };
@@ -311,10 +314,10 @@ BlinkStick.prototype.getVersionMinor = function () {
  */
 BlinkStick.prototype.getManufacturer = function (callback) {
     if (isWin) {
-        if (callback) callback(null, this.manufacturer);
+        if (callback) callback(undefined, this.manufacturer);
     } else {
-        this.device.getStringDescriptor(1, function(error, result) {
-            if (callback) callback(error, result);
+        this.device.getStringDescriptor(1, function(err, result) {
+            if (callback) callback(err, result);
         });
     }
 };
@@ -337,10 +340,10 @@ BlinkStick.prototype.getManufacturer = function (callback) {
 */
 BlinkStick.prototype.getDescription = function (callback) {
     if (isWin) {
-        if (callback) callback(null, this.product);
+        if (callback) callback(undefined, this.product);
     } else {
-        this.device.getStringDescriptor(2, function(error, result) {
-            if (callback) callback(error, result);
+        this.device.getStringDescriptor(2, function(err, result) {
+            if (callback) callback(err, result);
         });
     }
 };
@@ -406,34 +409,52 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
     var self = this;
 
     var sendColorInternal = function (r, g, b, callback) {
-        if (params.options.channel == 0 && params.options.index == 0) {
-            self.setFeatureReport(1, [1, r, g, b], callback);
-        } else {
-            self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
+        try {
+            if (params.options.channel == 0 && params.options.index == 0) {
+                self.setFeatureReport(1, [1, r, g, b], params.callback);
+            } else {
+                self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], params.callback);
+            }
+        } catch (ex) {
+            if (params.callback) params.callback(ex);
         }
     };
 
     if (this.requiresSoftwareColorPatch) {
         this.getColor(function (err, cr, cg, cb) {
-            if (params.red == cg && params.green == cr && params.blue == cb)
-                {
-                    if (cr > 0)
-                        {
-                            cr = cr - 1;
-                        }
-                        else if (cg > 0)
-                            {
-                                cg = cg - 1;
-                            }
+            if (typeof(err) !== 'undefined') {
+                if (params.callback) params.callback(err);
+                return;
+            }
 
-                            sendColorInternal(cr, cg, cb, function () {
-                                sendColorInternal(params.red, params.green, params.blue, params.callback);
-                            });
+            if (params.red == cg && params.green == cr && params.blue == cb) {
+                if (cr > 0) {
+                    cr = cr - 1;
+                } else if (cg > 0) {
+                    cg = cg - 1;
                 }
-                else
-                    {
-                        sendColorInternal(params.red, params.green, params.blue, params.callback);
+
+                sendColorInternal(cr, cg, cb, function (err) {
+                    if (typeof(err) !== 'undefined') {
+                        if (params.callback) params.callback(params.err);
+                        return;
                     }
+
+                    sendColorInternal(params.red, params.green, params.blue, params.callback, function (err) {
+                        if (typeof(err) !== 'undefined') {
+                            if (params.callback) params.callback(params.err);
+                            return;
+                        }
+                    });
+                });
+            } else {
+                sendColorInternal(params.red, params.green, params.blue, params.callback, function (err) {
+                    if (typeof(err) !== 'undefined') {
+                        if (params.callback) params.callback(params.err);
+                        return;
+                    }
+                });
+            }
         });
     } else {
         sendColorInternal(params.red, params.green, params.blue, params.callback);
@@ -556,11 +577,23 @@ BlinkStick.prototype.getColor = function (index, callback) {
 
     if (index == 0) {
         this.getFeatureReport(0x0001, 33, function (err, buffer) {
-            if (callback) callback(err, buffer[1], buffer[2], buffer[3]);
+            if (callback) {
+                if (typeof(err) === 'undefined') {
+                    callback(err, buffer[1], buffer[2], buffer[3]);
+                } else {
+                    callback(err);
+                }
+            }
         });
     } else {
         this.getColors(index, function(err, buffer) {
-            if (callback) callback(err, buffer[index * 3 + 1], buffer[index * 3], buffer[index * 3 + 2]);
+            if (callback) {
+                if (typeof(err) === 'undefined') {
+                    callback(err, buffer[index * 3 + 1], buffer[index * 3], buffer[index * 3 + 2]);
+                } else {
+                    callback(err);
+                }
+            }
         });
     }
 };
@@ -587,7 +620,13 @@ BlinkStick.prototype.getColors = function (count, callback) {
     params = _determineReportId(count);
 
     this.getFeatureReport(params.reportId, params.maxLeds * 3 + 2, function (err, buffer) {
-        if (callback) callback(err, buffer.slice(2, buffer.length -1));
+        if (callback) {
+            if (typeof(buffer) !== 'undefined') {
+                buffer = buffer.slice(2, buffer.length -1);
+            }
+
+            callback(err, buffer);
+        }
     });
 };
 
@@ -684,7 +723,13 @@ BlinkStick.prototype.getColorString = function (index, callback) {
     }
 
     this.getColor(index, function (err, r, g, b) {
-        callback(err, '#' + decimalToHex(r, 2) + decimalToHex(g, 2) + decimalToHex(b, 2) );
+        if (callback) {
+            if (typeof(err) === 'undefined') {
+                callback(err, '#' + decimalToHex(r, 2) + decimalToHex(g, 2) + decimalToHex(b, 2) );
+            } else { 
+                callback(err);
+            }
+        }
     });
 };
 
@@ -703,7 +748,11 @@ BlinkStick.prototype.getColorString = function (index, callback) {
  */
 function getInfoBlock (device, location, callback) {
     getFeatureReport(location, 33, function (err, buffer) {
-        if (err) return callback(err);
+        if (typeof(err) !== 'undefined')
+        {
+            callback(err);
+            return;
+        }
 
         var result = '',
         i, l;
@@ -713,7 +762,7 @@ function getInfoBlock (device, location, callback) {
             result += String.fromCharCode(buffer[i]);
         }
 
-        callback(null, result);
+        callback(err, result);
     });
 };
 
@@ -1007,19 +1056,28 @@ BlinkStick.prototype.blink = function (red, green, blue, options, callback) {
     var self = this;
 
     var blinker = function (count) {
-        self.setColor(params.red, params.green, params.blue, params.options);
+        self.setColor(params.red, params.green, params.blue, params.options, function (err) {
+            if (typeof(err) !== 'undefined') {
+                if (params.callback) callback(err);
+            } else {
+                setTimeout(function() {
+                    self.setColor(0, 0, 0, params.options, function (err) {
+                        if (typeof(err) !== 'undefined') {
+                            if (params.callback) callback(err);
+                        } else {
+                            setTimeout(function() {
+                                if (count == repeats - 1) {
+                                    if (params.callback) params.callback();
+                                } else {
+                                    blinker(count + 1);
+                                }
+                            }, delay);
+                        }
+                    });
 
-        setTimeout(function() {
-            self.setColor(0, 0, 0, params.options);
-
-            setTimeout(function() {
-                if (count == repeats - 1) {
-                    if (params.callback) params.callback();
-                } else {
-                    blinker(count + 1);
-                }
-            }, delay);
-        }, delay);
+                }, delay);
+            }
+        });
     }
 
     blinker(0);
@@ -1069,25 +1127,32 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
     var self = this;
 
     this.getColor(params.options.index, function(err, cr, cg, cb) {
+        if (typeof(err) !== 'undefined') {
+            if (params.callback) callback(err);
+        } else {
+            var morpher = function (count) {
+                var nextRed = parseInt(cr + (params.red - cr) / steps * count),
+                    nextGreen = parseInt(cg + (params.green - cg) / steps * count),
+                    nextBlue = parseInt(cb + (params.blue - cb) / steps * count);
 
-        var morpher = function (count) {
-
-            self.setColor(
-                parseInt(cr + (params.red - cr) / steps * count),
-                parseInt(cg + (params.green - cg) / steps * count),
-                parseInt(cb + (params.blue - cb) / steps * count),
-                params.options);
-
-                setTimeout(function() {
-                    if (count >= steps) {
-                        if (params.callback) params.callback();
-                    } else {
-                        morpher(count + 1);
+                self.setColor(nextRed, nextGreen, nextBlue, params.options, function (err) {
+                    if (typeof(err) !== 'undefined') {
+                        if (params.callback) callback(err);
+                    } else{
+                        setTimeout(function() {
+                            if (count >= steps) {
+                                if (params.callback) params.callback();
+                            } else {
+                                morpher(count + 1);
+                            }
+                        }, parseInt(duration/steps));
                     }
-                }, parseInt(duration/steps));
-        }
+                });
 
-        morpher(1);
+            }
+
+            morpher(1);
+        }
     });
 };
 
@@ -1129,8 +1194,12 @@ BlinkStick.prototype.pulse = function (red, green, blue, options, callback) {
 
     var self = this;
 
-    self.morph(params.red, params.green, params.blue, params.options, function() {
-        self.morph(0, 0, 0, params.options, params.callback);
+    self.morph(params.red, params.green, params.blue, params.options, function(err) {
+        if (err) {
+            if (params.callback) params.callback(err);
+        } else {
+            self.morph(0, 0, 0, params.options, params.callback);
+        }
     });
 };
 
@@ -1180,20 +1249,28 @@ function findBlinkSticks (filter) {
 
 
 BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
-    if (isWin) {
-        this.device.sendFeatureReport(data);
-        if (callback) { callback(); };
-    } else {
-        this.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), callback);
+    try {
+        if (isWin) {
+            this.device.sendFeatureReport(data);
+            if (callback) { callback(); };
+        } else {
+            this.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), callback);
+        }
+    } catch (ex) {
+        if (callback) callback(ex);
     }
 }
 
 BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
-    if (isWin) {
-        var buffer = this.device.getFeatureReport(reportId, length);
-        if (callback) callback(null, buffer);
-    } else {
-        this.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, callback);
+    try {
+        if (isWin) {
+            var buffer = this.device.getFeatureReport(reportId, length);
+            if (callback) callback(undefined, buffer);
+        } else {
+            this.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, callback);
+        }
+    } catch (ex) {
+        if (callback) callback(ex);
     }
 }
 
