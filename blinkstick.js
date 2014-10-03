@@ -423,12 +423,12 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
     var sendColorInternal = function (r, g, b, callback) {
         try {
             if (params.options.channel === 0 && params.options.index === 0) {
-                self.setFeatureReport(1, [1, r, g, b], params.callback);
+                self.setFeatureReport(1, [1, r, g, b], callback);
             } else {
-                self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], params.callback);
+                self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
             }
         } catch (ex) {
-            if (params.callback) params.callback(ex);
+            if (callback) callback(ex);
         }
     };
 
@@ -448,22 +448,26 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
 
                 sendColorInternal(cr, cg, cb, function (err) {
                     if (typeof(err) !== 'undefined') {
-                        if (params.callback) params.callback(params.err);
+                        if (params.callback) params.callback(err);
                         return;
                     }
 
-                    sendColorInternal(params.red, params.green, params.blue, params.callback, function (err) {
+                    sendColorInternal(params.red, params.green, params.blue, function (err) {
                         if (typeof(err) !== 'undefined') {
-                            if (params.callback) params.callback(params.err);
+                            if (params.callback) params.callback(err);
                             return;
+                        } else {
+                            if (params.callback) params.callback();
                         }
                     });
                 });
             } else {
-                sendColorInternal(params.red, params.green, params.blue, params.callback, function (err) {
+                sendColorInternal(params.red, params.green, params.blue, function (err) {
                     if (typeof(err) !== 'undefined') {
-                        if (params.callback) params.callback(params.err);
+                        if (params.callback) params.callback(err);
                         return;
+                    } else {
+                        if (params.callback) params.callback();
                     }
                 });
             }
@@ -1151,7 +1155,7 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
 
     this.getColor(params.options.index, function(err, cr, cg, cb) {
         if (typeof(err) !== 'undefined') {
-            if (params.callback) callback(err);
+            if (params.callback) params.callback(err);
         } else {
             var morpher = function (count) {
                 if (!self.animationsEnabled) return;
@@ -1162,7 +1166,7 @@ BlinkStick.prototype.morph = function (red, green, blue, options, callback) {
 
                 self.setColor(nextRed, nextGreen, nextBlue, params.options, function (err) {
                     if (typeof(err) !== 'undefined') {
-                        if (params.callback) callback(err);
+                        if (params.callback) params.callback(err);
                     } else{
                         if (!self.animationsEnabled) return;
 
