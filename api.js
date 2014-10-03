@@ -2,7 +2,7 @@ YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
         "BlinkStick",
-        "ModuleExports"
+        "module"
     ],
     "modules": [
         "blinkstick"
