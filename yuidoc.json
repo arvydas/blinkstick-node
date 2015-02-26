@@ -1,7 +1,7 @@
 {
     "name": "BlinkStick API for Node.js",
     "description": "Provides access to BlinkStick devices using Node.js",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "url": "http://www.blinkstick.com/",
     "logo": "http://www.blinkstick.com/images/logos/blinkstick-nodejs-small.png",
     "options": {
