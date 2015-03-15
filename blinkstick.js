@@ -1,4 +1,4 @@
-var usb = require('./platform/windows/HID.node');
+var usb = require("./HID");
 
 var	VENDOR_ID = 0x20a0,
 	PRODUCT_ID = 0x41e5,
