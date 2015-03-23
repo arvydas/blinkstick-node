@@ -4,7 +4,8 @@
  * @module blinkstick
  */
 
-var usb = /^win/.test(process.platform) ? require('./HID') : require('usb');
+var isWin = /^win/.test(process.platform),
+    usb = isWin ? require('./HID') : require('usb');
 
 var VENDOR_ID = 0x20a0,
     PRODUCT_ID = 0x41e5,
