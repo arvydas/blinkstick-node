@@ -4,20 +4,7 @@
  * @module blinkstick
  */
 
-var isWin = /^win/.test(process.platform),
-    usb;
-
-if (isWin) {
-	//v0.11.13 of Node.js introduced changes to the API which require 
-	//a new version of precompiled HID.node for Windows platforms
-	if (compareVersions(process.version, '0.11.13')) {
-		usb = require('./platform/windows/HID_0.3.2-patched.node');
-	} else {
-		usb = require('./platform/windows/HID.node');
-	}
-} else {
-    usb = require('usb');
-}
+var usb = /^win/.test(process.platform) ? require('./HID') : require('usb');
 
 var VENDOR_ID = 0x20a0,
     PRODUCT_ID = 0x41e5,
@@ -244,10 +231,12 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
  * @param {function} callback Callback to receive serial number
  */
 BlinkStick.prototype.getSerial = function (callback) {
+    var self = this;
     if (isWin) {
-        if (callback) callback(undefined, this.serial);
+        if (callback) process.nextTick(function() {
+            callback(undefined, self.serial);
+        });
     } else {
-        var self = this;
         this.device.getStringDescriptor(3, function(err, result) {
             self.serial = result;
             if (callback) callback(err, result);
@@ -269,11 +258,15 @@ BlinkStick.prototype.close = function (callback) {
     try {
         this.device.close();
     } catch (ex) {
-        if (callback) callback(ex);
+        if (callback) process.nextTick(function() {
+          callback(ex);
+        });
         return;
     }
 
-    if (callback) callback();
+    if (callback) process.nextTick(function() {
+      callback();
+    });
 };
 
 
@@ -332,7 +325,10 @@ BlinkStick.prototype.getVersionMinor = function () {
  */
 BlinkStick.prototype.getManufacturer = function (callback) {
     if (isWin) {
-        if (callback) callback(undefined, this.manufacturer);
+        var self = this;
+        if (callback) process.nextTick(function() {
+          callback(undefined, self.manufacturer);
+        });
     } else {
         this.device.getStringDescriptor(1, function(err, result) {
             if (callback) callback(err, result);
@@ -358,7 +354,10 @@ BlinkStick.prototype.getManufacturer = function (callback) {
 */
 BlinkStick.prototype.getDescription = function (callback) {
     if (isWin) {
-        if (callback) callback(undefined, this.product);
+        var self = this;
+        if (callback) process.nextTick(function() {
+          callback(undefined, self.product);
+        });
     } else {
         this.device.getStringDescriptor(2, function(err, result) {
             if (callback) callback(err, result);
@@ -434,7 +433,9 @@ BlinkStick.prototype.setColor = function (red, green, blue, options, callback) {
                 self.setFeatureReport(5, [5, params.options.channel, params.options.index, r, g, b], callback);
             }
         } catch (ex) {
-            if (callback) callback(ex);
+            if (callback) process.nextTick(function() {
+              callback(ex);
+            });
         }
     };
 
@@ -563,7 +564,9 @@ BlinkStick.prototype.getMode = function (callback) {
     }
     catch (err)
     {
-        if (callback) callback(err, 0);
+        if (callback) process.nextTick(function() {
+          callback(err, 0);
+        });
     }
 };
 
@@ -1308,14 +1311,18 @@ BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
         retries = retries + 1;
 
         if (retries > 5) {
-            if (callback) callback(error);
+            if (callback) process.nextTick(function() {
+              callback(error);
+            });
             return;
         }
 
         try {
             if (isWin) {
                 self.device.sendFeatureReport(data);
-                if (callback) { callback(); }
+                if (callback) process.nextTick(function() {
+                  callback();
+                });
             } else {
                 self.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), function (err) {
                     if (typeof(err) === 'undefined') {
@@ -1363,14 +1370,18 @@ BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
         retries = retries + 1;
 
         if (retries > 5) {
-            if (callback) callback(error);
+            if (callback) process.nextTick(function() {
+              callback(error);
+            });
             return;
         }
 
         try {
             if (isWin) {
                 var buffer = self.device.getFeatureReport(reportId, length);
-                if (callback) callback(undefined, buffer);
+                if (callback) process.nextTick(function() {
+                  callback(undefined, buffer);
+                });
             } else {
                 self.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, function (err, data) {
                     if (typeof(err) === 'undefined') {
@@ -1466,7 +1477,9 @@ module.exports = {
         var finder = function() {
 
             if (i == devices.length) {
-                if (callback) callback(result);
+                if (callback) process.nextTick(function() {
+                  callback(result);
+                });
             } else {
                 devices[i].getSerial(function (err, serial) {
                     result.push(serial);
@@ -1499,7 +1512,9 @@ module.exports = {
         var finder = function() {
 
             if (i == devices.length) {
-                if (callback) callback();
+                if (callback) process.nextTick(function() {
+                  callback();
+                });
             } else {
                 devices[i].getSerial(function (err, serialNumber) {
                     if (serialNumber == serial) {
