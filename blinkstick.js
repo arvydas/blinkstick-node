@@ -381,13 +381,13 @@ function _determineReportId(ledCount)
     var reportId = 9;
     var maxLeds = 64;
 
-    if (ledCount <= 8 * 3) {
+    if (ledCount < 8 * 3) {
         reportId = 6;
         maxLeds = 8;
-    } else if (ledCount <= 16 * 3) {
+    } else if (ledCount < 16 * 3) {
         reportId = 7;
         maxLeds = 16;
-    } else if (ledCount <= 32 * 3) {
+    } else if (ledCount < 32 * 3) {
         reportId = 8;
         maxLeds = 32;
     }
@@ -643,7 +643,7 @@ BlinkStick.prototype.getColor = function (index, callback) {
  * @return {Array} Callback returns an array of LED data in the following format: [g0, r0, b0, g1, r1, b1...]
  */
 BlinkStick.prototype.getColors = function (count, callback) {
-    params = _determineReportId(count);
+    params = _determineReportId(count * 3);
 
     this.getFeatureReport(params.reportId, params.maxLeds * 3 + 2, function (err, buffer) {
         if (callback) {
