@@ -38,6 +38,23 @@ to your PATH environment variable.
 $> sudo apt-get install libusb nodejs npm
 ```
 
+#### Raspberry Pi
+
+The apt repositories keep a very old version of NodeJS.  Please install the
+[Node ARM Binaries](http://nodejs.org/download/) from the official site. Run the
+following command to confirm the architecture of your Raspberry Pi.
+
+```
+$> uname -m
+```
+
+Addionally, you will need to install `libudev-dev` rather than `libusb`.
+
+```
+$> sudo apt-get install libudev-dev -y
+```
+
+
 ## Install BlinkStick node module
 
 Install using npm:
