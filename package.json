@@ -32,6 +32,7 @@
     "url": "https://github.com/arvydas/blinkstick-node"
   },
   "dependencies": {
-    "usb": "1.1.1"
+    "usb": "1.1.1",
+	"node-hid": "0.5.1"
   }
 }

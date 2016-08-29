@@ -8,13 +8,7 @@ var isWin = /^win/.test(process.platform),
     usb;
 
 if (isWin) {
-	//v0.11.13 of Node.js introduced changes to the API which require 
-	//a new version of precompiled HID.node for Windows platforms
-	if (compareVersions(process.version, '0.11.13')) {
-		usb = require('./platform/windows/HID_0.3.2-patched.node');
-	} else {
-		usb = require('./platform/windows/HID.node');
-	}
+    usb = require('node-hid');
 } else {
     usb = require('usb');
 }
