@@ -648,7 +648,7 @@ BlinkStick.prototype.getColors = function (count, callback) {
     this.getFeatureReport(params.reportId, params.maxLeds * 3 + 2, function (err, buffer) {
         if (callback) {
             if (typeof(buffer) !== 'undefined') {
-                buffer = buffer.slice(2, buffer.length -1);
+                buffer = buffer.slice(2, buffer.length);
             }
 
             callback(err, buffer);
