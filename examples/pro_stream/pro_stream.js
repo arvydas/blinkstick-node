@@ -61,7 +61,7 @@ if (device){
 //Returns the next frame.
 //Called by the producer.
 //Pixel source can be anything (eg. a running screenshot scaled to 8x1 resolution for ambient display applications)
-//This example is an animation that shifts an eye back and forth. 
+//This example is an animation that shifts an eye back and forth at variable framerates (10-60fps)
 
 function onFrame(){       
 	var frame = [];
@@ -69,7 +69,7 @@ function onFrame(){
 	if (phase<0 || phase>5)
 	{
 		speed =-speed;
-		framerate = Math.random()*50+1
+		framerate = Math.random()*50+10;
 	}
 
 	phase    += speed;	
