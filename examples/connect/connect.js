@@ -7,7 +7,7 @@
  
 if (process.argv[2] == null) {
     console.log("Please supply access code as an argument");
-    return;
+    process.exit(1);
 }
  
 var faye = require('faye'),
