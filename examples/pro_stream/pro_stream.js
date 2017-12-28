@@ -66,14 +66,12 @@ if (device){
 function onFrame(){       
 	var frame = [];
 
-	if (phase<0 || phase>5)
-	{
+	if (phase<0 || phase>5){
 		speed =-speed;
 		framerate = Math.random()*50+10;
 	}
 
 	phase    += speed;	
-
 	shift     = Math.floor(phase);
 
 	for (var i = 0; i<size; i++) {
