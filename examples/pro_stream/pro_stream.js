@@ -44,9 +44,6 @@ function convert_grb(rgb){
 		grb[i*3+1] = rgb[i*3+0]; // R
 		grb[i*3+0] = rgb[i*3+1]; // G
 		grb[i*3+2] = rgb[i*3+2]; // B
-
-		if (shift<size)
-			shift+=1;
 	}
 	return grb;
 }
