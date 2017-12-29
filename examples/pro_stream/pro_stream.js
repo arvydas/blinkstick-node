@@ -69,7 +69,7 @@ function onFrame(){
 	var frame = [];
 
 	//Bounce image off edges of LED strip
-	if (phase<0 || phase>5){
+	if (phase<0 || phase>size-3){
 		speed =-speed;
 		//Vary the fps after each bounce
 		framerate = Math.random()*50+10;
