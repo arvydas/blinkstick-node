@@ -73,6 +73,10 @@ function onFrame(){
 		speed =-speed;
 		//Vary the fps after each bounce
 		framerate = Math.random()*50+10;
+		//Change pupil colour
+		pixels[(size-2)*3+0] = Math.floor(Math.random()*128);
+		pixels[(size-2)*3+1] = Math.floor(Math.random()*128);
+		pixels[(size-2)*3+2] = Math.floor(Math.random()*128);
 	}
 
 	phase    += speed;	
@@ -99,9 +103,9 @@ var pixels = [
 	000, 000, 000,
 	000, 000, 000,
 	000, 000, 000,
-	004, 000, 000, //Iris
-	128, 032, 000, //Pupil
-	004, 000, 000  //Iris
+	004, 004, 004, //Iris
+	128, 000, 000, //Pupil
+	004, 004, 004  //Iris
 	];
 
 //Animation variables
