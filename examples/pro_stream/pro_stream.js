@@ -93,7 +93,7 @@ function onFrame(){
 	return frame;
 }
 
-//Pixel source (this one is Kit from Knight Rider, or maybe a Cylon?)
+//Pixel source (this one is an image of an eye)
 //Add more pixels to match your LED strip size (this is for 8 LEDs)
 //Note this example is for a single channel (up to 64 LEDs)
 var pixels = [
@@ -104,8 +104,8 @@ var pixels = [
 	000, 000, 000,
 	000, 000, 000,
 	004, 004, 004, //Iris
-	128, 000, 000, //Pupil
-	004, 004, 004  //Iris
+	000, 000, 128, //Pupil
+	032, 032, 032  //Iris
 	];
 
 //Animation variables
