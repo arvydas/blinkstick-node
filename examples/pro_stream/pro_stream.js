@@ -2,7 +2,7 @@
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
 //This is elastic and very efficient, with low overhead CPU in the node process
-//Note that LED strips vary in response time, resulting in colour blur at high fps
+//Note that LEDs can vary in response time, resulting in colour blur at high fps
 
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
