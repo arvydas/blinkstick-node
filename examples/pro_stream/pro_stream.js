@@ -91,7 +91,7 @@ function onFrame(){
 
 //Pixel source (this one is Kit from Knight Rider, or maybe a Cylon?)
 //Add more pixels to match your LED strip size (this is for 8 LEDs)
-//Note this example for for a single channel (up to 64 LEDs)
+//Note this example is for a single channel (up to 64 LEDs)
 var pixels = [
 	//R  //G  //B
 	000, 000, 000,
