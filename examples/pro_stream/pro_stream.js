@@ -1,7 +1,7 @@
-//Stream producer-consumer pattern than allows separation of concerns for BlinkStick frame streaming.
-//Producer pushes frames to the stream as simple RGB arrays at a variable frame rate.
-//Consumer pulls frames from the stream and sends them to BlickStick at the same rate.
-//This is elastic and very efficient, with low overhead CPU in the node process. 
+//Stream producer-consumer pattern than allows separation of concerns for BlinkStick frame streaming
+//Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
+//Consumer pulls frames from the stream and sends them to BlickStick at the same rate
+//This is elastic and very efficient, with low overhead CPU in the node process
 
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
@@ -14,24 +14,28 @@ var framerate = 60;
 //Stream buffer for frames
 var stream_buffer = [];
 
-//This provides some elasticity to avoid skipped frames.
+//This provides some elasticity to avoid skipped frames
 var MAX_BUFFER_LENGTH = 60;
 
 //Stream Producer 
 function producer(){
+	//Skip frame when buffer is full
 	if (stream_buffer.length<MAX_BUFFER_LENGTH)
 		stream_buffer.push(onFrame());
+	//Clamp to 1-60fps
 	framerate = Math.max(1, Math.min(framerate, 60));
 	setTimeout(producer, 1000/framerate);
 }
 
 //Stream Consumer
 function consumer(){
+	//Send converted frame, if available
 	if (stream_buffer.length>0){
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
 		device.setColors(0, grb, function(err, grb) {});
 	}
+	//Clamp to 1-60fps
 	framerate = Math.max(1, Math.min(framerate, 60));
 	setTimeout(consumer, 1000/framerate);
 }
@@ -54,17 +58,19 @@ if (device){
 	consumer();
 }
 
-//User defined frame generator.
-//Returns the next frame.
-//Called by the producer.
+//User defined frame generator
+//Returns the next frame
+//Called by the producer
 //Pixel source can be anything (eg. a running screenshot scaled to 8x1 resolution for ambient display applications)
 //This example is an animation that shifts an image back and forth at variable framerates (10-60fps)
 
 function onFrame(){       
 	var frame = [];
 
+	//Bounce image off edges of LED strip
 	if (phase<0 || phase>5){
 		speed =-speed;
+		//Vary the fps after each bounce
 		framerate = Math.random()*50+10;
 	}
 
