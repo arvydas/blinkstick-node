@@ -82,7 +82,7 @@ function onFrame(){
 	return frame;
 }
 
-//Pixel source (this one is Knight Rider, or a Cylon)
+//Pixel source (this one is Kit from Knight Rider, or a Cylon)
 var pixels = [
 	//R  //G  //B
 	000, 000, 000,
