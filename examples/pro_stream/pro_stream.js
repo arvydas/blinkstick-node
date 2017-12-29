@@ -1,7 +1,7 @@
 //Stream producer-consumer pattern than allows separation of concerns for BlinkStick frame streaming.
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate.
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate.
-//This is elastic and very efficient, requiring negligible CPU for the node process. 
+//This is elastic and very efficient, with low overhead CPU in the node process. 
 
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
@@ -84,6 +84,7 @@ function onFrame(){
 
 //Pixel source (this one is Knight Rider, or a Cylon)
 var pixels = [
+	//R  //G  //B
 	000, 000, 000,
 	000, 000, 000,
 	000, 000, 000,
