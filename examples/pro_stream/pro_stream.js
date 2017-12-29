@@ -58,7 +58,7 @@ if (device){
 //Returns the next frame.
 //Called by the producer.
 //Pixel source can be anything (eg. a running screenshot scaled to 8x1 resolution for ambient display applications)
-//This example is an animation that shifts an eye back and forth at variable framerates (10-60fps)
+//This example is an animation that shifts an image back and forth at variable framerates (10-60fps)
 
 function onFrame(){       
 	var frame = [];
@@ -82,7 +82,7 @@ function onFrame(){
 	return frame;
 }
 
-//Pixel source (this one is Kit from Knight Rider, or a Cylon)
+//Pixel source (this one is Kit from Knight Rider, or maybe a Cylon?)
 var pixels = [
 	//R  //G  //B
 	000, 000, 000,
