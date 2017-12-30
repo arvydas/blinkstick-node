@@ -1,7 +1,7 @@
 //Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
-//This is elastic and very efficient, with low overhead CPU in the node process
+//This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
 
 var blinkstick = require('blinkstick');
