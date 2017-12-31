@@ -112,3 +112,19 @@ var phase = 0;
 var shift = 0;
 var speed = 1;
 var size  = pixels.length/3;
+
+//Clean exit
+process.on('SIGTERM', onExit);
+process.on('SIGINT',  onExit);
+
+function onExit(){
+	//Turn off LEDs
+	var frame = [];
+	for (var i = 0; i<size; i++) {
+		frame[i*3+0] = 0; // G
+		frame[i*3+1] = 0; // R
+		frame[i*3+2] = 0; // B
+	}
+	device.setColors(0, frame, function(err, frame) {process.exit(0);});
+}
+

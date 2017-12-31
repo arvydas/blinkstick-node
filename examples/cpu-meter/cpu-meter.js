@@ -1,52 +1,33 @@
-//Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
-//Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
-//Consumer pulls frames from the stream and sends them to BlickStick at the same rate
-//User
-//This is elastic and very efficient, with low CPU overhead in the node process
-//Note that LEDs can vary in response time, resulting in colour blur at high fps
+//CPU meter based on pro_stream.js example
 
 var os         = require("os");
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
-//Variable frame rate in frames per second (fps)
-//Can be dynamically set in onFrame()
-//BlinkStick can handle maximum 60fps
 var framerate = 60;
-
-//Stream buffer for frames
-//This provides some elasticity to avoid skipped frames
 var stream_buffer = [];
 var MAX_BUFFER_LENGTH = 60;
 
-//Stream Producer 
 function producer(){
-	//Skip frame when buffer is full
 	if (stream_buffer.length<MAX_BUFFER_LENGTH)
 		stream_buffer.push(onFrame());
-	//Clamp to 1-60fps
 	framerate = Math.max(1, Math.min(framerate, 60));
 	setTimeout(producer, 1000/framerate);
 }
 
-//Stream Consumer
 function consumer(){
-	//Send converted frame, if available
 	if (stream_buffer.length>0){
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
 		device.setColors(0, grb, function(err, grb) {});
 	}
-	//Clamp to 1-60fps
 	framerate = Math.max(1, Math.min(framerate, 60));
 	setTimeout(consumer, 1000/framerate);
 }
 
 function convert_grb(rgb){
 	var grb = [];
-
 	for (var i = 0; i<size; i++) {
-		//Convert to BlinkStick RGB format (GRB)
 		grb[i*3+0] = rgb[i*3+1]; // G
 		grb[i*3+1] = rgb[i*3+0]; // R
 		grb[i*3+2] = rgb[i*3+2]; // B
@@ -54,12 +35,10 @@ function convert_grb(rgb){
 	return grb;
 }
 
-//User defined frame generator
-//Returns the next frame
-//Called by the producer
-//Pixel source can be anything (eg. a running screenshot scaled to 8x1 resolution for ambient display applications)
-//This example is an animation that shifts an image back and forth at variable framerates (10-60fps)
-//The framerate corresponds to current CPU load.
+if (device){
+	producer();
+	consumer();
+}
 
 var startMeasure  = cpuAverage();
 var percentageCPU = 0;
@@ -98,9 +77,6 @@ function onFrame(){
 	return frame;
 }
 
-//Pixel source (this one is an image of an eye)
-//Add more pixels to match your LED strip size (this is for 8 LEDs)
-//Note this example is for a single channel (up to 64 LEDs)
 var pixels = [
 	//R  //G  //B
 	000, 000, 000,
@@ -113,7 +89,6 @@ var pixels = [
 	004, 004, 004  //Iris
 	];
 
-//Animation variables
 var phase = 0;
 var shift = 0;
 var speed = 1;
@@ -147,8 +122,4 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {process.exit(0);});
 }
 
-//MAIN LOOP: Start streaming timers
-if (device){
-	producer();
-	consumer();
-}
+
