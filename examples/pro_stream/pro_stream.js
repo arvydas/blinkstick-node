@@ -13,9 +13,8 @@ var device     = blinkstick.findFirst();
 var framerate = 60;
 
 //Stream buffer for frames
-var stream_buffer = [];
-
 //This provides some elasticity to avoid skipped frames
+var stream_buffer = [];
 var MAX_BUFFER_LENGTH = 60;
 
 //Stream Producer 
