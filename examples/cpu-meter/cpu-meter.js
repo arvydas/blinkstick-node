@@ -1,3 +1,4 @@
+//Blinkstick Desktop PC Case lighting mod
 //CPU meter based on pro_stream.js example
 
 var os         = require("os");
