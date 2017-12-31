@@ -1,6 +1,7 @@
 //Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
+//User
 //This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
 
@@ -61,39 +62,29 @@ function convert_grb(rgb){
 //This example is an animation that shifts an image back and forth at variable framerates (10-60fps)
 //The framerate corresponds to current CPU load.
 
-
 var startMeasure = cpuAverage();
 
 function onFrame(){       
         var frame = [];
-
+        
+        //Vary the fps by CPU load
         var endMeasure = cpuAverage(); 
         var idleDifference = endMeasure.idle - startMeasure.idle;
         var totalDifference = endMeasure.total - startMeasure.total;
         var percentageCPU = 100 - ~~(100 * idleDifference / totalDifference);
-
         startMeasure = endMeasure; 
-        
-        //Vary the fps by CPU load
         framerate = percentageCPU/2+10;
 
-        //Vary pupil colour by CPU load        
+        //Vary pupil colour by CPU load (green to amber to red)        
         pixels[(size-2)*3+0] = Math.floor(percentageCPU*2.5)+5;
         pixels[(size-2)*3+1] = Math.floor(percentageCPU/8)+32;
         pixels[(size-2)*3+2] = 5;
-
         
-        //Bounce image off edges of LED strip
-        if (phase<0 || phase>size-3){
-                speed =-speed;
-           
-       
- 
-        }
-
+        //Bounce image off edges of LED strip (copy from pixel source to new frame)
+        if (phase<0 || phase>size-3)
+                speed =-speed;         
         phase    += speed;
         shift     = Math.floor(phase);
-
         for (var i = 0; i<size; i++) {
                 frame[i*3+0] = pixels[shift*3+0]; // R
                 frame[i*3+1] = pixels[shift*3+1]; // G
@@ -126,6 +117,7 @@ var shift = 0;
 var speed = 1;
 var size  = pixels.length/3;
 
+//CPU load 
 function cpuAverage() {
         var totalIdle = 0, totalTick = 0;
         var cpus = os.cpus();
