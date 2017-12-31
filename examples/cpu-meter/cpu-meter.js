@@ -9,6 +9,7 @@ var framerate = 60;
 var stream_buffer = [];
 var MAX_BUFFER_LENGTH = 60;
 
+
 function producer(){
 	if (stream_buffer.length<MAX_BUFFER_LENGTH)
 		stream_buffer.push(onFrame());
@@ -36,29 +37,46 @@ function convert_grb(rgb){
 	return grb;
 }
 
-if (device){
-	producer();
-	consumer();
-}
 
-var startMeasure  = cpuAverage();
+var startMeasure  = cpuLoad();
 var percentageCPU = 0;
+
+var phase = 0;
+var shift = 0;
+var speed = 1;
+var cpu_avg = 0;
+
+var pixels = [
+	//R  //G  //B
+	000, 000, 000,
+	000, 000, 000,
+	000, 000, 000,
+	000, 000, 000,
+	000, 000, 000,
+	004, 004, 004, //Iris
+	000, 000, 128, //Pupil
+	004, 004, 004  //Iris
+	];
+var size  = pixels.length/3;
+
 
 function onFrame(){       
 	var frame = [];
 
 	//Vary the fps by CPU load
-	var endMeasure = cpuAverage(); 
+	var endMeasure = cpuLoad(); 
 	var idleDifference = endMeasure.idle - startMeasure.idle;
 	var totalDifference = endMeasure.total - startMeasure.total;
 
 	percentageCPU = 100 - ~~(100 * idleDifference / totalDifference);
 
+	cpu_avg = (cpu_avg+percentageCPU)/2;
+	
 	startMeasure = endMeasure; 
-	framerate = percentageCPU/2+10;
+	framerate = cpu_avg/2+10;
 
 	//Vary pupil colour by CPU load (green to amber to red)        
-	pixels[(size-2)*3+0] = Math.floor(percentageCPU*2.5)+5;
+	pixels[(size-2)*3+0] = Math.floor(cpu_avg*2.5)+5;
 	pixels[(size-2)*3+1] = 20;
 	pixels[(size-2)*3+2] = 4;
 
@@ -78,25 +96,10 @@ function onFrame(){
 	return frame;
 }
 
-var pixels = [
-	//R  //G  //B
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	004, 004, 004, //Iris
-	000, 000, 128, //Pupil
-	004, 004, 004  //Iris
-	];
 
-var phase = 0;
-var shift = 0;
-var speed = 1;
-var size  = pixels.length/3;
 
 //CPU load 
-function cpuAverage() {
+function cpuLoad() {
 	var totalIdle = 0, totalTick = 0;
 	var cpus = os.cpus();
 	for(var i = 0, len = cpus.length; i < len; i++) {
@@ -123,4 +126,9 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {process.exit(0);});
 }
 
+
+if (device){
+	producer();
+	consumer();
+}
 
