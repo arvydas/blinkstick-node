@@ -58,8 +58,8 @@ function onFrame(){
 
 	//Vary pupil colour by CPU load (green to amber to red)        
 	pixels[(size-2)*3+0] = Math.floor(percentageCPU*2.5)+5;
-	pixels[(size-2)*3+1] = 16;
-	pixels[(size-2)*3+2] = 5;
+	pixels[(size-2)*3+1] = 20;
+	pixels[(size-2)*3+2] = 4;
 
 	//Bounce image off edges of LED strip (copy from pixel source to new frame)
 	if (phase<0 || phase>size-3)
