@@ -135,6 +135,7 @@ function cpuAverage() {
 
 //Clean exit
 process.on('SIGTERM', onExit);
+process.on('SIGINT', onExit);
 function onExit(){
 	//Turn off LEDs
 	var frame = [];
