@@ -15,15 +15,13 @@ var framerate = 60;
 //Stream buffer for frames
 //This provides some elasticity to avoid skipped frames
 var stream_buffer = [];
-var MAX_BUFFER_LENGTH = 60;
 
 //Clean exit flag
-var exit = false;
+var streaming = true;
 
 //Stream Producer 
 function producer(){
-	//Skip frame when buffer is full
-	if (stream_buffer.length<MAX_BUFFER_LENGTH)
+	if (stream_buffer.length==0)
 		stream_buffer.push(onFrame());
 	//Clamp to 1-60fps
 	framerate = Math.max(1, Math.min(framerate, 60));
@@ -33,7 +31,7 @@ function producer(){
 //Stream Consumer
 function consumer(){
 	//Send converted frame, if available
-	if (stream_buffer.length>0 && !exit){
+	if (stream_buffer.length>0 && streaming){
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
 		device.setColors(0, grb, function(err, grb) {});
@@ -122,7 +120,7 @@ process.on('SIGINT',  onExit);
 
 function onExit(){
 	//Turn off LEDs
-	exit = true;
+	streaming = false;
 	var frame = [];
 	for (var i = 0; i<size; i++) {
 		frame[i*3+0] = 0; // G

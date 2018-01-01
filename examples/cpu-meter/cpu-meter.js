@@ -6,18 +6,17 @@ var device     = blinkstick.findFirst();
 
 var framerate = 60;
 var stream_buffer = [];
-var MAX_BUFFER_LENGTH = 60;
-var exit = false;
+var streaming = true;
 
 function producer(){
-        if (stream_buffer.length<MAX_BUFFER_LENGTH)
+        if (stream_buffer.length == 0)
                 stream_buffer.push(onFrame());
         framerate = Math.max(1, Math.min(framerate, 60));
         setTimeout(producer, 1000/framerate);
 }
 
 function consumer(){
-        if (stream_buffer.length>0 && !exit){
+        if (stream_buffer.length>0 && streaming){
                 var rgb = stream_buffer.shift();
                 var grb = convert_grb(rgb);
                 device.setColors(0, grb, function(err, grb) {});
@@ -115,7 +114,7 @@ function cpuLoad() {
 process.on('SIGTERM', onExit);
 process.on('SIGINT', onExit);
 function onExit(){
-        exit = true;
+        streaming = false;
         //Turn off LEDs
         var frame = [];
         for (var i = 0; i<size; i++) {
