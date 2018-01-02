@@ -1,5 +1,6 @@
 //Ambient display based on pro_stream.js example     
-//Realtime streaming of desktop to blinkstick                                                                                                                                                           
+//Realtime streaming of desktop to blinkstick  
+//
 //Minimum Requirements: 
 // - Latest version of nodejs (tested with v8.9.3)
 // - 4 core 3GHz processor, 8MB ram, and 2MB graphics card
