@@ -10,7 +10,8 @@
 // - The bottleneck is screenshot-desktop - looking for a faster screen grabber.
 // - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
 // - Test with Monitor Color Test youtube video (https://www.youtube.com/watch?v=JeQuelXsUYA) running at FULLSCREEN.
-
+// - Could be improved by morphing between screenshots.
+s
 var    os         = require("os");                                                                                                                                                                              
 var    blinkstick = require('blinkstick');                                                                                                                                                                      
 const  screenshot = require('screenshot-desktop');                                                                                                                                                              
@@ -18,7 +19,7 @@ const  sharp      = require('sharp');
                                                                                                                                                                                                                 
 var device     = blinkstick.findFirst();                                                                                                                                                                        
 
-// Change framerate and number of LEDs to match your system
+// Change framerate and number of LEDs to match your system specs.
 var framerate = 10;                                                                                                                                                                                              
 var size      = 8;                                                                                                                                                                                              
                                                                                                                                                                                                                 
