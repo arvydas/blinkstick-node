@@ -10,9 +10,9 @@
 // - The bottleneck is screenshot-desktop - looking for a faster cross-platform screen grabber.
 // - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
 // - Test with Ambilight Color Test youtube video (https://www.youtube.com/watch?v=8u4UzzJZAUg) running at FULLSCREEN.
-// - Could be improved by morphing between screenshots.
+// - Could be improved by morphing between screenshots, and predictive look-ahead .
+// - Ideally, blinkstick display drivers could be created so it could be treated as just another monitor.
 
-var    os         = require("os");                                                                                                                                                                              
 var    blinkstick = require('blinkstick');                                                                                                                                                                      
 const  screenshot = require('screenshot-desktop');                                                                                                                                                              
 const  sharp      = require('sharp');                                                                                                                                                                           
@@ -20,7 +20,7 @@ const  sharp      = require('sharp');
 var device     = blinkstick.findFirst();                                                                                                                                                                        
 
 // Change framerate and number of LEDs to match your system specs.
-var framerate = 10;                                                                                                                                                                                              
+var framerate = 15;                                                                                                                                                                                              
 var size      = 8;                                                                                                                                                                                              
                                                                                                                                                                                                                 
 var stream_buffer = [];                                                                                                                                                                                         
