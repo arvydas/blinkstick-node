@@ -1,7 +1,7 @@
 //Ambient display based on pro_stream.js example                                                                                                                                                                 
 //Minimum Requirements: 
 // - Latest version of nodejs (tested with v8.9.3)
-// - 4 core processor, 8MB ram, and 2MB graphics card
+// - 4 core 3GHz processor, 8MB ram, and 2MB graphics card
 // - Latest blinkstick, screenshot-desktop and sharp npm packages
 
 //Notes:
@@ -11,7 +11,7 @@
 // - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
 // - Test with Monitor Color Test youtube video (https://www.youtube.com/watch?v=JeQuelXsUYA) running at FULLSCREEN.
 // - Could be improved by morphing between screenshots.
-s
+
 var    os         = require("os");                                                                                                                                                                              
 var    blinkstick = require('blinkstick');                                                                                                                                                                      
 const  screenshot = require('screenshot-desktop');                                                                                                                                                              
