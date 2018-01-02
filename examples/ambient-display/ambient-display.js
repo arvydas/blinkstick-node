@@ -9,7 +9,7 @@
 // - Lower framerates reduce CPU overhead but increase ambient display lag
 // - The bottleneck is screenshot-desktop - looking for a faster screen grabber.
 // - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
-// - Test with Monitor Color Test youtube video (https://www.youtube.com/watch?v=JeQuelXsUYA) running at FULLSCREEN.
+// - Test with Ambilight Color Test youtube video (https://www.youtube.com/watch?v=8u4UzzJZAUg) running at FULLSCREEN.
 // - Could be improved by morphing between screenshots.
 
 var    os         = require("os");                                                                                                                                                                              
