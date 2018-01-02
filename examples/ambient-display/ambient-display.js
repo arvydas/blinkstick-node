@@ -8,7 +8,8 @@
 // - Higher framerates will slow down your entire system, depending on how fast it is.
 // - Lower framerates reduce CPU overhead but increase ambient display lag
 // - The bottleneck is screenshot-desktop - looking for a faster screen grabber.
-// - Sharp package is very fast and used for scaling the screenshot to Nx1 for blinkstick
+// - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
+// - Test with Monitor Color Test youtube video (https://www.youtube.com/watch?v=JeQuelXsUYA) running at FULLSCREEN.
 
 var    os         = require("os");                                                                                                                                                                              
 var    blinkstick = require('blinkstick');                                                                                                                                                                      
