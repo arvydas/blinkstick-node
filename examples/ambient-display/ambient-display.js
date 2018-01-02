@@ -19,7 +19,7 @@ const  sharp      = require('sharp');
 var device     = blinkstick.findFirst();                                                                                                                                                                        
 
 // Change framerate and number of LEDs to match your system
-var framerate = 30;                                                                                                                                                                                              
+var framerate = 10;                                                                                                                                                                                              
 var size      = 8;                                                                                                                                                                                              
                                                                                                                                                                                                                 
 var stream_buffer = [];                                                                                                                                                                                         
