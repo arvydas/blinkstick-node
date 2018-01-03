@@ -171,7 +171,7 @@ function getConsumerFramerate()
 
 function setSize(s)
 {	
-	//Clamp between 1 and MAX_LEDS
+	//Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
 	size = Math.max(1, Math.min(s, MAX_SIZE));
 }
 
