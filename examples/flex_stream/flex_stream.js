@@ -197,9 +197,11 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
-	//Dsables streaming to ensure no pending frames are set after LEDs are turned off
+	//Disable streaming to ensure no pending frames are set after LEDs are turned off
 	streaming = false;
-	var frame = [];
+	
+	//Turn off LEDs
+	var frame = newFrame();
 	for (var i = 0; i<getSize(); i++) {
 		frame[i*3+0] = 0; // G
 		frame[i*3+1] = 0; // R
