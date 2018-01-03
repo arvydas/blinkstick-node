@@ -4,7 +4,7 @@
 //Minimum Requirements: 
 //- Latest version of nodejs (tested with v8.9.3)
 //- Latest blinkstick, screenshot-desktop and sharp npm packages (all cross-platform)
-//Windows, Linux and Mac
+//For Windows, Linux and Mac
 
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                     
 const  screenshot  = require('screenshot-desktop'); //Available at npm.org                                                                                                                                       
