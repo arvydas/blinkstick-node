@@ -4,8 +4,8 @@
 //Windows, Linux and Mac
 
 //Minimum Requirements: 
-// - Latest version of nodejs (tested with v8.9.3)
-// - Latest blinkstick, screenshot-desktop and sharp npm packages (all cross-platform)
+//- Latest version of nodejs (tested with v8.9.3)
+//- Latest blinkstick, screenshot-desktop and sharp npm packages (all cross-platform)
 
 
 var    flex_stream = require("./flex_stream.js");                                                                                                                                                                     
@@ -19,11 +19,11 @@ var transparency       = 0.85 // 85% transparency for smooth interlacing
 
 //Send desktop to BlinkStick via async futures pipeline
 function onFrame(){
-        screenshot().then((img) => {
-              sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
-                flex_stream.produceFrame(data);
-              })
-        });
+	screenshot().then((img) => {
+		sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
+			flex_stream.produceFrame(data);
+		})
+	});
 }
 
 //Configure stream
