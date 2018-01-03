@@ -44,7 +44,7 @@ function onFrame() {
         startMeasure = endMeasure; 
         framerate = cpu_avg/2+10;
 
-        //Vary pupil colour by CPU load (green to amber to red)        
+        //Vary particle colour by CPU load (green to amber to red)        
         pixels[(size-2)*3+0] = Math.floor(cpu_avg*2.5)+5;
         pixels[(size-2)*3+1] = 100-Math.floor(cpu_avg);
         pixels[(size-2)*3+2] = 2;

@@ -17,11 +17,11 @@
 // - Ideally, blinkstick display drivers could be created so it could be treated as just another monitor.
 
 var    flex_stream = require("./flex_stream.js");                                                                                                                                                                     
-const  screenshot = require('screenshot-desktop');                                                                                                                                                              
-const  sharp      = require('sharp');                                                                                                                                                                         
+const  screenshot = require('screenshot-desktop'); //Available at npm.org                                                                                                                                       
+const  sharp      = require('sharp');              //Available at npm.org                                                                                                                                             
 
 var size               = 8;
-var producer_framerate = 5;   // low capture rate to reduce overhead (5 fps = 200ms lag)
+var producer_framerate = 5;   // low capture rate to reduce CPU overhead (5 fps = 200ms lag)
 var consumer_framerate = 60;  // high render rate for smooth interlacing
 var transparency       = 0.95 // 95% transparency for smooth interlacing
 
