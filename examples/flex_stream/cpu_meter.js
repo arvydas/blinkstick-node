@@ -63,8 +63,7 @@ function onFrame() {
         }
         
         flex_stream.setProducerFramerate(framerate);
-        flex_stream.produceFrame(frame);
-        
+        flex_stream.produceFrame(frame);     
 }
 
 //CPU load 

@@ -6,7 +6,7 @@
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
 //The 64 LED maximum corresponds to a single Pro channel, which is the limit for Flex.
 //Transparency can be used to composite a newly produced frame over the last.
-//This allows morphing of slowly produced frames at 60fps (interlacing - see examples).
+//This allows smooth morphing of slowly produced frames at high fps (interlacing - see examples).
 //Windows, Linux and Mac
 
 
