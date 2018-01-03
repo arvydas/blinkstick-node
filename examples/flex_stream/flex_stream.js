@@ -58,9 +58,9 @@ var size     = 8;   // Default 8 LEDs.
 var backingstore = null;
 var currentFrame = null;
 
-var producer_framerate = 30; // Default low rate to reduce CPU overhead 
-var consumer_framerate = 60; // Default high rate for frame morphing
-var transparency       = .5; // Default interlaced (fast morphing)
+var producer_framerate = 15; // Default low frame production
+var consumer_framerate = 60; // Default high frame rendering
+var transparency       = 0;  // Default is opaque frames (no morphing)
 
 //Stream buffer for frames
 var stream_buffer = [];
