@@ -1,14 +1,8 @@
-//For Blinkstick Flex and Pro (MAX 64 LEDS)
-//Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
-//Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
-//Consumer pulls frames from the stream and sends them to BlickStick at the same rate
-//This is elastic and very efficient, with low CPU overhead in the node process
-//Note that LEDs can vary in response time, resulting in colour blur at high fps
-//The 64 LED maximum corresponds to a single Pro channel, which is the limit for Flex.
-//Transparency can be used to composite a newly produced frame over the last.
-//This allows smooth morphing of slowly produced frames at high fps (interlacing - see examples).
+//For Blinkstick Flex and Pro (MAX 64 LEDS - single channel)
+//Producer pushes frames to the stream as simple RGB arrays at a set rate
+//Consumer pulls frames from the stream and renders them to BlickStick at a set rate
+//When consumer rate is faster than production rate, transparency allows frame morphing 
 //Windows, Linux and Mac
-
 
 module.exports = {
 		setOnFrame: function(fn) {
@@ -59,19 +53,16 @@ var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
 var MAX_SIZE = 64;
-var size         = 8; // Default 8 LEDs.
-var transparency = 0; // Default opaque frames (no morphing)
+var size     = 8;   // Default 8 LEDs.
+
 var backingstore = null;
 var currentFrame = null;
 
-//Variable frame rates in frames per second (fps)
-//Can be dynamically set in onFrame()
-//BlinkStick can handle maximum 60fps
-var producer_framerate = 60;
-var consumer_framerate = 60;
+var producer_framerate = 30; // Low rate to reduce CPU overhead 
+var consumer_framerate = 60; // High rate for frame compositing
+var transparency      = 0.5; // Default interlaced (fast morphing)
 
 //Stream buffer for frames
-//This provides some elasticity to avoid skipped frames
 var stream_buffer = [];
 
 //Clean exit flag
