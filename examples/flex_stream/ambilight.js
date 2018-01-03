@@ -1,10 +1,10 @@
 //Ambient display (ambilight) based on flex_stream.js     
 //Realtime streaming of desktop to BlinkStick Flex and Pro
 //User defined OnFrame() samples the desktop, and renders interlaced frames to BlinkStick
-//Windows, Linux and Mac
 //Minimum Requirements: 
 //- Latest version of nodejs (tested with v8.9.3)
 //- Latest blinkstick, screenshot-desktop and sharp npm packages (all cross-platform)
+//- Windows, Linux and Mac
 
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                     
 const  screenshot  = require('screenshot-desktop'); //Available at npm.org                                                                                                                                       
