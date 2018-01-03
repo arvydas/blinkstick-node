@@ -1,4 +1,4 @@
-//For Blinkstick Flex or Pro (MAX 64 LEDS)
+//For Blinkstick Flex and Pro (MAX 64 LEDS)
 //Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
@@ -10,6 +10,9 @@
 module.exports = {
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
+		},
+		newFrame: function() {
+			return newFrame(); 
 		},
 		setTransparency: function(t)
 		{
@@ -53,7 +56,10 @@ var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
 var MAX_SIZE = 64;
-var size     = 8;
+var size         = 8; // Default 8 LEDs.
+var transparency = 0; // Default opaque frames
+var backingstore = null;
+var currentFrame = null;
 
 //Variable frame rates in frames per second (fps)
 //Can be dynamically set in onFrame()
@@ -82,7 +88,7 @@ function consumer(){
 }
 
 function convert_grb(rgb){
-	var grb = [];
+	var grb = newFrame();
 
 	for (var i = 0; i<rgb.length; i++) {
 		//Convert to BlinkStick RGB format (GRB)
@@ -91,6 +97,11 @@ function convert_grb(rgb){
 		grb[i*3+2] = rgb[i*3+2]; // B
 	}
 	return grb;
+}
+
+//Create an empty frame
+function newFrame(){
+	return new Uint8Array(getSize()*3);
 }
 
 function produceFrame(frame)
@@ -107,11 +118,31 @@ function consumeFrame()
 	if (stream_buffer.length>0 && streaming){
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
-		device.setColors(0, grb, function(err, grb) {});
+		currentFrame = grb;
 	}
 
+	if (currentFrame != null)
+		setColors(currentFrame);
+	
 	//Clamp between 1 and 60 fps
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60));
+}
+
+function setColors(grb)
+{
+	if (backingstore == null || transparency == 0)
+		backingstore = grb;
+
+	if (transparency>0){   //Composite the new frame with current backingstore 
+		for (var i = 0; i<getSize(); i++) {
+			//Convert to BlinkStick RGB format (GRB)
+			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
+			backingstore[i*3+1] = Math.floor(backingstore[i*3+1]*transparency + grb[i*3+1]*(1-transparency)); // G
+			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
+		}
+	}
+
+	device.setColors(0, backingstore, function(err, backingstore) {});
 }
 
 function setOnFrame(fn)
@@ -157,13 +188,12 @@ function getSize()
 
 function setTransparency(t)
 {
-
 	transparency = Math.max(0, Math.min(t, 1));
 }
 
 function getTranparency()
 {
-	return t;
+	return transparency;
 }
 
 //Clean exit

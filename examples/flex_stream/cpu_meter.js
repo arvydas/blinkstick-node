@@ -1,5 +1,5 @@
 //CPU load meter based on flex_stream.js
-//User defined OnFrame() function animates a bouncing 'eye' to indicate CPU load
+//User defined OnFrame() function animates a bouncing particle trail to indicate CPU load
 //Windows, Linux and Mac
 
 var os         = require("os");
@@ -22,15 +22,15 @@ var pixels = [
         000, 000, 000,
         000, 000, 000,
         000, 000, 000,
-        004, 004, 004, //Iris
-        000, 000, 128, //Pupil
-        004, 004, 004  //Iris
+        000, 000, 000,
+        255, 255, 255,
+        000, 000, 000
         ];
 
 var size = pixels.length/3;
 
 function onFrame() {       
-        var frame = [];
+	    var frame = flex_stream.newFrame();
         
         //Vary the fps by CPU load
         var endMeasure = cpuLoad(); 
@@ -63,7 +63,6 @@ function onFrame() {
         }
         
         flex_stream.setProducerFramerate(framerate);
-        flex_stream.setConsumerFramerate(framerate);
         flex_stream.produceFrame(frame);
         
 }
@@ -86,5 +85,6 @@ function cpuLoad() {
 flex_stream.setSize(size);
 flex_stream.setProducerFramerate(framerate);
 flex_stream.setConsumerFramerate(framerate);
+flex_stream.setTransparency(.75);
 flex_stream.setOnFrame(onFrame);
 

@@ -14,16 +14,16 @@
 // - The bottleneck is screenshot-desktop - looking for a faster cross-platform screen grabber (gstreamer?)
 // - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
 // - Test with Ambilight Color Test youtube video (https://www.youtube.com/watch?v=8u4UzzJZAUg) running at FULLSCREEN.
-// - Could be improved by morphing between screenshots, and predictive look-ahead .
 // - Ideally, blinkstick display drivers could be created so it could be treated as just another monitor.
 
 var    flex_stream = require("./flex_stream.js");                                                                                                                                                                     
 const  screenshot = require('screenshot-desktop');                                                                                                                                                              
 const  sharp      = require('sharp');                                                                                                                                                                         
 
-var size = 8;
-var producer_framerate = 15;
-var consumer_framerate = 15;
+var size               = 8;
+var producer_framerate = 4;   // low capture rate to reduce overhead
+var consumer_framerate = 60;  // high render rate
+var transparency       = 0.95 // 95% transparency at 60fps gives interlaced (morph) effect
 
 function onFrame(){
         screenshot().then((img) => {
@@ -37,4 +37,5 @@ function onFrame(){
 flex_stream.setSize(size);
 flex_stream.setProducerFramerate(producer_framerate);
 flex_stream.setConsumerFramerate(consumer_framerate);
+flex_stream.setTransparency(transparency);
 flex_stream.setOnFrame(onFrame);
