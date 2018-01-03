@@ -65,13 +65,13 @@ var streaming = true;         //Clean exit flag
 
 //Stream Producer 
 function producer(){
-	onFrame(); // Call user defined function
+	onFrame(); //Call user defined function
 	setTimeout(producer, 1000/producer_framerate); //Clamp to 1-60fps
 }
 
 //Stream Consumer
 function consumer(){
-	consumeFrame();
+	consumeFrame(); //Render frame to BlinkStick
 	setTimeout(consumer, 1000/consumer_framerate);
 }
 
@@ -94,7 +94,7 @@ function newFrame(){
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
 {
-	if (stream_buffer.length==0)
+	if (stream_buffer.length==0) // Skip frame if consumer is falling behind
 		stream_buffer.push(frame);
 	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
@@ -102,23 +102,24 @@ function produceFrame(frame)
 //Consume frame from stream - called from consumer
 function consumeFrame()
 {
-	if (stream_buffer.length>0){
+	if (stream_buffer.length>0){ //Check if new frame available
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
 		currentFrame = grb;
 	}
 	if (currentFrame != null)
-		morphFrame(currentFrame);
+		morphFrame(currentFrame); //Morph to the current frame
+	
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
-// Morph current frame over backingstore (composite frame)
+// Morph current frame over backingstore (frame compositing)
 function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
 	
-	//Morph the new frame with current backingstore (additive alpha blending)
+	//Morph the new frame with current backingstore (additive alpha blending function)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
 			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
