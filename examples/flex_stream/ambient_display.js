@@ -21,7 +21,7 @@ const  screenshot = require('screenshot-desktop');
 const  sharp      = require('sharp');                                                                                                                                                                         
 
 var size               = 8;
-var producer_framerate = 4;   // low capture rate to reduce overhead
+var producer_framerate = 5;   // low capture rate to reduce overhead (5 fps = 200ms lag)
 var consumer_framerate = 60;  // high render rate for smooth interlacing
 var transparency       = 0.95 // 95% transparency for smooth interlacing
 
