@@ -12,8 +12,8 @@ const  sharp       = require('sharp');              //Available at npmjs.com
 
 var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
 var producer_framerate = 5;   // Low sample rate (5 fps = 200ms lag) to reduce CPU overhead 
-var consumer_framerate = 60;  // High render rate for smooth morphing
-var transparency       = 0.85 // 85% transparency for smooth morphing
+var consumer_framerate = 60;  // High render rate for smooth morphing/interlacing
+var transparency       = 0.85 // 85% transparency for smooth morphing/interlacing
 
 //Send scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function onFrame(){
