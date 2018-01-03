@@ -109,7 +109,7 @@ function produceFrame(frame)
 
 function consumeFrame()
 {
-	if (stream_buffer.length>0 && streaming){
+	if (stream_buffer.length>0){
 		var rgb = stream_buffer.shift();
 		var grb = convert_grb(rgb);
 		currentFrame = grb;
@@ -117,7 +117,7 @@ function consumeFrame()
 
 	if (currentFrame != null)
 		morphFrame(currentFrame);
-	
+
 	//Clamp between 1 and 60 fps
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60));
 }
@@ -126,8 +126,8 @@ function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
-	
-    //Morph the new frame with current backingstore (additive alpha blending)
+
+	//Morph the new frame with current backingstore (additive alpha blending)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
 			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
@@ -135,7 +135,8 @@ function morphFrame(grb)
 			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
 		}
 	}
-	device.setColors(0, backingstore, function(err, backingstore) {});
+	if (streaming)
+		device.setColors(0, backingstore, function(err, backingstore) {});
 }
 
 function setOnFrame(fn)
