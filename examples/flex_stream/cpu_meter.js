@@ -29,7 +29,7 @@ function onFrame() {
 	framerate = cpu_avg/1.8+5;
 
 	//Bounce particle off edges of LED strip
-	if (pos<=0 || pos>=size-1)
+	if (pos<1 || pos>size-1)
 		speed =-speed;         
 	pos += speed;
 	
