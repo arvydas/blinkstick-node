@@ -5,7 +5,6 @@
 
 //Minimum Requirements: 
 // - Latest version of nodejs (tested with v8.9.3)
-// - 4 core 3GHz processor, 8MB ram, and 2MB graphics card
 // - Latest blinkstick, screenshot-desktop and sharp npm packages (all cross-platform)
 
 
