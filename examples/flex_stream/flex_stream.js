@@ -15,7 +15,7 @@ module.exports = {
 		},
 		setAlpha: function(a)
 		{
-			setAlpha(t);
+			setAlpha(a);
 		},
 		getAlpha: function()
 		{
@@ -181,9 +181,9 @@ function getSize()
 	return size;
 }
 
-function setAlpha(t)
+function setAlpha(a)
 {
-	alpha = Math.max(0, Math.min(t, 1));	//Clamp between 0 (invisible) and 1 (opaque)
+	alpha = Math.max(0, Math.min(a, 1));	//Clamp between 0 (invisible) and 1 (opaque)
 }
 
 function getAlpha()
