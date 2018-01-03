@@ -61,7 +61,7 @@ var transparency       = 0.5; //Default is transparent frames for morphing
 var stream_buffer = [];       //Stream buffer for frames
 var composite = null;         //Composite frame
 var currentFrame = null;      //Latest frame from stream
-var streaming = true;         //Clean exit flag
+var streaming = true;         //Pause flag
 
 //Stream Producer 
 function producer(){
