@@ -60,7 +60,7 @@ var currentFrame = null;
 
 var producer_framerate = 15;  // Default low frame production for morphing
 var consumer_framerate = 60;  // Default high frame rendering for morphing
-var transparency       = 0.5; // Default is transparent frames for morphing (0 = no morphing)
+var transparency       = 0.5; // Default is transparent frames for morphing
 
 //Stream buffer for frames
 var stream_buffer = [];
@@ -182,6 +182,8 @@ function getSize()
 
 function setTransparency(t)
 {
+	// 0 = opaque
+	// 1 = invisible
 	transparency = Math.max(0, Math.min(t, 1));
 }
 
