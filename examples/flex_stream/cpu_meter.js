@@ -24,7 +24,7 @@ function onFrame() {
 	var totalDifference = endMeasure.total - startMeasure.total;
 	startMeasure = endMeasure;
 
-	//Vary the framerate by percentage CPU load (4 to 60 fps)
+	//Vary the producer framerate by percentage CPU load (4 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
 	producer_framerate = cpu_avg/1.8+5;
