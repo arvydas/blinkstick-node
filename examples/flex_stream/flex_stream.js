@@ -2,7 +2,7 @@
 //Producer pushes frames to the stream as simple RGB arrays at a set rate
 //Consumer pulls frames from the stream and renders them to BlickStick at a set rate
 //When consumer rate is faster than production rate, transparency allows frame morphing 
-//Windows, Linux and Mac
+//For Windows, Linux and Mac
 
 module.exports = {
 		setOnFrame: function(fn) {
