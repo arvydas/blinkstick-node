@@ -169,7 +169,6 @@ function getConsumerFramerate()
 	return consumer_framerate;
 }
 
-
 function setSize(s)
 {	
 	//Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
