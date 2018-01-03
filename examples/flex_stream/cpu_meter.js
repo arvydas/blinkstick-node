@@ -85,6 +85,6 @@ function cpuLoad() {
 flex_stream.setSize(size);
 flex_stream.setProducerFramerate(framerate);
 flex_stream.setConsumerFramerate(framerate);
-flex_stream.setTransparency(.75);
+flex_stream.setTransparency(.75); // leave a particle trail
 flex_stream.setOnFrame(onFrame);
 
