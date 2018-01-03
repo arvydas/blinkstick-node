@@ -135,6 +135,7 @@ function morphFrame(grb)
 			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
 		}
 	}
+	
 	if (streaming)
 		device.setColors(0, backingstore, function(err, backingstore) {});
 }
@@ -196,7 +197,7 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
-	//Turn off LEDs
+	//Dsables streaming to ensure no pending frames are set after LEDs are turned off
 	streaming = false;
 	var frame = [];
 	for (var i = 0; i<getSize(); i++) {
