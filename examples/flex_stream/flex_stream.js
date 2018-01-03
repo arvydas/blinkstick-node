@@ -116,13 +116,13 @@ function consumeFrame()
 	}
 
 	if (currentFrame != null)
-		setColors(currentFrame);
+		morphFrame(currentFrame);
 	
 	//Clamp between 1 and 60 fps
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60));
 }
 
-function setColors(grb)
+function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
