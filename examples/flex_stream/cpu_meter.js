@@ -29,10 +29,10 @@ function onFrame() {
 
         percentageCPU = 100 - (100 * idleDifference / totalDifference);
 
-        cpu_avg = (cpu_avg+percentageCPU)/1.2;
+        cpu_avg = (cpu_avg+percentageCPU)/2;
 
         startMeasure = endMeasure; 
-        framerate = cpu_avg/2+10;
+        framerate = cpu_avg/1.8+5;
 
         if (pixels == null)
         	pixels = flex_stream.newFrame();
