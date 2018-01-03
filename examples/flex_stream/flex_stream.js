@@ -59,8 +59,8 @@ var producer_framerate = 15;  //Default low frame production for morphing
 var consumer_framerate = 60;  //Default high frame rendering for morphing
 var transparency       = 0.5; //Default is transparent frames for morphing
 var stream_buffer = [];       //Stream buffer for frames
-var backingstore = null;      //Internal frames for morphing
-var currentFrame = null;
+var composite = null;      //Composite frame
+var currentFrame = null;      //Latest frame from stream
 var streaming = true;         //Clean exit flag
 
 //Stream Producer 
@@ -113,23 +113,23 @@ function consumeFrame()
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
-// Morph current frame over backingstore (frame compositing)
+// Morph current frame over composite (frame compositing)
 function morphFrame(grb)
 {
-	if (backingstore == null || transparency == 0)
-		backingstore = grb;
+	if (composite == null || transparency == 0)
+		composite = grb;
 	
-	//Morph the new frame with current backingstore (additive alpha blending function)
+	//Morph the new frame with current composite (additive alpha blending function)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
-			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
-			backingstore[i*3+1] = Math.floor(backingstore[i*3+1]*transparency + grb[i*3+1]*(1-transparency)); // G
-			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
+			composite[i*3+0] = Math.floor(composite[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
+			composite[i*3+1] = Math.floor(composite[i*3+1]*transparency + grb[i*3+1]*(1-transparency)); // G
+			composite[i*3+2] = Math.floor(composite[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
 		}
 	}
 	
 	if (streaming)
-		device.setColors(0, backingstore, function(err, backingstore) {});
+		device.setColors(0, composite, function(err, composite) {});
 }
 
 // Set user-defined OnFrame()
