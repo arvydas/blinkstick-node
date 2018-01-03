@@ -6,7 +6,7 @@ const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
 var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
-var produer_framerate  = 30;  // Varies with CPU load   
+var producer_framerate = 30;  // Varies with CPU load   
 var consumer_framerate = 60;  // High fps for morphing   
 var transparency       = .75; // Leave a particle trail
 
