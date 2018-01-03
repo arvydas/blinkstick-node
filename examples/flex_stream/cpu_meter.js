@@ -1,5 +1,5 @@
 //CPU load meter based on flex_stream.js
-//User defined OnFrame() function animates a bouncing particle trail to indicate CPU load
+//User defined OnFrame() is a particle trail emitter to indicate CPU load. 
 //Windows, Linux and Mac
 
 var os         = require("os");
@@ -23,7 +23,7 @@ var pixels = [
         000, 000, 000,
         000, 000, 000,
         000, 000, 000,
-        255, 255, 255,
+        255, 255, 255, // Particle
         000, 000, 000
         ];
 
