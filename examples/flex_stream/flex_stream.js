@@ -1,4 +1,5 @@
-//Frame streamer for Blinkstick Flex and Pro (MAX 64 LEDS - single channel)
+//Frame streamer for Blinkstick Flex and Pro (MAX 64 LEDs - single channel)
+//Flex can handle 64 LEDs if flashed with Pro firmware, otherwise 32 is the default limit
 //Producer pushes frames to the stream as simple RGB arrays at a set rate
 //Consumer pulls frames from the stream and renders them to BlickStick at a set rate
 //When consumer rate is faster than production rate, transparency allows frame morphing 
