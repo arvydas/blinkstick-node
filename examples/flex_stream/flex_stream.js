@@ -201,7 +201,6 @@ function onExit(){
 	
 	//Turn off LEDs 
 	var frame = newFrame();
-
 	device.setColors(0, frame, function(err, frame) {process.exit(0);});
 }
 
