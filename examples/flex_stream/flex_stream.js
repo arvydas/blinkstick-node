@@ -53,28 +53,20 @@ module.exports = {
 
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
-
 var MAX_SIZE = 64;
-var size     = 8;   // Default 8 LEDs.
-
-var backingstore = null;
+var size     = 8;             //Default 8 LEDs.
+var producer_framerate = 15;  //Default low frame production for morphing
+var consumer_framerate = 60;  //Default high frame rendering for morphing
+var transparency       = 0.5; //Default is transparent frames for morphing
+var stream_buffer = [];       //Stream buffer for frames
+var backingstore = null;      //Internal frames for morphing
 var currentFrame = null;
-
-var producer_framerate = 15;  // Default low frame production for morphing
-var consumer_framerate = 60;  // Default high frame rendering for morphing
-var transparency       = 0.5; // Default is transparent frames for morphing
-
-//Stream buffer for frames
-var stream_buffer = [];
-
-//Clean exit flag
-var streaming = true;
+var streaming = true;         //Clean exit flag
 
 //Stream Producer 
 function producer(){
 	onFrame();
-	//Clamp to 1-60fps
-	setTimeout(producer, 1000/producer_framerate);
+	setTimeout(producer, 1000/producer_framerate); //Clamp to 1-60fps
 }
 
 //Stream Consumer
@@ -83,13 +75,13 @@ function consumer(){
 	setTimeout(consumer, 1000/consumer_framerate);
 }
 
+//Convert to internal BlinkStick buffer
 function convert_grb(rgb){
 	var grb = newFrame();
 
 	for (var i = 0; i<rgb.length; i++) {
-		//Convert to BlinkStick RGB format (GRB)
-		grb[i*3+1] = rgb[i*3+0]; // R
-		grb[i*3+0] = rgb[i*3+1]; // G
+		grb[i*3+1] = rgb[i*3+0]; // G
+		grb[i*3+0] = rgb[i*3+1]; // R
 		grb[i*3+2] = rgb[i*3+2]; // B
 	}
 	return grb;
@@ -104,9 +96,7 @@ function produceFrame(frame)
 {
 	if (stream_buffer.length==0)
 		stream_buffer.push(frame);
-
-	//Clamp between 1 and 60 fps
-	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));
+	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
 
 function consumeFrame()
@@ -116,19 +106,16 @@ function consumeFrame()
 		var grb = convert_grb(rgb);
 		currentFrame = grb;
 	}
-
 	if (currentFrame != null)
 		morphFrame(currentFrame);
-
-	//Clamp between 1 and 60 fps
-	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60));
+	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
 function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
-
+	
 	//Morph the new frame with current backingstore (additive alpha blending)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
@@ -173,8 +160,7 @@ function getConsumerFramerate()
 
 function setSize(s)
 {	
-	//Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
-	size = Math.max(1, Math.min(s, MAX_SIZE));
+	size = Math.max(1, Math.min(s, MAX_SIZE)); //Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
 }
 
 function getSize()
@@ -184,8 +170,7 @@ function getSize()
 
 function setTransparency(t)
 {
-	// Clamp between 0 (opaque) and 1 (invisible)
-	transparency = Math.max(0, Math.min(t, 1));
+	transparency = Math.max(0, Math.min(t, 1));	//Clamp between 0 (opaque) and 1 (invisible)
 }
 
 function getTranparency()
@@ -198,12 +183,9 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
-	//Disable streaming to ensure no pending frames are set after LEDs are turned off
-	streaming = false;
-	
-	//Turn off LEDs 
-	var frame = newFrame();
-	device.setColors(0, frame, function(err, frame) {process.exit(0);});
+	var frame = newFrame();	
+	streaming = false; //Disable streaming to ensure no pending frames are set after LEDs are turned off
+	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
 //Start streaming
