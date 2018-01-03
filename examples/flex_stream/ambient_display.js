@@ -23,7 +23,7 @@ const  sharp      = require('sharp');              //Available at npm.org
 var size               = 8;
 var producer_framerate = 5;   // Low capture rate to reduce CPU overhead (5 fps = 200ms lag)
 var consumer_framerate = 60;  // High render rate for smooth interlacing
-var transparency       = 0.95 // 95% transparency for smooth interlacing
+var transparency       = 0.85 // 95% transparency for smooth interlacing
 
 function onFrame(){
         screenshot().then((img) => {
