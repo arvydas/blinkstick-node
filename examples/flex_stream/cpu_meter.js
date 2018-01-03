@@ -13,11 +13,8 @@ var startMeasure  = cpuLoad();
 var percentageCPU = 0;
 var cpu_avg = 0;
 
-var phase   = 0;
-var shift   = 0;
+var pos    = 0;
 var speed   = 1;
-
-var pixels  = null;
 
 function onFrame() {       
 	var frame = flex_stream.newFrame();
@@ -31,27 +28,16 @@ function onFrame() {
 	cpu_avg = (cpu_avg+percentageCPU)/2;
 	framerate = cpu_avg/1.8+5;
 
-	if (pixels == null)
-		pixels = flex_stream.newFrame();
-
-	//Vary particle colour by CPU load (green to amber to red)        
-	pixels[(size-2)*3+0] = Math.floor(cpu_avg*2.5)+5;
-	pixels[(size-2)*3+1] = 100-Math.floor(cpu_avg);
-	pixels[(size-2)*3+2] = 2;
-
-	//Bounce particle off edges of LED strip (copy from pixel source to new frame)
-	if (phase<0 || phase>size-3)
+	//Bounce particle off edges of LED strip
+	if (pos<0 || pos>=size)
 		speed =-speed;         
-	phase    += speed;
-	shift     = Math.floor(phase);
-	for (var i = 0; i<size; i++) {
-		frame[i*3+0] = pixels[shift*3+0]; // R
-		frame[i*3+1] = pixels[shift*3+1]; // G
-		frame[i*3+2] = pixels[shift*3+2]; // B
-		if (shift<size)
-			shift+=1;
-	}
-
+	pos += speed;
+	
+	//Vary particle colour by CPU load (green to amber to red)        
+	frame[pos*3+0] = Math.floor(cpu_avg*2.5)+5; //R
+	frame[pos*3+1] = 100-Math.floor(cpu_avg);   //G
+	frame[pos*3+2] = 2;                         //B
+	
 	flex_stream.setProducerFramerate(framerate);
 	flex_stream.produceFrame(frame);     
 }
