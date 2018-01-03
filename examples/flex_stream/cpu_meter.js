@@ -13,7 +13,7 @@ var startMeasure  = cpuLoad();
 var percentageCPU = 0;
 var cpu_avg = 0;
 
-var pos    = 0;
+var pos     = 1;
 var speed   = 1;
 
 function onFrame() {       
@@ -29,7 +29,7 @@ function onFrame() {
 	framerate = cpu_avg/1.8+5;
 
 	//Bounce particle off edges of LED strip
-	if (pos<0 || pos>size-2)
+	if (pos<1 || pos>size-2)
 		speed =-speed;         
 	pos += speed;
 	
