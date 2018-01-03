@@ -5,29 +5,19 @@
 var os         = require("os");
 var flex_stream = require("./flex_stream.js");
 
-var framerate = 60;
+var size         = 8;   // Default 8, maximum 64 (single BlickStick channel)
+var framerate    = 60;  // Varies with CPU load   
+var transparency = .7; // Leave a particle trail
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
 
-var phase = 0;
-var shift = 0;
-var speed = 1;
+var phase   = 0;
+var shift   = 0;
+var speed   = 1;
 var cpu_avg = 0;
 
-var pixels = [
-        //R  //G  //B
-        000, 000, 000,
-        000, 000, 000,
-        000, 000, 000,
-        000, 000, 000,
-        000, 000, 000,
-        000, 000, 000,
-        255, 255, 255, // Particle
-        000, 000, 000
-        ];
-
-var size = pixels.length/3;
+var pixels  = null;
 
 function onFrame() {       
 	    var frame = flex_stream.newFrame();
@@ -37,13 +27,16 @@ function onFrame() {
         var idleDifference = endMeasure.idle - startMeasure.idle;
         var totalDifference = endMeasure.total - startMeasure.total;
 
-        percentageCPU = 100 - ~~(100 * idleDifference / totalDifference);
+        percentageCPU = 100 - (100 * idleDifference / totalDifference);
 
-        cpu_avg = (cpu_avg+percentageCPU)/2;
+        cpu_avg = (cpu_avg+percentageCPU)/1.2;
 
         startMeasure = endMeasure; 
         framerate = cpu_avg/2+10;
 
+        if (pixels == null)
+        	pixels = flex_stream.newFrame();
+        
         //Vary particle colour by CPU load (green to amber to red)        
         pixels[(size-2)*3+0] = Math.floor(cpu_avg*2.5)+5;
         pixels[(size-2)*3+1] = 100-Math.floor(cpu_avg);
@@ -84,6 +77,6 @@ function cpuLoad() {
 flex_stream.setSize(size);
 flex_stream.setProducerFramerate(framerate);
 flex_stream.setConsumerFramerate(framerate);
-flex_stream.setTransparency(.75); // leave a particle trail
+flex_stream.setTransparency(transparency);
 flex_stream.setOnFrame(onFrame);
 
