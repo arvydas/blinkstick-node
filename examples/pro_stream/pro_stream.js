@@ -4,13 +4,50 @@
 //This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
 
+module.exports = {
+		setOnFrame: function(fn) {
+			setOnFrame(fn); 
+		},
+		produceFrame: function(frame)
+		{
+			produceFrame(frame);
+		},
+		setProducerFramerate: function(framerate)
+		{
+			setProducerFramerate(framerate);
+		},
+		getProducerFramerate: function()
+		{
+			return getProducerFramerate();
+		},
+		setConsumerFramerate: function(framerate)
+		{
+			setConsumerFramerate(framerate);
+		},
+		getConsumerFramerate: function()
+		{
+			return getConsumerFramerate();
+		},
+		setSize: function(size)
+		{
+			setSize(size);
+		},
+		getSize: function()
+		{
+			return getSize();
+		}
+}
+
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
-//Variable frame rate in frames per second (fps)
+var size = 8;
+
+//Variable frame rates in frames per second (fps)
 //Can be dynamically set in onFrame()
 //BlinkStick can handle maximum 60fps
-var framerate = 60;
+var producer_framerate = 60;
+var consumer_framerate = 60;
 
 //Stream buffer for frames
 //This provides some elasticity to avoid skipped frames
@@ -21,30 +58,21 @@ var streaming = true;
 
 //Stream Producer 
 function producer(){
-	if (stream_buffer.length==0)
-		stream_buffer.push(onFrame());
+	onFrame();
 	//Clamp to 1-60fps
-	framerate = Math.max(1, Math.min(framerate, 60));
-	setTimeout(producer, 1000/framerate);
+	setTimeout(producer, 1000/producer_framerate);
 }
 
 //Stream Consumer
 function consumer(){
-	//Send converted frame, if available
-	if (stream_buffer.length>0 && streaming){
-		var rgb = stream_buffer.shift();
-		var grb = convert_grb(rgb);
-		device.setColors(0, grb, function(err, grb) {});
-	}
-	//Clamp to 1-60fps
-	framerate = Math.max(1, Math.min(framerate, 60));
-	setTimeout(consumer, 1000/framerate);
+	consumeFrame();
+	setTimeout(consumer, 1000/consumer_framerate);
 }
 
 function convert_grb(rgb){
 	var grb = [];
 
-	for (var i = 0; i<size; i++) {
+	for (var i = 0; i<rgb.length; i++) {
 		//Convert to BlinkStick RGB format (GRB)
 		grb[i*3+1] = rgb[i*3+0]; // R
 		grb[i*3+0] = rgb[i*3+1]; // G
@@ -53,66 +81,67 @@ function convert_grb(rgb){
 	return grb;
 }
 
-//Start streaming
-if (device){
-	producer();
-	consumer();
+function produceFrame(frame)
+{
+	if (stream_buffer.length==0)
+		stream_buffer.push(frame);
+
+	//Clamp between 1 and 60 fps
+	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));
 }
 
-//User defined frame generator
-//Returns the next frame
-//Called by the producer
-//Pixel source can be anything (eg. a running screenshot scaled to 8x1 resolution for ambient display applications)
-//This example is an animation that shifts an image back and forth at variable framerates (10-60fps)
-
-function onFrame(){       
-	var frame = [];
-
-	//Bounce image off edges of LED strip
-	if (phase<0 || phase>size-3){
-		speed =-speed;
-		//Vary the fps after each bounce
-		framerate = Math.random()*50+10;
-		//Change pupil colour
-		pixels[(size-2)*3+0] = Math.floor(Math.random()*128);
-		pixels[(size-2)*3+1] = Math.floor(Math.random()*128);
-		pixels[(size-2)*3+2] = Math.floor(Math.random()*128);
+function consumeFrame()
+{
+	if (stream_buffer.length>0 && streaming){
+		var rgb = stream_buffer.shift();
+		var grb = convert_grb(rgb);
+		device.setColors(0, grb, function(err, grb) {});
 	}
 
-	phase    += speed;	
-	shift     = Math.floor(phase);
-
-	for (var i = 0; i<size; i++) {
-		frame[i*3+0] = pixels[shift*3+0]; // R
-		frame[i*3+1] = pixels[shift*3+1]; // G
-		frame[i*3+2] = pixels[shift*3+2]; // B
-		if (shift<size)
-			shift+=1;
-	}
-
-	return frame;
+	//Clamp between 1 and 60 fps
+	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60));
 }
 
-//Pixel source (this one is an image of an eye)
-//Add more pixels to match your LED strip size (this is for 8 LEDs)
-//Note this example is for a single channel (up to 64 LEDs)
-var pixels = [
-	//R  //G  //B
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	000, 000, 000,
-	032, 032, 032, //Iris
-	000, 000, 128, //Pupil
-	032, 032, 032  //Iris
-	];
+function setOnFrame(fn)
+{
+	onFrame = fn;
+}
 
-//Animation variables
-var phase = 0;
-var shift = 0;
-var speed = 1;
-var size  = pixels.length/3;
+var onFrame = function(){
+	// use setOnFrame() to set user defined OnFrame function
+};
+
+function setProducerFramerate(framerate)
+{
+	producer_framerate = framerate;
+}
+
+function getProducerFramerate()
+{
+	return producer_framerate;
+}
+
+function setConsumerFramerate(framerate)
+{
+	consumer_framerate = framerate;
+}
+
+function getConsumerFramerate()
+{
+	return consumer_framerate;
+}
+
+
+function setSize(s)
+{
+	size = s;
+}
+
+function getSize()
+{
+	return size;
+}
+
 
 //Clean exit
 process.on('SIGTERM', onExit);
@@ -122,11 +151,18 @@ function onExit(){
 	//Turn off LEDs
 	streaming = false;
 	var frame = [];
-	for (var i = 0; i<size; i++) {
+	for (var i = 0; i<getSize(); i++) {
 		frame[i*3+0] = 0; // G
 		frame[i*3+1] = 0; // R
 		frame[i*3+2] = 0; // B
 	}
 	device.setColors(0, frame, function(err, frame) {process.exit(0);});
 }
+
+//Start streaming
+if (device){
+	producer();
+	consumer();
+}
+
 

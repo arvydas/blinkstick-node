@@ -1,40 +1,9 @@
 //CPU load meter based on pro_stream.js example
 
 var os         = require("os");
-var blinkstick = require('blinkstick');
-var device     = blinkstick.findFirst();
+var pro_stream = require("./pro_stream.js");
 
 var framerate = 60;
-var stream_buffer = [];
-var streaming = true;
-
-function producer(){
-        if (stream_buffer.length == 0)
-                stream_buffer.push(onFrame());
-        framerate = Math.max(1, Math.min(framerate, 60));
-        setTimeout(producer, 1000/framerate);
-}
-
-function consumer(){
-        if (stream_buffer.length>0 && streaming){
-                var rgb = stream_buffer.shift();
-                var grb = convert_grb(rgb);
-                device.setColors(0, grb, function(err, grb) {});
-        }
-        framerate = Math.max(1, Math.min(framerate, 60));
-        setTimeout(consumer, 1000/framerate);
-}
-
-function convert_grb(rgb){
-        var grb = [];
-        for (var i = 0; i<size; i++) {
-                grb[i*3+0] = rgb[i*3+1]; // G
-                grb[i*3+1] = rgb[i*3+0]; // R
-                grb[i*3+2] = rgb[i*3+2]; // B
-        }
-        return grb;
-}
-
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
@@ -55,12 +24,15 @@ var pixels = [
         000, 000, 128, //Pupil
         004, 004, 004  //Iris
         ];
-var size  = pixels.length/3;
 
+var size = pixels.length/3;
 
-function onFrame(){       
+pro_stream.setSize(size);
+pro_stream.setOnFrame(onFrame);
+
+function onFrame() {       
         var frame = [];
-
+        
         //Vary the fps by CPU load
         var endMeasure = cpuLoad(); 
         var idleDifference = endMeasure.idle - startMeasure.idle;
@@ -91,10 +63,10 @@ function onFrame(){
                         shift+=1;
         }
 
-        return frame;
+        pro_stream.setProducerFramerate(framerate);
+        pro_stream.setConsumerFramerate(framerate);
+        pro_stream.produceFrame(frame);
 }
-
-
 
 //CPU load 
 function cpuLoad() {
@@ -108,25 +80,4 @@ function cpuLoad() {
                 totalIdle += cpu.times.idle;
         }
         return {idle: totalIdle / cpus.length,  total: totalTick / cpus.length};
-}
-
-//Clean exit
-process.on('SIGTERM', onExit);
-process.on('SIGINT', onExit);
-function onExit(){
-        streaming = false;
-        //Turn off LEDs
-        var frame = [];
-        for (var i = 0; i<size; i++) {
-                frame[i*3+0] = 0; // G
-                frame[i*3+1] = 0; // R
-                frame[i*3+2] = 0; // B
-        }
-        device.setColors(0, frame, function(err, frame) {process.exit(0);});
-}
-
-
-if (device){
-        producer();
-        consumer();
 }
