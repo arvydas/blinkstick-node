@@ -1,6 +1,6 @@
 //CPU load meter based on flex_stream.js
 //User defined OnFrame() is a particle trail emitter to indicate CPU load. 
-//Windows, Linux and Mac
+//For Windows, Linux and Mac
 
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
