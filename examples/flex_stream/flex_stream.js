@@ -78,7 +78,6 @@ function consumer(){
 //Convert to internal BlinkStick buffer
 function convert_grb(rgb){
 	var grb = newFrame();
-
 	for (var i = 0; i<rgb.length; i++) {
 		grb[i*3+1] = rgb[i*3+0]; // G
 		grb[i*3+0] = rgb[i*3+1]; // R
@@ -92,6 +91,7 @@ function newFrame(){
 	return new Uint8Array(getSize()*3);
 }
 
+//Push new frame to stream - called from OnFrame()
 function produceFrame(frame)
 {
 	if (stream_buffer.length==0)
@@ -99,6 +99,7 @@ function produceFrame(frame)
 	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
 
+//Pull frame from stream
 function consumeFrame()
 {
 	if (stream_buffer.length>0){
