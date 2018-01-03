@@ -1,4 +1,4 @@
-//Ambient display (ambilight) based on pro_stream.js example     
+//Ambient display (ambilight) based on pro_stream.js     
 //Realtime streaming of desktop to blinkstick for Windows, Linux and Mac
 //
 //Minimum Requirements: 

@@ -1,4 +1,4 @@
-//CPU load meter based on pro_stream.js example
+//CPU load meter based on pro_stream.js
 
 var os         = require("os");
 var pro_stream = require("./pro_stream.js");
