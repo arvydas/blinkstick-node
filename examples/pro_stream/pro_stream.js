@@ -3,6 +3,7 @@
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
 //This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
+//Windows, Linux and Mac
 
 module.exports = {
 		setOnFrame: function(fn) {
