@@ -8,13 +8,6 @@
 // - 4 core 3GHz processor, 8MB ram, and 2MB graphics card
 // - Latest blinkstick, screenshot-desktop and sharp npm packages (these all work with Windows, Linux and Mac)
 
-//Notes:
-// - Higher framerates will slow down your entire system, depending on how fast it is.
-// - Lower framerates reduce CPU overhead but increase ambient display lag
-// - The bottleneck is screenshot-desktop - looking for a faster cross-platform screen grabber (gstreamer?)
-// - Sharp package is very fast and used for scaling the screenshot to Nx1 resolution for blinkstick LED strip
-// - Test with Ambilight Color Test youtube video (https://www.youtube.com/watch?v=8u4UzzJZAUg) running at FULLSCREEN.
-// - Ideally, blinkstick display drivers could be created so it could be treated as just another monitor.
 
 var    flex_stream = require("./flex_stream.js");                                                                                                                                                                     
 const  screenshot = require('screenshot-desktop'); //Available at npm.org                                                                                                                                       
