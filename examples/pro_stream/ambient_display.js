@@ -25,11 +25,6 @@ var size = 8;
 var producer_framerate = 15;
 var consumer_framerate = 15;
 
-pro_stream.setProducerFramerate(producer_framerate);
-pro_stream.setConsumerFramerate(consumer_framerate);
-pro_stream.setSize(size);
-pro_stream.setOnFrame(onFrame);
-
 function onFrame(){
         screenshot().then((img) => {
               sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
@@ -37,3 +32,9 @@ function onFrame(){
               })
         });
 }
+
+//Configure stream
+pro_stream.setProducerFramerate(producer_framerate);
+pro_stream.setConsumerFramerate(consumer_framerate);
+pro_stream.setSize(size);
+pro_stream.setOnFrame(onFrame);

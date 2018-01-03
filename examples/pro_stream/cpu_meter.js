@@ -29,9 +29,6 @@ var pixels = [
 
 var size = pixels.length/3;
 
-pro_stream.setSize(size);
-pro_stream.setOnFrame(onFrame);
-
 function onFrame() {       
         var frame = [];
         
@@ -64,10 +61,11 @@ function onFrame() {
                 if (shift<size)
                         shift+=1;
         }
-
+        
         pro_stream.setProducerFramerate(framerate);
         pro_stream.setConsumerFramerate(framerate);
         pro_stream.produceFrame(frame);
+        
 }
 
 //CPU load 
@@ -83,3 +81,9 @@ function cpuLoad() {
         }
         return {idle: totalIdle / cpus.length,  total: totalTick / cpus.length};
 }
+
+//Configure stream
+pro_stream.setSize(size);
+pro_stream.setOnFrame(onFrame);
+pro_stream.setProducerFramerate(framerate);
+pro_stream.setConsumerFramerate(framerate);
