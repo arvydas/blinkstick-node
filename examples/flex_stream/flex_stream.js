@@ -113,7 +113,7 @@ function consumeFrame()
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
-// Morph current frame over composite (frame compositing)
+// Morph current frame over composite frame
 function morphFrame(current)
 {
 	if (composite == null || transparency == 0)
