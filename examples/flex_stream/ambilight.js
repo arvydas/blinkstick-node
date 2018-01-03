@@ -1,5 +1,5 @@
 //Ambient display (ambilight) based on flex_stream.js     
-//Realtime streaming of desktop to BlinkStick Flex and Pro
+//Real-time streaming of desktop to BlinkStick Flex and Pro
 //User defined OnFrame() samples the desktop, and morphs frames to BlinkStick
 //Minimum Requirements: 
 //- Latest version of nodejs (tested with v8.9.3)
