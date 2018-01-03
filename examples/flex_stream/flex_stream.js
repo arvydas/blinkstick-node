@@ -171,8 +171,8 @@ function getConsumerFramerate()
 
 function setSize(s)
 {	
-	//Clamp between 0 and MAX_LEDS
-	size = Math.max(0, Math.min(s, MAX_SIZE));
+	//Clamp between 1 and MAX_LEDS
+	size = Math.max(1, Math.min(s, MAX_SIZE));
 }
 
 function getSize()
