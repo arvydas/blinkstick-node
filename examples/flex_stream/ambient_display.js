@@ -1,4 +1,4 @@
-//Ambient display (ambilight) based on pro_stream.js     
+//Ambient display (ambilight) based on flex_stream.js     
 //Realtime streaming of desktop to blinkstick.
 //User defined OnFrame() creates jpegs of the desktop, scales, and sends frame to stream
 //Windows, Linux and Mac
@@ -17,7 +17,7 @@
 // - Could be improved by morphing between screenshots, and predictive look-ahead .
 // - Ideally, blinkstick display drivers could be created so it could be treated as just another monitor.
 
-var    pro_stream = require("./pro_stream.js");                                                                                                                                                                     
+var    flex_stream = require("./flex_stream.js");                                                                                                                                                                     
 const  screenshot = require('screenshot-desktop');                                                                                                                                                              
 const  sharp      = require('sharp');                                                                                                                                                                         
 
@@ -28,13 +28,13 @@ var consumer_framerate = 15;
 function onFrame(){
         screenshot().then((img) => {
               sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
-                pro_stream.produceFrame(data);
+                flex_stream.produceFrame(data);
               })
         });
 }
 
 //Configure stream
-pro_stream.setSize(size);
-pro_stream.setProducerFramerate(producer_framerate);
-pro_stream.setConsumerFramerate(consumer_framerate);
-pro_stream.setOnFrame(onFrame);
+flex_stream.setSize(size);
+flex_stream.setProducerFramerate(producer_framerate);
+flex_stream.setConsumerFramerate(consumer_framerate);
+flex_stream.setOnFrame(onFrame);

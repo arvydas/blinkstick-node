@@ -1,3 +1,4 @@
+//For Blinkstick Flex (MAX 32 LEDS)
 //Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
@@ -8,6 +9,14 @@
 module.exports = {
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
+		},
+		setTransparency: function(t)
+		{
+			setTransparency(t);
+		},
+		getTransparency: function()
+		{
+			return getTransparency();
 		},
 		produceFrame: function(frame)
 		{
@@ -42,7 +51,8 @@ module.exports = {
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
-var size = 8;
+var MAX_SIZE = 32;
+var size     = 8;
 
 //Variable frame rates in frames per second (fps)
 //Can be dynamically set in onFrame()
@@ -134,8 +144,9 @@ function getConsumerFramerate()
 
 
 function setSize(s)
-{
-	size = s;
+{	
+	//Clamp between 0 and MAX_LEDS
+	size = Math.max(0, Math.min(s, MAX_SIZE));
 }
 
 function getSize()
@@ -143,6 +154,16 @@ function getSize()
 	return size;
 }
 
+function setTransparency(t)
+{
+
+	transparency = Math.max(0, Math.min(t, 1));
+}
+
+function getTranparency()
+{
+	return t;
+}
 
 //Clean exit
 process.on('SIGTERM', onExit);

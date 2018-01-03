@@ -1,9 +1,9 @@
-//CPU load meter based on pro_stream.js
+//CPU load meter based on flex_stream.js
 //User defined OnFrame() function animates a bouncing 'eye' to indicate CPU load
 //Windows, Linux and Mac
 
 var os         = require("os");
-var pro_stream = require("./pro_stream.js");
+var flex_stream = require("./flex_stream.js");
 
 var framerate = 60;
 
@@ -62,9 +62,9 @@ function onFrame() {
                         shift+=1;
         }
         
-        pro_stream.setProducerFramerate(framerate);
-        pro_stream.setConsumerFramerate(framerate);
-        pro_stream.produceFrame(frame);
+        flex_stream.setProducerFramerate(framerate);
+        flex_stream.setConsumerFramerate(framerate);
+        flex_stream.produceFrame(frame);
         
 }
 
@@ -83,8 +83,8 @@ function cpuLoad() {
 }
 
 //Configure stream
-pro_stream.setSize(size);
-pro_stream.setProducerFramerate(framerate);
-pro_stream.setConsumerFramerate(framerate);
-pro_stream.setOnFrame(onFrame);
+flex_stream.setSize(size);
+flex_stream.setProducerFramerate(framerate);
+flex_stream.setConsumerFramerate(framerate);
+flex_stream.setOnFrame(onFrame);
 
