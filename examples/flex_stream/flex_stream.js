@@ -4,7 +4,7 @@
 //When consumer rate is faster than production rate, transparency allows frame morphing 
 //For Windows, Linux and Mac
 //** Flex can handle 64 LEDs if flashed with Pro firmware, otherwise 32 is the default limit
-//** Pro can currently only set one channel per call, so multiple channels are not yet supported for streaming
+//** Pro can currently only set one channel per call, so streaming is not yet supported for multiple channels
 
 module.exports = {
 		setOnFrame: function(fn) {
