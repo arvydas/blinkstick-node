@@ -2,8 +2,8 @@
 //User defined OnFrame() is a particle trail emitter to indicate CPU load. 
 //Windows, Linux and Mac
 
-var os         = require("os");
-var flex_stream = require("./flex_stream.js");
+const os          = require("os");
+const flex_stream = require("./flex_stream.js");
 
 var size         = 8;   // Default 8, maximum 64 (single BlickStick channel)
 var framerate    = 60;  // Varies with CPU load   
