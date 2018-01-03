@@ -49,7 +49,7 @@ function onFrame() {
         pixels[(size-2)*3+1] = 100-Math.floor(cpu_avg);
         pixels[(size-2)*3+2] = 2;
 
-        //Bounce image off edges of LED strip (copy from pixel source to new frame)
+        //Bounce particle off edges of LED strip (copy from pixel source to new frame)
         if (phase<0 || phase>size-3)
                 speed =-speed;         
         phase    += speed;
