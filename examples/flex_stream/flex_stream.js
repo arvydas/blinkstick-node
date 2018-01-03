@@ -56,6 +56,10 @@ module.exports = {
 		stop: function()
 		{
 			return stop();
+		},
+		isStreaming: function()
+		{
+			return streaming;
 		}
 }
 
@@ -197,7 +201,7 @@ process.on('SIGINT',  onExit);
 
 function onExit(){
 	var frame = newFrame();	
-	streaming = false; //Disable streaming to ensure no pending frames are set after LEDs are turned off
+	stop(); //Disable streaming to ensure no pending frames are set after LEDs are turned off
 	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
