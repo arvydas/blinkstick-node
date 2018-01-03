@@ -65,7 +65,7 @@ var streaming = true;         //Clean exit flag
 
 //Stream Producer 
 function producer(){
-	onFrame();
+	onFrame(); // Call user defined function
 	setTimeout(producer, 1000/producer_framerate); //Clamp to 1-60fps
 }
 
