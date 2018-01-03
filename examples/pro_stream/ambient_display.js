@@ -1,6 +1,7 @@
 //Ambient display (ambilight) based on pro_stream.js     
-//Realtime streaming of desktop to blinkstick for Windows, Linux and Mac
+//Realtime streaming of desktop to blinkstick.
 //User defined OnFrame() creates jpegs of the desktop, scales, and sends to BlinkStick
+//Windows, Linux and Mac
 
 //Minimum Requirements: 
 // - Latest version of nodejs (tested with v8.9.3)
