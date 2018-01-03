@@ -91,7 +91,7 @@ function newFrame(){
 	return new Uint8Array(getSize()*3);
 }
 
-//Push new frame to stream - called from OnFrame()
+//Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
 {
 	if (stream_buffer.length==0)
@@ -99,7 +99,7 @@ function produceFrame(frame)
 	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
 
-//Pull frame from stream
+//Consume frame from stream - called from consumer
 function consumeFrame()
 {
 	if (stream_buffer.length>0){
@@ -112,6 +112,7 @@ function consumeFrame()
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
+// Morph current frame over backingstore (composite frame)
 function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
@@ -130,11 +131,13 @@ function morphFrame(grb)
 		device.setColors(0, backingstore, function(err, backingstore) {});
 }
 
+// Set user-defined OnFrame()
 function setOnFrame(fn)
 {
 	onFrame = fn;
 }
 
+// Default OnFrame stub - set by user with setOnFrame()
 var onFrame = function(){
 	// use setOnFrame() to set user defined OnFrame function
 };
