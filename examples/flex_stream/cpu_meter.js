@@ -12,17 +12,16 @@ var alpha              = .25; // 25% opacity to leave a particle trail
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
-var cpu_avg = 0;
-
-var pos     = 1;
-var speed   = 1;
+var cpu_avg       = 0;
+var pos           = 1;
+var speed         = 1;
 
 function onFrame() {       
-	var frame = flex_stream.newFrame();
-	var endMeasure = cpuLoad(); 
-	var idleDifference = endMeasure.idle - startMeasure.idle;
+	var frame           = flex_stream.newFrame();
+	var endMeasure      = cpuLoad(); 
+	var idleDifference  = endMeasure.idle - startMeasure.idle;
 	var totalDifference = endMeasure.total - startMeasure.total;
-	startMeasure = endMeasure;
+	startMeasure        = endMeasure;
 
 	//Vary the producer framerate by percentage CPU load (5 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
@@ -45,8 +44,10 @@ function onFrame() {
 
 //CPU load 
 function cpuLoad() {
-	var totalIdle = 0, totalTick = 0;
-	var cpus = os.cpus();
+	var totalIdle = 0;
+	var totalTick = 0;
+	var cpus      = os.cpus();
+	
 	for(var i = 0, len = cpus.length; i < len; i++) {
 		var cpu = cpus[i];
 		for(type in cpu.times) {
