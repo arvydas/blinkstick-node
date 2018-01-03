@@ -182,8 +182,7 @@ function getSize()
 
 function setTransparency(t)
 {
-	// 0 = opaque
-	// 1 = invisible
+	// Clamp between 0 (opaque) and 1 (invisible)
 	transparency = Math.max(0, Math.min(t, 1));
 }
 
