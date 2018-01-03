@@ -22,16 +22,15 @@ var pixels  = null;
 function onFrame() {       
 	    var frame = flex_stream.newFrame();
         
-        //Vary the fps by CPU load
+    
         var endMeasure = cpuLoad(); 
         var idleDifference = endMeasure.idle - startMeasure.idle;
         var totalDifference = endMeasure.total - startMeasure.total;
-
+        startMeasure = endMeasure;
+        
+        //Vary the framerate by percentage CPU load (4 to 60 fps)
         percentageCPU = 100 - (100 * idleDifference / totalDifference);
-
         cpu_avg = (cpu_avg+percentageCPU)/2;
-
-        startMeasure = endMeasure; 
         framerate = cpu_avg/1.8+5;
 
         if (pixels == null)
