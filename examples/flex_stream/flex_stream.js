@@ -5,7 +5,10 @@
 //This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
 //The 64 LED maximum corresponds to a single Pro channel, which is the limit for Flex.
+//Transparency can be used to composite a newly produced frame over the last.
+//This allows morphing of slowly produced frames at 60fps (interlacing - see examples).
 //Windows, Linux and Mac
+
 
 module.exports = {
 		setOnFrame: function(fn) {
@@ -57,7 +60,7 @@ var device     = blinkstick.findFirst();
 
 var MAX_SIZE = 64;
 var size         = 8; // Default 8 LEDs.
-var transparency = 0; // Default opaque frames
+var transparency = 0; // Default opaque frames (no morphing)
 var backingstore = null;
 var currentFrame = null;
 
