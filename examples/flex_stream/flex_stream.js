@@ -59,7 +59,7 @@ var producer_framerate = 15;  //Default low frame production for morphing
 var consumer_framerate = 60;  //Default high frame rendering for morphing
 var transparency       = 0.5; //Default is transparent frames for morphing
 var stream_buffer = [];       //Stream buffer for frames
-var composite = null;      //Composite frame
+var composite = null;         //Composite frame
 var currentFrame = null;      //Latest frame from stream
 var streaming = true;         //Clean exit flag
 
@@ -94,7 +94,7 @@ function newFrame(){
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
 {
-	if (stream_buffer.length==0) // Skip frame if consumer is falling behind
+	if (stream_buffer.length==0) //Skip frame if consumer is falling behind
 		stream_buffer.push(frame);
 	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
@@ -114,17 +114,17 @@ function consumeFrame()
 }
 
 // Morph current frame over composite (frame compositing)
-function morphFrame(grb)
+function morphFrame(current)
 {
 	if (composite == null || transparency == 0)
-		composite = grb;
+		composite = current; //Initialize composite frame
 	
-	//Morph the new frame with current composite (additive alpha blending function)
+	//Morph to the current frame with composite (additive alpha blending function)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
-			composite[i*3+0] = Math.floor(composite[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
-			composite[i*3+1] = Math.floor(composite[i*3+1]*transparency + grb[i*3+1]*(1-transparency)); // G
-			composite[i*3+2] = Math.floor(composite[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
+			composite[i*3+0] = Math.floor(composite[i*3+0]*transparency + current[i*3+0]*(1-transparency)); // R
+			composite[i*3+1] = Math.floor(composite[i*3+1]*transparency + current[i*3+1]*(1-transparency)); // G
+			composite[i*3+2] = Math.floor(composite[i*3+2]*transparency + current[i*3+2]*(1-transparency)); // B
 		}
 	}
 	
