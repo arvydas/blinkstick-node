@@ -127,7 +127,7 @@ function morphFrame(grb)
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
 	
-    //Morph the new frame with current backingstore (additive alpha colour blending)
+    //Morph the new frame with current backingstore (additive alpha blending)
 	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
 			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
