@@ -7,8 +7,8 @@
 //For Windows, Linux and Mac
 
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                     
-const  screenshot  = require('screenshot-desktop'); //Available at npm.org                                                                                                                                       
-const  sharp       = require('sharp');              //Available at npm.org                                                                                                                                             
+const  screenshot  = require('screenshot-desktop'); //Available at npmjs.com                                                                                                                                       
+const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
 
 var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
 var producer_framerate = 5;   // Low sample rate (5 fps = 200ms lag) to reduce CPU overhead 
