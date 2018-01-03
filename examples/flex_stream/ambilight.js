@@ -15,7 +15,7 @@ var producer_framerate = 5;   // Low sample rate (5 fps = 200ms lag) to reduce C
 var consumer_framerate = 60;  // High render rate for smooth interlacing
 var transparency       = 0.85 // 85% transparency for smooth interlacing
 
-//Send desktop to BlinkStick via async futures pipeline
+//Send scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function onFrame(){
 	screenshot().then((img) => {
 		sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
