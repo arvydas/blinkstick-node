@@ -60,7 +60,7 @@ var currentFrame = null;
 
 var producer_framerate = 30; // Low rate to reduce CPU overhead 
 var consumer_framerate = 60; // High rate for frame compositing
-var transparency      = 0.5; // Default interlaced (fast morphing)
+var transparency       = .5; // Default interlaced (fast morphing)
 
 //Stream buffer for frames
 var stream_buffer = [];
