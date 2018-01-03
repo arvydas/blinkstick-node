@@ -22,8 +22,8 @@ const  sharp      = require('sharp');
 
 var size               = 8;
 var producer_framerate = 4;   // low capture rate to reduce overhead
-var consumer_framerate = 60;  // high render rate
-var transparency       = 0.95 // 95% transparency at 60fps gives interlaced (morph) effect
+var consumer_framerate = 60;  // high render rate for smooth interlacing
+var transparency       = 0.95 // 95% transparency for smooth interlacing
 
 function onFrame(){
         screenshot().then((img) => {
