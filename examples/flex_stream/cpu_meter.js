@@ -7,7 +7,7 @@ var flex_stream = require("./flex_stream.js");
 
 var size         = 8;   // Default 8, maximum 64 (single BlickStick channel)
 var framerate    = 60;  // Varies with CPU load   
-var transparency = .7; // Leave a particle trail
+var transparency = .75; // Leave a particle trail
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
