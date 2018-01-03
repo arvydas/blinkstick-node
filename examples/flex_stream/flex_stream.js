@@ -58,9 +58,9 @@ var size     = 8;   // Default 8 LEDs.
 var backingstore = null;
 var currentFrame = null;
 
-var producer_framerate = 15; // Default low frame production
-var consumer_framerate = 60; // Default high frame rendering
-var transparency       = 0;  // Default is opaque frames (no morphing)
+var producer_framerate = 15;  // Default low frame production for morphing
+var consumer_framerate = 60;  // Default high frame rendering for morphing
+var transparency       = 0.5; // Default is transparent frames for morphing (0 = no morphing)
 
 //Stream buffer for frames
 var stream_buffer = [];
