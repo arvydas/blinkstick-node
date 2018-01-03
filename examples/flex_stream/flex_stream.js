@@ -199,13 +199,9 @@ function onExit(){
 	//Disable streaming to ensure no pending frames are set after LEDs are turned off
 	streaming = false;
 	
-	//Turn off LEDs
+	//Turn off LEDs 
 	var frame = newFrame();
-	for (var i = 0; i<getSize(); i++) {
-		frame[i*3+0] = 0; // G
-		frame[i*3+1] = 0; // R
-		frame[i*3+2] = 0; // B
-	}
+
 	device.setColors(0, frame, function(err, frame) {process.exit(0);});
 }
 
