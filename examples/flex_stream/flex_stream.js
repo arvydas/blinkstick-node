@@ -135,7 +135,6 @@ function morphFrame(grb)
 			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
 		}
 	}
-
 	device.setColors(0, backingstore, function(err, backingstore) {});
 }
 
