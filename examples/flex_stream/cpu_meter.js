@@ -11,18 +11,16 @@ var transparency = .75; // Leave a particle trail
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
+var cpu_avg = 0;
 
 var phase   = 0;
 var shift   = 0;
 var speed   = 1;
-var cpu_avg = 0;
 
 var pixels  = null;
 
 function onFrame() {       
 	    var frame = flex_stream.newFrame();
-        
-    
         var endMeasure = cpuLoad(); 
         var idleDifference = endMeasure.idle - startMeasure.idle;
         var totalDifference = endMeasure.total - startMeasure.total;
