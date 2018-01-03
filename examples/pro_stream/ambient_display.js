@@ -34,7 +34,7 @@ function onFrame(){
 }
 
 //Configure stream
+pro_stream.setSize(size);
 pro_stream.setProducerFramerate(producer_framerate);
 pro_stream.setConsumerFramerate(consumer_framerate);
-pro_stream.setSize(size);
 pro_stream.setOnFrame(onFrame);

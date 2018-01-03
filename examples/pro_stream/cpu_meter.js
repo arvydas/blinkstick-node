@@ -84,6 +84,7 @@ function cpuLoad() {
 
 //Configure stream
 pro_stream.setSize(size);
-pro_stream.setOnFrame(onFrame);
 pro_stream.setProducerFramerate(framerate);
 pro_stream.setConsumerFramerate(framerate);
+pro_stream.setOnFrame(onFrame);
+
