@@ -195,6 +195,16 @@ function getAlpha()
 	return alpha;
 }
 
+function start()
+{
+	streaming = true;	//Clamp between 0 (invisible) and 1 (opaque)
+}
+
+function stop()
+{
+	streaming = false;
+}
+
 //Clean exit
 process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
