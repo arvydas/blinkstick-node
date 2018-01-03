@@ -18,6 +18,7 @@ var producer_framerate = 5;   // Low capture rate (5 fps = 200ms lag) to reduce 
 var consumer_framerate = 60;  // High render rate for smooth interlacing
 var transparency       = 0.85 // 85% transparency for smooth interlacing
 
+//Send desktop to BlinkStick
 function onFrame(){
         screenshot().then((img) => {
               sharp(img).resize(size,1).ignoreAspectRatio().raw().toBuffer().then(data => {
