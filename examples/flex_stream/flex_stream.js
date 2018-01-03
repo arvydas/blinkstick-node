@@ -1,9 +1,10 @@
-//For Blinkstick Flex (MAX 32 LEDS)
+//For Blinkstick Flex or Pro (MAX 64 LEDS)
 //Stream producer-consumer pattern that allows separation of concerns for BlinkStick frame streaming
 //Producer pushes frames to the stream as simple RGB arrays at a variable frame rate
 //Consumer pulls frames from the stream and sends them to BlickStick at the same rate
 //This is elastic and very efficient, with low CPU overhead in the node process
 //Note that LEDs can vary in response time, resulting in colour blur at high fps
+//The 64 LED maximum corresponds to a single Pro channel, which is the limit for Flex.
 //Windows, Linux and Mac
 
 module.exports = {
@@ -51,7 +52,7 @@ module.exports = {
 var blinkstick = require('blinkstick');
 var device     = blinkstick.findFirst();
 
-var MAX_SIZE = 32;
+var MAX_SIZE = 64;
 var size     = 8;
 
 //Variable frame rates in frames per second (fps)
