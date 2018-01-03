@@ -1,4 +1,5 @@
 //CPU load meter based on pro_stream.js
+//User defined OnFrame() function animates a bouncing 'eye' to indicate CPU load
 
 var os         = require("os");
 var pro_stream = require("./pro_stream.js");
