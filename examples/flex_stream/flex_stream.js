@@ -126,10 +126,10 @@ function morphFrame(grb)
 {
 	if (backingstore == null || transparency == 0)
 		backingstore = grb;
-
-	if (transparency>0){   //Composite the new frame with current backingstore 
+	
+    //Morph the new frame with current backingstore (additive colour blend)
+	if (transparency>0){   
 		for (var i = 0; i<getSize(); i++) {
-			//Convert to BlinkStick RGB format (GRB)
 			backingstore[i*3+0] = Math.floor(backingstore[i*3+0]*transparency + grb[i*3+0]*(1-transparency)); // R
 			backingstore[i*3+1] = Math.floor(backingstore[i*3+1]*transparency + grb[i*3+1]*(1-transparency)); // G
 			backingstore[i*3+2] = Math.floor(backingstore[i*3+2]*transparency + grb[i*3+2]*(1-transparency)); // B
