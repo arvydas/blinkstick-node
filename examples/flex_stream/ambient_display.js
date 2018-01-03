@@ -1,5 +1,5 @@
 //Ambient display (ambilight) based on flex_stream.js     
-//Realtime streaming of desktop to blinkstick.
+//Realtime streaming of desktop to BlinkStick Flex and Pro
 //User defined OnFrame() creates jpegs of the desktop, scales, and sends frame to stream
 //Windows, Linux and Mac
 
