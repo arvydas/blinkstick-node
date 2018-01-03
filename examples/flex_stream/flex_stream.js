@@ -1,7 +1,7 @@
 //Frame streamer for Blinkstick Flex and Pro (MAX 64 LEDs - single channel **)
 //Producer pushes frames to the stream as simple RGB arrays at a set rate
 //Consumer pulls frames from the stream and renders them to BlickStick at a set rate
-//When consumer rate is faster than production rate, transparency allows frame morphing 
+//When consumer rate is faster than production rate, alpha (transparency) allows frame morphing 
 //For Windows, Linux and Mac
 //** Flex is single channel and can handle 64 LEDs if flashed with Pro firmware, otherwise 32 is the default limit
 //** Pro can currently only set one channel per call, so streaming is not yet supported for multiple channels
@@ -13,13 +13,13 @@ module.exports = {
 		newFrame: function() {
 			return newFrame(); 
 		},
-		setTransparency: function(t)
+		setAlpha: function(a)
 		{
-			setTransparency(t);
+			setAlpha(t);
 		},
-		getTransparency: function()
+		getAlpha: function()
 		{
-			return getTransparency();
+			return getAlpha();
 		},
 		produceFrame: function(frame)
 		{
@@ -48,20 +48,28 @@ module.exports = {
 		getSize: function()
 		{
 			return getSize();
+		},
+		start: function(size)
+		{
+			start();
+		},
+		stop: function()
+		{
+			return stop();
 		}
 }
 
-var blinkstick = require('blinkstick');
-var device     = blinkstick.findFirst();
-var MAX_SIZE = 64;
-var size     = 8;             //Default 8 LEDs.
-var producer_framerate = 15;  //Default low frame production for morphing
-var consumer_framerate = 60;  //Default high frame rendering for morphing
-var transparency       = 0.5; //Default is transparent frames for morphing
-var stream_buffer = [];       //Stream buffer for frames
-var composite = null;         //Composite frame
-var currentFrame = null;      //Latest frame from stream
-var streaming = true;         //Pause flag
+var blinkstick         = require('blinkstick');
+var device             = blinkstick.findFirst();
+var MAX_SIZE           = 64;   //BlinkStick single channel limit
+var size               = 8;    //Default 8 LEDs.
+var producer_framerate = 15;   //Default low frame production for morphing
+var consumer_framerate = 60;   //Default high frame rendering for morphing
+var alpha              = 0.5;  //Default is transparent frames for morphing
+var stream_buffer      = [];   //Stream buffer for frames
+var composite          = null; //Composite frame
+var currentFrame       = null; //Latest frame from stream
+var streaming          = true; //Pause flag
 
 //Stream Producer 
 function producer(){
@@ -109,36 +117,36 @@ function consumeFrame()
 	}
 	if (currentFrame != null)
 		morphFrame(currentFrame); //Morph to the current frame
-	
+
 	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
-// Morph current frame over composite frame
+//Morph current frame over composite frame
 function morphFrame(current)
 {
-	if (composite == null || transparency == 0)
+	if (composite == null || alpha == 0)
 		composite = current; //Initialize composite frame
-	
+
 	//Morph to the current frame with composite (additive alpha blending function)
-	if (transparency>0){   
+	if (alpha>0){   
 		for (var i = 0; i<getSize(); i++) {
-			composite[i*3+0] = Math.floor(composite[i*3+0]*transparency + current[i*3+0]*(1-transparency)); // R
-			composite[i*3+1] = Math.floor(composite[i*3+1]*transparency + current[i*3+1]*(1-transparency)); // G
-			composite[i*3+2] = Math.floor(composite[i*3+2]*transparency + current[i*3+2]*(1-transparency)); // B
+			composite[i*3+0] = Math.floor(current[i*3+0]*alpha + composite[i*3+0]*(1-alpha)); // R
+			composite[i*3+1] = Math.floor(current[i*3+1]*alpha + composite[i*3+1]*(1-alpha)); // G
+			composite[i*3+2] = Math.floor(current[i*3+2]*alpha + composite[i*3+2]*(1-alpha)); // B
 		}
 	}
-	
+
 	if (streaming)
 		device.setColors(0, composite, function(err, composite) {});
 }
 
-// Set user-defined OnFrame()
+//Set user-defined OnFrame()
 function setOnFrame(fn)
 {
 	onFrame = fn;
 }
 
-// Default OnFrame stub - set by user with setOnFrame()
+//Default OnFrame stub - set by user with setOnFrame()
 var onFrame = function(){
 	// use setOnFrame() to set user defined OnFrame function
 };
@@ -173,14 +181,14 @@ function getSize()
 	return size;
 }
 
-function setTransparency(t)
+function setAlpha(t)
 {
-	transparency = Math.max(0, Math.min(t, 1));	//Clamp between 0 (opaque) and 1 (invisible)
+	alpha = Math.max(0, Math.min(t, 1));	//Clamp between 0 (invisible) and 1 (opaque)
 }
 
-function getTranparency()
+function getAlpha()
 {
-	return transparency;
+	return alpha;
 }
 
 //Clean exit
