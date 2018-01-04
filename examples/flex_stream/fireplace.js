@@ -17,7 +17,7 @@ function onFrame() {
 		var r = Math.random()*255;
 		var g = r*Math.random()*.4;
 
-		if (Math.random<.5)
+		if (Math.random()<.5)
 		{
 			frame[i*3+0] = Math.floor(r);  //R
 			frame[i*3+1] = Math.floor(g);  //G
