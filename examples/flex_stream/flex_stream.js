@@ -128,7 +128,7 @@ function consumeFrame()
 //Morph current frame over composite frame
 function morphFrame(current)
 {
-	if (composite == null || alpha == 0)
+	if (composite == null || alpha == 1)
 		composite = current; //Initialize composite frame
 
 	//Morph to the current frame with composite (additive alpha blending function)
