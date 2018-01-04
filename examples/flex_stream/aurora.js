@@ -12,25 +12,26 @@ var frame              = flex_stream.newFrame();
 
 function onFrame() {       
 
-
 	//Aurora
 	a = Math.random();
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
 
 	for (i=0; i<size; i++)
-	{       
+	{    			
+		var r = Math.random()*192;
+		var g = (1-Math.random()*.85)*255;
+		var b = (1-Math.random()*.85)*255;   
 		//Borealis
-		if (Math.random()>.75)
+		if (Math.random()<.75)
 		{
-			var r = Math.random()*192;
-			var g = (1-Math.random()*.85)*255;
-			var b = (1-Math.random()*.85)*255;
-			frame[i*3+0] = Math.floor(r);  //R
-			frame[i*3+1] = Math.floor(g);  //G
-			frame[i*3+2] = Math.floor(b);  //B
+			r=0; g=0; b=0;
 		}
+		frame[i*3+0] = Math.floor(r);  //R
+		frame[i*3+1] = Math.floor(g);  //G
+		frame[i*3+2] = Math.floor(b);  //B
 	}
+
 	flex_stream.produceFrame(frame);     
 }
 
