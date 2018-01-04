@@ -19,10 +19,11 @@ function onFrame() {
 			//Red to yellow spectrum
 			var r = Math.random()*230+25;
 			var g = r*Math.random()*.5;
+			frame[i*3+0] = Math.floor(r);  //R
+			frame[i*3+1] = Math.floor(g);  //G
+			frame[i*3+2] = 0;              //B
 		}
-		frame[i*3+0] = Math.floor(r);  //R
-		frame[i*3+1] = Math.floor(g);  //G
-		frame[i*3+2] = 0;              //B
+		
 		//Flickering frames
 		f = Math.random();
 		flex_stream.setProducerFramerate(f*5+3);
