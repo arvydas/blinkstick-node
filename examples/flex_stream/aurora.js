@@ -22,7 +22,7 @@ function onFrame() {
 		//Borealis
 		if (Math.random()>.25)
 		{
-			var r = Math.random()*128;
+			var r = Math.random()*192;
 			var g = (1-Math.random()*.85)*255;
 			var b = (1-Math.random()*.85)*255;
 			frame[i*3+0] = Math.floor(r);  //R
