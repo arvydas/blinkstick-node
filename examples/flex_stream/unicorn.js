@@ -7,7 +7,7 @@ const flex_stream = require("./flex_stream.js");
 var size               = 8;     // Default 8, maximum 64 (single BlickStick channel)
 var producer_framerate = 1;     // slow 
 var consumer_framerate = 60;    // High fps for morphing   
-var alpha              = 0.01;  // slow
+var alpha              = 0.05;  // slow
 var frame              = flex_stream.newFrame();
 
 function onFrame() {       
@@ -17,13 +17,9 @@ function onFrame() {
 	{   
 		//Normalize all pixel brightness to 128
 		var r = Math.random()*128;
-		var g = r+(Math.random()*(128-r));
+		var g = (128-r)+(Math.random()*(128-r));
 		var b = 128-g;
-		//Borealis
-		if (Math.random()>.9)
-		{
-			r=0; g=0; b=0;
-		}
+
 		frame[i*3+0] = Math.floor(r);  //R
 		frame[i*3+1] = Math.floor(g);  //G
 		frame[i*3+2] = Math.floor(b);  //B
