@@ -9,9 +9,6 @@ var producer_framerate = 30;  // Varies for flame flickering
 var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // variable opacity for flickering flames
 
-var pos           = 1;
-var speed         = 1;
-
 function onFrame() {       
 	var frame = flex_stream.newFrame();
 
