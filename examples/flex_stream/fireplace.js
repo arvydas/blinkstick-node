@@ -13,16 +13,17 @@ var frame              = flex_stream.newFrame();
 function onFrame() {       
 	for (i=0; i<size; i++)
 	{
-		//Red to yellow spectrum
-		var r = Math.random()*255;
-		var g = r*Math.random()*.5;
 
+        r=0; g=0; b=0;
 		if (Math.random()<.5)
-		{
-			frame[i*3+0] = Math.floor(r);  //R
-			frame[i*3+1] = Math.floor(g);  //G
-			frame[i*3+2] = 0;              //B
+		{	
+			//Red to yellow spectrum
+			var r = Math.random()*255;
+			var g = r*Math.random()*.5;
 		}
+		frame[i*3+0] = Math.floor(r);  //R
+		frame[i*3+1] = Math.floor(g);  //G
+		frame[i*3+2] = 0;              //B
 		//Flickering frames
 		f = Math.random();
 		flex_stream.setProducerFramerate(f*20+4);
