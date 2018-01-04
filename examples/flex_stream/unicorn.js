@@ -7,7 +7,7 @@ const flex_stream = require("./flex_stream.js");
 var size               = 8;     // Default 8, maximum 64 (single BlickStick channel)
 var producer_framerate = 1;     // slow 
 var consumer_framerate = 60;    // High fps for morphing   
-var alpha              = 0.01;  // slow
+var alpha              = 0.02;  // slow
 var frame              = flex_stream.newFrame();
 
 function onFrame() {       
