@@ -14,10 +14,6 @@ function onFrame() {
 	for (i=0; i<size; i++)
 	{
 
-		if (Math.random()<.05){
-			r=0; g=0; b=0;
-		}
-
 		if (Math.random()<.5)
 		{	
 			//Red to yellow spectrum
