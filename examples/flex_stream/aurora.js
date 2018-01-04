@@ -20,10 +20,10 @@ function onFrame() {
 	for (i=0; i<size; i++)
 	{    			
 		var r = Math.random()*192;
-		var g = (1-Math.random()*.85)*255;
-		var b = (1-Math.random()*.85)*255;   
+		var g = (1-Math.random()*.85)*192;
+		var b = (1-Math.random()*.85)*192;   
 		//Borealis
-		if (Math.random()>.9)
+		if (Math.random()>.8)
 		{
 			r=0; g=0; b=0;
 		}
