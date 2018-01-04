@@ -19,7 +19,7 @@ function onFrame() {
 
 	for (i=0; i<size; i++)
 	{    			
-		var r = Math.random()*192;
+		var r = Math.random()*128;
 		var g = (1-Math.random()*.85)*192;
 		var b = (1-Math.random()*.85)*192;   
 		//Borealis
