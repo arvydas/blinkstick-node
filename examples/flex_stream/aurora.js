@@ -23,7 +23,7 @@ function onFrame() {
 		var g = (1-Math.random()*.85)*192;
 		var b = (1-Math.random()*.85)*192;   
 		//Borealis
-		if (Math.random()>.8)
+		if (Math.random()>.9)
 		{
 			r=0; g=0; b=0;
 		}
