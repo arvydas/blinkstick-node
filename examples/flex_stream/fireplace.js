@@ -25,7 +25,7 @@ function onFrame() {
 		}
 		//Flickering frames
 		f = Math.random();
-		flex_stream.setProducerFramerate(f*20+2);
+		flex_stream.setProducerFramerate(f*20+4);
 		flex_stream.setAlpha(.1+(f/5));
 	}
 	flex_stream.produceFrame(frame);     
