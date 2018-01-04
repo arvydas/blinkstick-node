@@ -5,9 +5,9 @@ const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
 var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
-var producer_framerate = 30;  // Varies for flame flickering
+var producer_framerate = 30;  // Varies
 var consumer_framerate = 60;  // High fps for morphing   
-var alpha              = 0;   // variable opacity for flickering flames
+var alpha              = 0;   // Varies
 
 function onFrame() {       
 	var frame = flex_stream.newFrame();
