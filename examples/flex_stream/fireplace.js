@@ -15,7 +15,7 @@ function onFrame() {
 	{
 
         r=0; g=0; b=0;
-		if (Math.random()<.5)
+		if (Math.random()<.75)
 		{	
 			//Red to yellow spectrum
 			var r = Math.random()*255;
