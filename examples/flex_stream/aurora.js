@@ -21,7 +21,7 @@ function onFrame() {
 	for (i=0; i<size; i++)
 	{       
 		//Borealis
-		if (Math.random()>.25)
+		if (Math.random()>.75)
 		{
 			var r = Math.random()*192;
 			var g = (1-Math.random()*.85)*255;
