@@ -173,7 +173,7 @@ var onFrame = function(){};
 
 function setProducerFramerate(framerate)
 {
-	producer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
+	producer_framerate = Math.max(1, Math.min(framerate, 50));	//Clamp between 1 and 50 fps
 }
 
 function getProducerFramerate()
@@ -183,7 +183,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
-	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
+	consumer_framerate = Math.max(1, Math.min(framerate, 50));	//Clamp between 1 and 50 fps
 }
 
 function getConsumerFramerate()
