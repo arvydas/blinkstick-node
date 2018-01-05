@@ -238,7 +238,7 @@ if (device){
 var pos = 0;
 var signatureOnFrame = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= size*2)
+	if (pos++ >= size+30)
 		pos=0;       
 
 	var frame = newFrame();
