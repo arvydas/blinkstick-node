@@ -226,7 +226,7 @@ function onExit(){
 
 
 //Start Streaming
-setOnFrame(onFrame);
+
 if (device){
 	producer();
 	consumer();
@@ -253,4 +253,4 @@ var onFrame = function(){
 	produceFrame(frame);
 };
 
-
+setOnFrame(onFrame);
