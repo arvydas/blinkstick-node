@@ -26,7 +26,7 @@ function cpuMeter() {
 	//Vary the producer framerate by percentage CPU load (10 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
-	producer_framerate = cpu_avg*(50/100)+10;
+	producer_framerate = cpu_avg*0.40+10;
 
 	//Bounce particle off edges of LED strip
 	if (pos<=0 || pos>=size-1)
