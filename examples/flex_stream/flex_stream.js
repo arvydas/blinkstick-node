@@ -227,7 +227,7 @@ function getAlpha()
 
 function start()
 {
-	streaming = true;	//Clamp between 0 (invisible) and 1 (opaque)
+	streaming = true;
 }
 
 function stop()
@@ -246,12 +246,6 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
-
-//Initialize Stream with current size returned by getColorString
-
-device.getColors(function(error, result) {
-    console.log("color string:        " + result);
-});
 
 setOnFrame(onFrame);
 if (device){
