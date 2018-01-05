@@ -163,6 +163,11 @@ function setOnFrame(fn)
 	onFrame = fn;
 }
 
+
+//Default onFrame() stub
+
+var onFrame = function(){};
+
 function setProducerFramerate(framerate)
 {
 	producer_framerate = framerate;
@@ -224,21 +229,16 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
-
-//Start Streaming
-
 if (device){
 	producer();
 	consumer();
 }
 
-
-//Default OnFrame() is FlexStream signature
-
+//Default signature streaming
 var pos = 0;
-var onFrame = function(){
+var signatureOnFrame = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= size+30)
+	if (pos++ >= size*2)
 		pos=0;       
 
 	var frame = newFrame();
@@ -253,4 +253,5 @@ var onFrame = function(){
 	produceFrame(frame);
 };
 
-setOnFrame(onFrame);
+setOnFrame(signatureOnFrame);
+
