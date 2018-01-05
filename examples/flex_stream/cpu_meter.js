@@ -8,7 +8,7 @@ const flex_stream = require("./flex_stream.js");
 var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
 var producer_framerate = 30;  // Varies with CPU load   
 var consumer_framerate = 60;  // High fps for morphing   
-var alpha              = .2; // 25% opacity to leave a particle trail
+var alpha              = .3; // 25% opacity to leave a particle trail
 
 var startMeasure  = cpuLoad();
 var percentageCPU = 0;
@@ -26,7 +26,7 @@ function onFrame() {
 	//Vary the producer framerate by percentage CPU load (6 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
-	producer_framerate = cpu_avg*(52/100)+8;
+	producer_framerate = cpu_avg*(50/100)+10;
 
 	//Bounce particle off edges of LED strip
 	if (pos<=0 || pos>=size-1)
