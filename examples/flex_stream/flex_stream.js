@@ -155,15 +155,31 @@ function morphFrame(current)
 		device.setColors(0, composite, function(err, composite) {});
 }
 
-//Set user-defined OnFrame()
+
+//OnFrame() to stream user-defined frames
+
 function setOnFrame(fn)
 {
 	onFrame = fn;
 }
 
-//Default OnFrame stub - set by user with setOnFrame()
+
+
+//Default OnFrame() is FlexStream signature
+var frame = newFrame();
+var pos = 0;
 var onFrame = function(){
-	// use setOnFrame() to set user defined OnFrame function
+	//Bounce particle off edges of LED strip
+	if (pos++ >= size)
+		pos=0;       
+	
+	clearFrame(frame);
+	
+	frame[pos*3+0] = 255; //R
+	frame[pos*3+1] = 255; //G
+	frame[pos*3+2] = 255; //B
+	
+	produceFrame(frame);
 };
 
 function setProducerFramerate(framerate)
@@ -227,7 +243,9 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
+
 //Start streaming
+setOnFrame(onFrame);
 if (device){
 	producer();
 	consumer();
