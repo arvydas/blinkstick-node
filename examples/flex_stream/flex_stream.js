@@ -13,6 +13,10 @@ module.exports = {
 		newFrame: function() {
 			return newFrame(); 
 		},
+		clearFrame: function(frame)
+		{
+			clearFrame(frame);
+		},
 		setAlpha: function(a)
 		{
 			setAlpha(a);
@@ -102,6 +106,13 @@ function convert_grb(rgb){
 function newFrame(){
 	return new Uint8Array(getSize()*3);
 }
+
+//Create an empty frame
+function clearFrame(frame){
+	for (i=0; i<size; i++)
+		frame[i] =0;
+}
+
 
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
@@ -210,8 +221,9 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
-	var frame = newFrame();	
 	stop(); //Disable streaming to ensure no pending frames are set after LEDs are turned off
+	var frame = newFrame();	
+	clearFrame(frame);
 	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
 }
 
