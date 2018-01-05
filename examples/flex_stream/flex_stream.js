@@ -241,9 +241,7 @@ process.on('SIGINT',  onExit);
 
 function onExit(){
 	stop(); //Disable streaming to ensure no pending frames are set after LEDs are turned off
-	var frame = newFrame();	
-	clearFrame(frame);
-	device.setColors(0, frame, function(err, frame) {process.exit(0);}); //Turn off LEDs 
+    device.turnOff();
 }
 
 
