@@ -26,7 +26,7 @@ function onFrame() {
 	//Vary the producer framerate by percentage CPU load (6 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
-	producer_framerate = cpu_avg*(54/100)+6;
+	producer_framerate = cpu_avg*(52/100)+8;
 
 	//Bounce particle off edges of LED strip
 	if (pos<=0 || pos>=size-1)
