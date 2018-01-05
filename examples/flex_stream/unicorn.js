@@ -5,27 +5,30 @@ const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
 var size               = 8;     // Default 8, maximum 64 (single BlickStick channel)
-var producer_framerate = 1;     // slow 
+var producer_framerate = 4;     // slow 
 var consumer_framerate = 60;    // High fps for morphing   
-var alpha              = 0.02;  // slow
+var alpha              = 0.05;  // slow
 var frame              = flex_stream.newFrame();
 
 function onFrame() {       
 
-    // Unicorn rainbow barf
-	for (i=0; i<size; i++)
-	{   
-		//Normalize all pixel brightness to 128
-		var r = Math.random()*128;
-		var g = (128-r)+(Math.random()*(128-r));
-		var b = 128-g;
+    // Unicorn rainbow happy joy 
+    var off = 0;
+    var amp = 150;
+        for (i=0; i<size; i++)
+        {   
 
-		frame[i*3+0] = Math.floor(r);  //R
-		frame[i*3+1] = Math.floor(g);  //G
-		frame[i*3+2] = Math.floor(b);  //B
-	}
+                //Normalize all pixel brightness to 256
+                var r = Math.random()*amp+off;
+                var g = Math.random()*amp+off;
+                var b = Math.random()*amp+off;
 
-	flex_stream.produceFrame(frame);     
+                frame[i*3+0] = Math.floor(r);  //R
+                frame[i*3+1] = Math.floor(g);  //G
+                frame[i*3+2] = Math.floor(b);  //B
+        }
+
+        flex_stream.produceFrame(frame);     
 }
 
 //Configure stream
