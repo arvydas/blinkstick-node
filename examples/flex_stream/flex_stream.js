@@ -250,7 +250,7 @@ function onExit(){
 //Initialize Stream with current size returned by getColorString
 
 device.getColorString(function(error, result) {
-    console.log("LED SIZE:        " + result.length);
+    console.log("color string:        " + result);
 });
 
 setOnFrame(onFrame);
