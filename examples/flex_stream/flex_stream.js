@@ -77,7 +77,7 @@ var alpha              = 0.1;  //Default is transparent frames for morphing
 var stream_buffer      = [];   //Stream buffer for frames
 var composite          = null; //Composite frame for morphing
 var currentFrame       = null; //Latest frame from stream
-var streaming          = true; //Pause flag
+var streaming          = true; //Semaphore
 
 //Stream Producer 
 function producer(){
@@ -119,7 +119,6 @@ function produceFrame(frame)
 {
 	if (stream_buffer.length==0) //Skip frame if consumer is falling behind
 		stream_buffer.push(frame);
-	producer_framerate = Math.max(1, Math.min(producer_framerate, 60));	//Clamp between 1 and 60 fps
 }
 
 //Consume frame from stream - called from consumer
@@ -132,8 +131,6 @@ function consumeFrame()
 	}
 	if (currentFrame != null)
 		morphFrame(currentFrame); //Morph to the current frame
-
-	consumer_framerate = Math.max(1, Math.min(consumer_framerate, 60)); //Clamp between 1 and 60 fps
 }
 
 //Morph current frame over composite frame
@@ -152,7 +149,12 @@ function morphFrame(current)
 	}
 
 	if (streaming)
-		device.setColors(0, composite, function(err, composite) {});
+	{ 
+		streaming = false;
+		device.setColors(0, composite, function(err, composite) { 
+			streaming = true
+		});
+	}
 }
 
 
@@ -170,7 +172,7 @@ var onFrame = function(){};
 
 function setProducerFramerate(framerate)
 {
-	producer_framerate = framerate;
+	producer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 
 function getProducerFramerate()
@@ -180,7 +182,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
-	consumer_framerate = framerate;
+	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 
 function getConsumerFramerate()
