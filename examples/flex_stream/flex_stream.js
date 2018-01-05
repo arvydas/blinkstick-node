@@ -71,11 +71,11 @@ var blinkstick         = require('blinkstick');
 var device             = blinkstick.findFirst();
 var MAX_SIZE           = 64;   //BlinkStick single channel limit
 var size               = 8;    //Default 8 LEDs.
-var producer_framerate = 30;   //Default low frame production for morphing
+var producer_framerate = 20;   //Default low frame production for morphing
 var consumer_framerate = 60;   //Default high frame rendering for morphing
 var alpha              = 0.1;  //Default is transparent frames for morphing
 var stream_buffer      = [];   //Stream buffer for frames
-var composite          = null; //Composite frame
+var composite          = null; //Composite frame for morphing
 var currentFrame       = null; //Latest frame from stream
 var streaming          = true; //Pause flag
 
@@ -170,15 +170,18 @@ var frame = newFrame();
 var pos = 0;
 var onFrame = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= size)
+	if (pos++ >= size*2)
 		pos=0;       
-	
+
 	clearFrame(frame);
-	
-	frame[pos*3+0] = 255; //R
-	frame[pos*3+1] = 255; //G
-	frame[pos*3+2] = 255; //B
-	
+
+	if(pos < size)
+	{
+		frame[pos*3+0] = 255; //R
+		frame[pos*3+1] = 255; //G
+		frame[pos*3+2] = 255; //B
+	}
+
 	produceFrame(frame);
 };
 
