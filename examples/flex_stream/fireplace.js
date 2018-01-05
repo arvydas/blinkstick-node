@@ -12,7 +12,7 @@ var alpha              = 0;   // Varies
 
 function onFrame() {   
 	
-	var frame              = flex_stream.newFrame();
+	var frame = flex_stream.newFrame();
 	
 	for (i=0; i<size; i++)
 	{

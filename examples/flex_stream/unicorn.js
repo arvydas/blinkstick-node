@@ -8,12 +8,14 @@ var size               = 8;     // Default 8, maximum 64 (single BlickStick chan
 var producer_framerate = 4;     // slow 
 var consumer_framerate = 60;    // High fps for morphing   
 var alpha              = 0.05;  // slow
-var frame              = flex_stream.newFrame();
+
 
 function onFrame() {       
 	// Unicorn rainbow happy joy 
 	var off = 0;
 	var amp = 150;
+	var frame = flex_stream.newFrame();
+	
 	for (i=0; i<size; i++)
 	{   
 		var r = Math.random()*amp+off;

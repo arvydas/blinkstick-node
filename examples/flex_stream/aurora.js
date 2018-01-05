@@ -17,7 +17,7 @@ function onFrame() {
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
 	
-    var frame              = flex_stream.newFrame();
+    var frame = flex_stream.newFrame();
     
 	for (i=0; i<size; i++)
 	{    			
