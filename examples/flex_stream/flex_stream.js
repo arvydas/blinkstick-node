@@ -241,7 +241,7 @@ if (device){
 	consumer();
 }
 
-//Default signature streaming
+//Default signature animation
 var pos = 0;
 var signature = function(){
 	//Bounce particle off edges of LED strip
