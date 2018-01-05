@@ -77,7 +77,8 @@ var alpha              = 0.1;  //Default is transparent frames for morphing
 var stream_buffer      = [];   //Stream buffer for frames
 var composite          = null; //Composite frame for morphing
 var currentFrame       = null; //Latest frame from stream
-var streaming          = true; //Semaphore
+var streaming          = true; //Pause
+var busy               = false; //Semaphore
 
 //Stream Producer 
 function producer(){
@@ -148,11 +149,11 @@ function morphFrame(current)
 		}
 	}
 
-	if (streaming)
+	if (streaming && !busy)
 	{ 
-		streaming = false;
+		busy = true;
 		device.setColors(0, composite, function(err, composite) { 
-			streaming = true
+			busy = false;
 		});
 	}
 }
@@ -225,6 +226,7 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
+	console.log("FLEX STREAM EXIT");
 	stop(); //Disable streaming to ensure no pending frames are set after LEDs are turned off
 	var frame = newFrame();	
 	clearFrame(frame);
