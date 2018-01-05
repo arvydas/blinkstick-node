@@ -15,9 +15,10 @@ var percentageCPU = 0;
 var cpu_avg       = 0;
 var pos           = 1;
 var speed         = 1;
+var frame         = flex_stream.newFrame();
 
 function onFrame() {       
-	var frame           = flex_stream.newFrame();
+
 	var endMeasure      = cpuLoad(); 
 	var idleDifference  = endMeasure.idle - startMeasure.idle;
 	var totalDifference = endMeasure.total - startMeasure.total;
