@@ -173,7 +173,7 @@ var onFrame = function(){};
 
 function setProducerFramerate(framerate)
 {
-	producer_framerate = Math.max(1, Math.min(framerate, 50));	//Clamp between 1 and 50 fps
+	producer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 50 fps
 }
 
 function getProducerFramerate()
@@ -183,7 +183,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
-	consumer_framerate = Math.max(1, Math.min(framerate, 50));	//Clamp between 1 and 50 fps
+	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 
 function getConsumerFramerate()
@@ -242,13 +242,9 @@ if (device){
 var pos = 0;
 var signature = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= size+20)
-		pos=0;       
-
+	if (pos++ >= size+20) pos=0;       
 	var frame = newFrame();
-
-	if(pos < size)
-	{
+	if(pos < size){
 		frame[pos*3+0] = 255; //R
 		frame[pos*3+1] = 255; //G
 		frame[pos*3+2] = 255; //B
