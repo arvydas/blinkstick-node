@@ -247,7 +247,12 @@ function onExit(){
 }
 
 
-//Start streaming
+//Initialize Stream with current size returned by getColorString
+
+device.getColorString(function(error, result) {
+    console.log("LED SIZE:        " + result.length);
+});
+
 setOnFrame(onFrame);
 if (device){
 	producer();
