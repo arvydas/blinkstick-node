@@ -9,7 +9,6 @@ var producer_framerate = 15;  // Varies
 var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // Varies
 
-
 function fireplace() {   
 
         var frame = flex_stream.newFrame();
