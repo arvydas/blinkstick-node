@@ -163,28 +163,6 @@ function setOnFrame(fn)
 	onFrame = fn;
 }
 
-
-
-//Default OnFrame() is FlexStream signature
-
-var pos = 0;
-var onFrame = function(){
-	//Bounce particle off edges of LED strip
-	if (pos++ >= size*2)
-		pos=0;       
-
-	var frame = newFrame();
-
-	if(pos < size)
-	{
-		frame[pos*3+0] = 255; //R
-		frame[pos*3+1] = 255; //G
-		frame[pos*3+2] = 255; //B
-	}
-
-	produceFrame(frame);
-};
-
 function setProducerFramerate(framerate)
 {
 	producer_framerate = framerate;
@@ -247,10 +225,32 @@ function onExit(){
 }
 
 
+//Start Streaming
 setOnFrame(onFrame);
 if (device){
 	producer();
 	consumer();
 }
+
+
+//Default OnFrame() is FlexStream signature
+
+var pos = 0;
+var onFrame = function(){
+	//Bounce particle off edges of LED strip
+	if (pos++ >= size+30)
+		pos=0;       
+
+	var frame = newFrame();
+
+	if(pos < size)
+	{
+		frame[pos*3+0] = 255; //R
+		frame[pos*3+1] = 255; //G
+		frame[pos*3+2] = 255; //B
+	}
+
+	produceFrame(frame);
+};
 
 
