@@ -23,10 +23,10 @@ function onFrame() {
 	var totalDifference = endMeasure.total - startMeasure.total;
 	startMeasure        = endMeasure;
 
-	//Vary the producer framerate by percentage CPU load (5 to 60 fps)
+	//Vary the producer framerate by percentage CPU load (6 to 60 fps)
 	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
-	producer_framerate = cpu_avg/1.8+5;
+	producer_framerate = cpu_avg*(54/100)+6;
 
 	//Bounce particle off edges of LED strip
 	if (pos<=0 || pos>=size-1)
