@@ -88,6 +88,7 @@ function producer(){
 //Stream Consumer
 function consumer(){
 	consumeFrame(); //Render frame to BlinkStick
+	setTimeout(consumer, 1000/consumer_framerate);
 }
 
 //Convert to internal BlinkStick buffer
@@ -151,9 +152,7 @@ function morphFrame(current)
 	}
 
 	if (streaming)
-		device.setColors(0, composite, function(err, composite) {
-			setTimeout(consumer, 1000/consumer_framerate);
-		});
+		device.setColors(0, composite, function(err, composite) {});
 }
 
 
