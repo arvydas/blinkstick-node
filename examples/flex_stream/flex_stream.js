@@ -249,7 +249,6 @@ var signature = function(){
 		frame[pos*3+1] = 255; //G
 		frame[pos*3+2] = 255; //B
 	}
-
 	produceFrame(frame);
 };
 
