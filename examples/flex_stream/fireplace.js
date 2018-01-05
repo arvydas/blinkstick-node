@@ -26,7 +26,7 @@ function fireplace() {
                         frame[i*3+2] = 0;              //B
                 }
 
-                //Flickering frames
+                //Flickering flames
                 f = Math.random();
                 flex_stream.setProducerFramerate(f*10+2);
                 flex_stream.setAlpha(.05+(f/20));
