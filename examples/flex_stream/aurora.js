@@ -8,7 +8,7 @@ var size               = 8;   // Default 8, maximum 64 (single BlickStick channe
 var producer_framerate = 30;  // Varies 
 var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // Varies
-var frame              = flex_stream.newFrame();
+
 
 function onFrame() {       
 
@@ -16,7 +16,9 @@ function onFrame() {
 	a = Math.random();
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
-
+	
+    var frame              = flex_stream.newFrame();
+    
 	for (i=0; i<size; i++)
 	{    			
 		var r = Math.random()*128;
