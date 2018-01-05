@@ -249,7 +249,7 @@ function onExit(){
 
 //Initialize Stream with current size returned by getColorString
 
-device.getColorString(function(error, result) {
+device.getColors(function(error, result) {
     console.log("color string:        " + result);
 });
 
