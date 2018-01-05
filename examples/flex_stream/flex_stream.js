@@ -82,13 +82,12 @@ var streaming          = true; //Pause flag
 //Stream Producer 
 function producer(){
 	onFrame(); //Call user defined function
-	setTimeout(producer, 1000/producer_framerate); //Clamp to 1-60fps
+	setTimeout(producer, 1000/producer_framerate); 
 }
 
 //Stream Consumer
 function consumer(){
 	consumeFrame(); //Render frame to BlinkStick
-	setTimeout(consumer, 1000/consumer_framerate);
 }
 
 //Convert to internal BlinkStick buffer
@@ -152,7 +151,9 @@ function morphFrame(current)
 	}
 
 	if (streaming)
-		device.setColors(0, composite, function(err, composite) {});
+		device.setColors(0, composite, function(err, composite) {
+			setTimeout(consumer, 1000/consumer_framerate);
+		});
 }
 
 
