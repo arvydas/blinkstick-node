@@ -34,7 +34,7 @@ function onFrame() {
 		speed =-speed;         
 	pos += speed;
 	
-	clearFrame(frame);
+	flex_stream.clearFrame(frame);
 	//Vary particle colour by CPU load (green to amber to red)        
 	frame[pos*3+0] = Math.floor(cpu_avg*2.5)+5; //R
 	frame[pos*3+1] = 100-Math.floor(cpu_avg);   //G
