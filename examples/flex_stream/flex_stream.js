@@ -166,14 +166,14 @@ function setOnFrame(fn)
 
 
 //Default OnFrame() is FlexStream signature
-var frame = newFrame();
+
 var pos = 0;
 var onFrame = function(){
 	//Bounce particle off edges of LED strip
 	if (pos++ >= size*2)
 		pos=0;       
 
-	clearFrame(frame);
+	var frame = newFrame();
 
 	if(pos < size)
 	{

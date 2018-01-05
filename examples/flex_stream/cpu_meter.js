@@ -15,7 +15,7 @@ var percentageCPU = 0;
 var cpu_avg       = 0;
 var pos           = 1;
 var speed         = 1;
-var frame         = flex_stream.newFrame();
+
 
 function onFrame() {       
 	var endMeasure      = cpuLoad(); 
@@ -33,7 +33,7 @@ function onFrame() {
 		speed =-speed;         
 	pos += speed;
 	
-	flex_stream.clearFrame(frame);
+	var frame         = flex_stream.newFrame();
 	//Vary particle colour by CPU load (green to amber to red)        
 	frame[pos*3+0] = Math.floor(cpu_avg*2.5)+5; //R
 	frame[pos*3+1] = 100-Math.floor(cpu_avg);   //G
