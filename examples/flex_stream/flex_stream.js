@@ -236,7 +236,7 @@ if (device){
 
 //Default signature streaming
 var pos = 0;
-var signatureOnFrame = function(){
+var signature = function(){
 	//Bounce particle off edges of LED strip
 	if (pos++ >= size+20)
 		pos=0;       
@@ -253,5 +253,5 @@ var signatureOnFrame = function(){
 	produceFrame(frame);
 };
 
-setOnFrame(signatureOnFrame);
+setOnFrame(signature);
 

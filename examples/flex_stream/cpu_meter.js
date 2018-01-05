@@ -17,7 +17,7 @@ var pos           = 1;
 var speed         = 1;
 
 
-function onFrame() {       
+function cpuMeter() {       
 	var endMeasure      = cpuLoad(); 
 	var idleDifference  = endMeasure.idle - startMeasure.idle;
 	var totalDifference = endMeasure.total - startMeasure.total;
@@ -64,5 +64,5 @@ flex_stream.setSize(size);
 flex_stream.setProducerFramerate(producer_framerate);
 flex_stream.setConsumerFramerate(consumer_framerate);
 flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(onFrame);
+flex_stream.setOnFrame(cpuMeter);
 

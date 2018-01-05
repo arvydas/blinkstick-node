@@ -10,7 +10,7 @@ var consumer_framerate = 60;  // High fps for morphing
 var alpha              = 0;   // Varies
 
 
-function onFrame() {   
+function fireplace() {   
 	
 	var frame = flex_stream.newFrame();
 	
@@ -39,4 +39,4 @@ flex_stream.setSize(size);
 flex_stream.setProducerFramerate(producer_framerate);
 flex_stream.setConsumerFramerate(consumer_framerate);
 flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(onFrame);
+flex_stream.setOnFrame(fireplace);
