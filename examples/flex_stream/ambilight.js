@@ -28,5 +28,5 @@ function onFrame(){
 flex_stream.setSize(size);
 flex_stream.setProducerFramerate(producer_framerate);
 flex_stream.setConsumerFramerate(consumer_framerate);
-flex_stream.setTransparency(transparency);
+flex_stream.setAlpha(alpha);
 flex_stream.setOnFrame(onFrame);
