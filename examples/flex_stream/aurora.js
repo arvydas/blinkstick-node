@@ -10,7 +10,7 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-	
+
 var frame = flex_stream.newFrame();
 function aurora() {       
 	//Aurora
@@ -26,11 +26,10 @@ function aurora() {
 		//Borealis
 		if (Math.random()>.5)
 		{
-			r=0; g=0; b=0;
+			frame[i*3+0] = Math.floor(r);  //R
+			frame[i*3+1] = Math.floor(g);  //G
+			frame[i*3+2] = Math.floor(b);  //B
 		}
-		frame[i*3+0] = Math.floor(r);  //R
-		frame[i*3+1] = Math.floor(g);  //G
-		frame[i*3+2] = Math.floor(b);  //B
 	}
 	flex_stream.produceFrame(frame);     
 }
