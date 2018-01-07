@@ -22,7 +22,7 @@ function aurora() {
 		var g = (1-Math.random()*.85)*50;
 		var b = (1-Math.random()*.85)*100;   
 		//Borealis
-		if (Math.random()>.9)
+		if (Math.random()>.99)
 		{
 			frame[i*3+0] = Math.floor(r);  //R
 			frame[i*3+1] = Math.floor(g);  //G
@@ -36,7 +36,7 @@ function aurora() {
 
 function init(){
 	flex_stream.setSize(8);
-	flex_stream.setProducerFramerate(1);
+	flex_stream.setProducerFramerate(5);
 	flex_stream.setConsumerFramerate(60);
 	flex_stream.setAlpha(0.00001);
 	flex_stream.setOnFrame(aurora);
