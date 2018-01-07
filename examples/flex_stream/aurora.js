@@ -36,7 +36,7 @@ function aurora() {
 
 function init(){
 	flex_stream.setSize(8);
-	flex_stream.setProducerFramerate(2);
+	flex_stream.setProducerFramerate(1);
 	flex_stream.setConsumerFramerate(60);
 	flex_stream.setAlpha(0.00001);
 	flex_stream.setOnFrame(aurora);
