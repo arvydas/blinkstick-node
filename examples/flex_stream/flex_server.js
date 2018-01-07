@@ -44,4 +44,5 @@ var port = process.env.PORT || 5000;
 app.listen(port, function() {
 });
 
-flex_stream.init();
+//Start cpu meter example
+cpu_meter.init();
