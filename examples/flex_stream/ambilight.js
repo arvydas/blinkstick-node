@@ -33,10 +33,10 @@ function ambilight(){
 //Configure stream
 
 function init(){
-	flex_stream.setSize(size);
-	flex_stream.setProducerFramerate(producer_framerate);
-	flex_stream.setConsumerFramerate(consumer_framerate);
-	flex_stream.setAlpha(alpha);
+	flex_stream.setSize(8);
+	flex_stream.setProducerFramerate(5);
+	flex_stream.setConsumerFramerate(60);
+	flex_stream.setAlpha(0.1);
 	flex_stream.setOnFrame(ambilight);
 }
 
