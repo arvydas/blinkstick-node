@@ -10,10 +10,7 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-var size               = 8;     // Default 8, maximum 64 (single BlickStick channel)
-var producer_framerate = 4;     // slow 
-var consumer_framerate = 60;    // High fps for morphing   
-var alpha              = 0.05;  // slow
+
 
 function unicorn() {       
 	// Unicorn rainbow happy joy 
@@ -40,7 +37,7 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(4);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(1);
+	flex_stream.setAlpha(0.05);
 	flex_stream.setOnFrame(unicorn);
 }
 
