@@ -7,6 +7,9 @@
 //** Pro can currently only set one channel per call, so streaming is not yet supported for multiple channels
 
 module.exports = {
+		init: function() {
+			init(); 
+		},
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
 		},
@@ -233,7 +236,7 @@ function onExit(){
 	device.setColors(0, frame, function(err, frame) {
 		device.turnOff(); 
 		process.exit(0);
-		}); //Turn off LEDs 
+	}); //Turn off LEDs 
 }
 
 if (!streaming && device){
@@ -256,5 +259,13 @@ var signature = function(){
 	produceFrame(frame);
 };
 
-setOnFrame(signature);
+function init(){
+	setSize(8);
+	setProducerFramerate(20);
+	setConsumerFramerate(60);
+	setAlpha(0.1);
+	setOnFrame(signature);
+}
+
+init();
 

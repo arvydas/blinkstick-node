@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 		ambilight.init();
 		break;
 	default:
-		flex_stream.setOnFrame(flex_stream.signature);
+		flex_stream.init();
 	example = "default"
 	}
 
