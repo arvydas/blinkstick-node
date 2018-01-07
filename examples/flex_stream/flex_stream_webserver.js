@@ -14,9 +14,13 @@ const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
 
-app.get('/?example', function (req, res) {
+app.use('/favicon.ico', express.static('favicon.ico'));
+
+app.get('*', function (req, res) {
 	var example = req.query.example;
 
+	var filename = "/flex_stream_webserver.html";
+	
 	switch(example) {
 	case "cpu_meter":
 		cpu_meter.init();
@@ -41,7 +45,7 @@ app.get('/?example', function (req, res) {
 	    example = "default"
 	}
 
-	res.sendfile(path.join(__dirname + '/flex_stream_webserver.html'));
+	res.sendfile(path.join(__dirname + filename));
 })
 
 var port = process.env.PORT || 5000;
