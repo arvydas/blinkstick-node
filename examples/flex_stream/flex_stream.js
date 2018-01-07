@@ -83,7 +83,7 @@ var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
 var busy               = false; //Semaphore
 var producer_timer     = null;
-var conusmer_timer     = null;
+var consumer_timer     = null;
 
 //Stream Producer 
 function producer(){
