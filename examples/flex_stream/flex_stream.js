@@ -113,8 +113,9 @@ function newFrame(){
 
 //Create an empty frame
 function clearFrame(frame){
-	for (i=0; i<size*3; i++)
-		frame[i] =0;
+	if (frame != null)
+		for (i=0; i<size*3; i++)
+			frame[i] =0;
 }
 
 
