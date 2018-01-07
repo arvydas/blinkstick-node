@@ -23,11 +23,15 @@ function cpuMeter() {
 	var endMeasure      = cpuLoad(); 
 	var idleDifference  = endMeasure.idle - startMeasure.idle;
 	var totalDifference = endMeasure.total - startMeasure.total;
+
 	startMeasure        = endMeasure;
 
-	//Vary the producer framerate by percentage CPU load (10 to 60 fps)
-	percentageCPU      = 100 - (100 * idleDifference / totalDifference);
+	if (totalDifference != 0)
+		percentageCPU      = 100 - (100 * idleDifference / totalDifference);
+	
 	cpu_avg            = (cpu_avg+percentageCPU)/2;
+	
+	//Vary the producer framerate by percentage CPU load (10 to 60 fps)
 	framerate         = cpu_avg*0.50+10;
 
 	//Bounce particle off edges of LED strip
