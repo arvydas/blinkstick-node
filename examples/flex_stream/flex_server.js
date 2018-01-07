@@ -45,4 +45,4 @@ app.listen(port, function() {
 });
 
 //Start cpu meter example
-cpu_meter.init();
+unicorn.init();
