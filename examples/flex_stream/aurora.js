@@ -16,7 +16,7 @@ function aurora() {
 	//Aurora
 	a = Math.random();
 	flex_stream.setProducerFramerate(a*2+1);
-	flex_stream.setAlpha(.0001+(a/1000));
+	flex_stream.setAlpha(.001+(a/100));
 
 	//Borealis
 	for (i=0; i<flex_stream.getSize(); i++)
