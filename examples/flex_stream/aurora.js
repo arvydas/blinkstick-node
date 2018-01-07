@@ -15,15 +15,15 @@ var frame = flex_stream.newFrame();
 function aurora() {       
 	//Aurora
 	a = Math.random();
-	flex_stream.setProducerFramerate(a*2+1);
+	flex_stream.setProducerFramerate(a*4+2);
 	flex_stream.setAlpha(.005+(a/20));
 
 	//Borealis
 	for (i=0; i<flex_stream.getSize(); i++)
 	{    	
 
-		var r = Math.random()*25;
-		var g = (1-Math.random()*.85)*25;
+		var r = Math.random()*50;
+		var g = (1-Math.random()*.85)*50;
 		var b = (1-Math.random()*.85)*100;   
 
 		if (Math.random()>.5)
