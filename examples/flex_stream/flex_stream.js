@@ -56,6 +56,14 @@ module.exports = {
 		{
 			return getSize();
 		},
+		setCrossFade: function(fade)
+		{
+			crossFade = fade;
+		},
+		getCrossFade: function()
+		{
+			return crossFade;
+		},
 		start: function(size)
 		{
 			start();
@@ -82,6 +90,7 @@ var composite          = null;  //Composite frame for morphing
 var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
 var busy               = false; //Semaphore
+var crossFade          = false; //Hard or soft transitions.
 var producer_timer     = null;
 var consumer_timer     = null;
 
@@ -169,7 +178,10 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-
+	//Hard or soft transition
+    if (!crossFade)
+    	clearFrame(composite);
+    
 	onFrame = fn;
 
 	if (producer_timer != null)
