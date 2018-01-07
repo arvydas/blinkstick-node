@@ -267,6 +267,7 @@ function init(){
 	setConsumerFramerate(60);
 	setAlpha(0.1);
 	setOnFrame(signature);
+	pos = 0;
 }
 
 init();
