@@ -69,15 +69,15 @@ module.exports = {
 
 var blinkstick         = require('blinkstick');
 var device             = blinkstick.findFirst();
-var MAX_SIZE           = 64;   //BlinkStick single channel limit
-var size               = 8;    //Default 8 LEDs.
-var producer_framerate = 20;   //Default low frame production for morphing
-var consumer_framerate = 60;   //Default high frame rendering for morphing
-var alpha              = 0.1;  //Default is transparent frames for morphing
-var stream_buffer      = [];   //Stream buffer for frames
-var composite          = null; //Composite frame for morphing
-var currentFrame       = null; //Latest frame from stream
-var streaming          = true; //Pause
+var MAX_SIZE           = 64;    //BlinkStick single channel limit
+var size               = 8;     //Default 8 LEDs.
+var producer_framerate = 20;    //Default low frame production for morphing
+var consumer_framerate = 60;    //Default high frame rendering for morphing
+var alpha              = 0.1;   //Default is transparent frames for morphing
+var stream_buffer      = [];    //Stream buffer for frames
+var composite          = null;  //Composite frame for morphing
+var currentFrame       = null;  //Latest frame from stream
+var streaming          = false; //Pause
 var busy               = false; //Semaphore
 
 //Stream Producer 
@@ -236,9 +236,10 @@ function onExit(){
 		}); //Turn off LEDs 
 }
 
-if (device){
+if (!streaming && device){
 	producer();
 	consumer();
+	streaming = true;
 }
 
 //Default signature animation

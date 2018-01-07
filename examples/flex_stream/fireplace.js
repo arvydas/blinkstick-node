@@ -9,33 +9,42 @@ var producer_framerate = 15;  // Varies
 var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // Varies
 
+module.exports = {
+		init: function() {
+			init(); 
+		}
+}
+
 function fireplace() {   
+	var frame = flex_stream.newFrame();
+	for (i=0; i<size; i++)
+	{
+		if (Math.random()<.75)
+		{
+			//Red to yellow spectrum
+			var r = Math.random()*230+25;
+			var g = r*Math.random()*.75;
+			frame[i*3+0] = Math.floor(r);  //R
+			frame[i*3+1] = Math.floor(g);  //G
+			frame[i*3+2] = 0;              //B
+		}
 
-        var frame = flex_stream.newFrame();
-
-        for (i=0; i<size; i++)
-        {
-                if (Math.random()<.75)
-                {
-                        //Red to yellow spectrum
-                        var r = Math.random()*230+25;
-                        var g = r*Math.random()*.75;
-                        frame[i*3+0] = Math.floor(r);  //R
-                        frame[i*3+1] = Math.floor(g);  //G
-                        frame[i*3+2] = 0;              //B
-                }
-
-                //Flickering flames
-                f = Math.random();
-                flex_stream.setProducerFramerate(f*10+2);
-                flex_stream.setAlpha(.05+(f/20));
-        }
-        flex_stream.produceFrame(frame);     
+		//Flickering flames
+		f = Math.random();
+		flex_stream.setProducerFramerate(f*10+2);
+		flex_stream.setAlpha(.05+(f/20));
+	}
+	flex_stream.produceFrame(frame);     
 }
 
 //Configure stream
-flex_stream.setSize(size);
-flex_stream.setProducerFramerate(producer_framerate);
-flex_stream.setConsumerFramerate(consumer_framerate);
-flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(fireplace);
+
+function init(){
+	flex_stream.setSize(size);
+	flex_stream.setProducerFramerate(producer_framerate);
+	flex_stream.setConsumerFramerate(consumer_framerate);
+	flex_stream.setAlpha(alpha);
+	flex_stream.setOnFrame(fireplace);
+}
+
+init();

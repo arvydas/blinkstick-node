@@ -1,6 +1,12 @@
 //Aurora Borealis ambience based on flex_stream.js
 //For Windows, Linux and Mac
 
+module.exports = {
+		init: function() {
+			init(); 
+		}
+}
+
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
@@ -9,16 +15,15 @@ var producer_framerate = 30;  // Varies
 var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // Varies
 
-
 function aurora() {       
 
 	//Aurora
 	a = Math.random();
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
-	
-    var frame = flex_stream.newFrame();
-    
+
+	var frame = flex_stream.newFrame();
+
 	for (i=0; i<size; i++)
 	{    			
 		var r = Math.random()*128;
@@ -38,8 +43,14 @@ function aurora() {
 }
 
 //Configure stream
-flex_stream.setSize(size);
-flex_stream.setProducerFramerate(producer_framerate);
-flex_stream.setConsumerFramerate(consumer_framerate);
-flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(aurora);
+
+function init(){
+	flex_stream.setSize(size);
+	flex_stream.setProducerFramerate(producer_framerate);
+	flex_stream.setConsumerFramerate(consumer_framerate);
+	flex_stream.setAlpha(alpha);
+	flex_stream.setOnFrame(aurora);
+}
+
+init();
+

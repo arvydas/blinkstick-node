@@ -2,6 +2,12 @@
 //User defined OnFrame() is a particle trail emitter to indicate CPU load. 
 //For Windows, Linux and Mac
 
+module.exports = {
+		init: function() {
+			init(); 
+		}
+}
+
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
@@ -15,7 +21,6 @@ var percentageCPU = 0;
 var cpu_avg       = 0;
 var pos           = 1;
 var speed         = 1;
-
 
 function cpuMeter() {       
 	var endMeasure      = cpuLoad(); 
@@ -32,13 +37,13 @@ function cpuMeter() {
 	if (pos<=0 || pos>=size-1)
 		speed =-speed;         
 	pos += speed;
-	
+
 	var frame = flex_stream.newFrame();
 	//Vary particle colour by CPU load (green to amber to red)        
 	frame[pos*3+0] = Math.floor(cpu_avg*2.5)+5; //R
 	frame[pos*3+1] = 100-Math.floor(cpu_avg);   //G
 	frame[pos*3+2] = 2;                         //B
-	
+
 	flex_stream.setProducerFramerate(producer_framerate);
 	flex_stream.produceFrame(frame);     
 }
@@ -48,7 +53,7 @@ function cpuLoad() {
 	var totalIdle = 0;
 	var totalTick = 0;
 	var cpus      = os.cpus();
-	
+
 	for(var i = 0, len = cpus.length; i < len; i++) {
 		var cpu = cpus[i];
 		for(type in cpu.times) {
@@ -60,9 +65,14 @@ function cpuLoad() {
 }
 
 //Configure stream
-flex_stream.setSize(size);
-flex_stream.setProducerFramerate(producer_framerate);
-flex_stream.setConsumerFramerate(consumer_framerate);
-flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(cpuMeter);
+
+function init(){
+	flex_stream.setSize(size);
+	flex_stream.setProducerFramerate(producer_framerate);
+	flex_stream.setConsumerFramerate(consumer_framerate);
+	flex_stream.setAlpha(alpha);
+	flex_stream.setOnFrame(cpuMeter);
+}
+
+init();
 
