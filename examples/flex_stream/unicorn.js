@@ -15,14 +15,13 @@ var producer_framerate = 4;     // slow
 var consumer_framerate = 60;    // High fps for morphing   
 var alpha              = 0.05;  // slow
 
-
 function unicorn() {       
 	// Unicorn rainbow happy joy 
 	var off = 0;
 	var amp = 150;
 	var frame = flex_stream.newFrame();
 
-	for (i=0; i<size; i++)
+	for (i=0; i<flex_stream.getSize(); i++)
 	{   
 		var r = Math.random()*amp+off;
 		var g = Math.random()*amp+off;
@@ -38,10 +37,10 @@ function unicorn() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(size);
-	flex_stream.setProducerFramerate(producer_framerate);
-	flex_stream.setConsumerFramerate(consumer_framerate);
-	flex_stream.setAlpha(alpha);
+	flex_stream.setSize(8);
+	flex_stream.setProducerFramerate(4);
+	flex_stream.setConsumerFramerate(60);
+	flex_stream.setAlpha(1);
 	flex_stream.setOnFrame(unicorn);
 }
 

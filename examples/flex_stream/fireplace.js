@@ -4,11 +4,6 @@
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
-var producer_framerate = 15;  // Varies
-var consumer_framerate = 60;  // High fps for morphing   
-var alpha              = 0;   // Varies
-
 module.exports = {
 		init: function() {
 			init(); 
@@ -17,7 +12,7 @@ module.exports = {
 
 function fireplace() {   
 	var frame = flex_stream.newFrame();
-	for (i=0; i<size; i++)
+	for (i=0; i<flex_stream.getSize(); i++)
 	{
 		if (Math.random()<.75)
 		{
@@ -40,10 +35,10 @@ function fireplace() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(size);
-	flex_stream.setProducerFramerate(producer_framerate);
-	flex_stream.setConsumerFramerate(consumer_framerate);
-	flex_stream.setAlpha(alpha);
+	flex_stream.setSize(8);
+	flex_stream.setProducerFramerate(15);
+	flex_stream.setConsumerFramerate(60);
+	flex_stream.setAlpha(1);
 	flex_stream.setOnFrame(fireplace);
 }
 

@@ -10,8 +10,6 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-var alpha              = 0;   // Varies
-
 function aurora() {       
 
 	//Aurora
@@ -21,7 +19,7 @@ function aurora() {
 
 	var frame = flex_stream.newFrame();
 
-	for (i=0; i<size; i++)
+	for (i=0; i<flex_stream.getSize(); i++)
 	{    			
 		var r = Math.random()*128;
 		var g = (1-Math.random()*.85)*192;
