@@ -28,17 +28,16 @@ function timesquare() {
 		frame[(i-1)*3+2] = frame[(i*3)+2];
 	}
 	
-	//Separator
+	// Random separators
 	if (Math.random()>.5){
 		r = 0; g = 0; b = 0;
 	}	
 	
-	//New random pixel
+	//Push() not supported for Uint8Arrays, so ..
 	frame[(size-1)*3+0] = Math.floor(r);  //R
 	frame[(size-1)*3+1] = Math.floor(g);  //G
 	frame[(size-1)*3+2] = Math.floor(b);  //B
 	
-
 	flex_stream.produceFrame(frame);     
 }
 
