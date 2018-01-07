@@ -169,7 +169,7 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-	clearFrame(composite);
+
 	onFrame = fn;
 
 	if (producer_timer != null)
