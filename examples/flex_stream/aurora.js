@@ -10,9 +10,6 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-var size               = 8;   // Default 8, maximum 64 (single BlickStick channel)
-var producer_framerate = 30;  // Varies 
-var consumer_framerate = 60;  // High fps for morphing   
 var alpha              = 0;   // Varies
 
 function aurora() {       
@@ -45,10 +42,10 @@ function aurora() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(size);
-	flex_stream.setProducerFramerate(producer_framerate);
-	flex_stream.setConsumerFramerate(consumer_framerate);
-	flex_stream.setAlpha(alpha);
+	flex_stream.setSize(8);
+	flex_stream.setProducerFramerate(30);
+	flex_stream.setConsumerFramerate(60);
+	flex_stream.setAlpha(1);
 	flex_stream.setOnFrame(aurora);
 }
 
