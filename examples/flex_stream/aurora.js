@@ -13,13 +13,10 @@ const flex_stream = require("./flex_stream.js");
 	
 var frame = flex_stream.newFrame();
 function aurora() {       
-
 	//Aurora
 	a = Math.random();
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
-
-
 
 	for (i=0; i<flex_stream.getSize(); i++)
 	{    			
@@ -35,7 +32,6 @@ function aurora() {
 		frame[i*3+1] = Math.floor(g);  //G
 		frame[i*3+2] = Math.floor(b);  //B
 	}
-
 	flex_stream.produceFrame(frame);     
 }
 
