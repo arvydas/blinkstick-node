@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
 	    example = "default"
 	}
 
-	res.send("Example is set to " + example);
+	res.sendfile('./flex_stream_webserver.html');
 })
 
 var port = process.env.PORT || 5000;
