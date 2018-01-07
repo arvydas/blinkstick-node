@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 
 
-app.get('/', function (req, res) {
+app.get('/p/:onFrame', function (req, res) {
 	res.send("onFrame is set to " + req.params.onFrame);
 })
 
