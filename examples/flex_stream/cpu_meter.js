@@ -67,10 +67,10 @@ function cpuLoad() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(8);
-	flex_stream.setProducerFramerate(30);
-	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(0.3);
+	flex_stream.setSize(size);
+	flex_stream.setProducerFramerate(producer_framerate);
+	flex_stream.setConsumerFramerate(consumer_framerate);
+	flex_stream.setAlpha(alpha);
 	flex_stream.setOnFrame(cpuMeter);
 	startMeasure  = cpuLoad();
 	percentageCPU = 0;
