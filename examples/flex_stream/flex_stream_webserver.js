@@ -3,6 +3,7 @@
 //Default is the flex stream signature
 
 const express     = require('express');
+var   path        = require('path');
 const flex_stream = require("./flex_stream.js");
 const ambilight   = require("./ambilight.js");
 const unicorn     = require("./unicorn.js");
@@ -40,7 +41,7 @@ app.get('*', function (req, res) {
 	    example = "default"
 	}
 
-	res.sendfile( `${process.cwd()}/flex_stream_webserver.html`);
+	res.sendfile(path.join(__dirname + '/flex_stream_webserver.html'));
 })
 
 var port = process.env.PORT || 5000;
