@@ -36,7 +36,6 @@ app.get('/', function (req, res) {
 	default:
 		flex_stream.init();
 	    example = "default"
-		break;
 	}
 
 	res.send("Example is set to " + example);
