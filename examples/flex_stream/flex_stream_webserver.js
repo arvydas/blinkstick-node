@@ -8,6 +8,7 @@ const ambilight   = require("./ambilight.js");
 const unicorn     = require("./unicorn.js");
 const fireplace   = require("./fireplace.js");
 const aurora      = require("./aurora.js");
+const aurora      = require("./timesquare.js");
 const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
@@ -30,6 +31,9 @@ app.get('/', function (req, res) {
 		break;
 	case "ambilight":
 		ambilight.init();
+		break;
+	case "timesquare":
+		timesquare.init();
 		break;
 	default:
 		flex_stream.init();
