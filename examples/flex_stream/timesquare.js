@@ -21,7 +21,7 @@ function timesquare() {
 	var b = Math.random()*amp+off;
 	var size = flex_stream.getSize();
 	
-	//Shift() not supported for Uint8Arrays
+	//Shift() not supported for Uint8Arrays, so ..
 	for (i=1;i<size; i++){
 		frame[(i-1)*3+0] = frame[(i*3)+0];
 		frame[(i-1)*3+1] = frame[(i*3)+1];
