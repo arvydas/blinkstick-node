@@ -72,6 +72,11 @@ function init(){
 	flex_stream.setConsumerFramerate(consumer_framerate);
 	flex_stream.setAlpha(alpha);
 	flex_stream.setOnFrame(cpuMeter);
+	startMeasure  = cpuLoad();
+	percentageCPU = 0;
+	cpu_avg       = 0;
+	pos           = 1;
+	speed         = 1;
 }
 
 init();
