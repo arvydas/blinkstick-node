@@ -82,11 +82,13 @@ var composite          = null;  //Composite frame for morphing
 var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
 var busy               = false; //Semaphore
+var producer_timer     = null;
+var consumer_timer     = null;
 
 //Stream Producer 
 function producer(){
 	onFrame(); //Call user defined function
-    setTimeout(producer, 1000/producer_framerate); 
+	setTimeout(producer, 1000/producer_framerate); 
 }
 
 //Stream Consumer
@@ -179,6 +181,9 @@ var onFrame = function(){};
 function setProducerFramerate(framerate)
 {
 	producer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 50 fps
+	if (producer_timer != null)
+		clearTimeout(producer_timer);
+	setTimeout(producer, 1000/producer_framerate); 
 }
 
 function getProducerFramerate()
@@ -189,6 +194,9 @@ function getProducerFramerate()
 function setConsumerFramerate(framerate)
 {
 	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
+	if (consumer_timer != null)
+		clearTimeout(consumer_timer);
+	setTimeout(consumer, 1000/consumer_framerate); 
 }
 
 function getConsumerFramerate()
@@ -241,12 +249,6 @@ function onExit(){
 	}); //Turn off LEDs 
 }
 
-if (!streaming && device){
-	producer();
-	consumer();
-	streaming = true;
-}
-
 //Default signature animation
 var pos = 0;
 var signature = function(){
@@ -270,5 +272,7 @@ function init(){
 	pos = 0;
 }
 
-init();
-
+if (!streaming && device){
+	init();
+	streaming = true;
+}
