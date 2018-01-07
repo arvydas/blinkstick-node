@@ -13,7 +13,7 @@ const flex_stream = require("./flex_stream.js");
 var frame = flex_stream.newFrame();
 
 function timesquare() {       
-	// Scrolling ticker tape
+	// Scrolling random patterns
 	var off = 0;
 	var amp = 150;
 	var r = Math.random()*amp+off;
