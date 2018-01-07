@@ -82,17 +82,19 @@ var composite          = null;  //Composite frame for morphing
 var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
 var busy               = false; //Semaphore
+var producer_timer     = null;
+var conusmer_timer     = null;
 
 //Stream Producer 
 function producer(){
 	onFrame(); //Call user defined function
-    setTimeout(producer, 1000/producer_framerate); 
+	producer_timer = setTimeout(producer, 1000/producer_framerate); 
 }
 
 //Stream Consumer
 function consumer(){
 	consumeFrame(); //Render frame to BlinkStick
-	setTimeout(consumer, 1000/consumer_framerate);
+	conumser_timer = setTimeout(consumer, 1000/consumer_framerate);
 }
 
 //Convert to internal BlinkStick buffer
@@ -169,6 +171,14 @@ function setOnFrame(fn)
 {
 	clearFrame(composite);
 	onFrame = fn;
+	
+	if (producer_timer != null)
+		clearTimeout(producer_timer);
+	producer_timer = setTimeout(producer, 1000/producer_framerate); 
+	
+	if (consumer_timer != null)
+		clearTimeout(consumer_timer);
+	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
 }
 
 
