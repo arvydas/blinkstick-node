@@ -170,6 +170,8 @@ function morphFrame(current)
 function setOnFrame(fn)
 {
 	clearFrame(composite);
+	stream_buffer.push(composite);
+	
 	onFrame = fn;
 
 	if (producer_timer != null)
@@ -179,6 +181,7 @@ function setOnFrame(fn)
 	if (consumer_timer != null)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
+
 }
 
 
@@ -228,7 +231,8 @@ function getAlpha()
 
 function start()
 {
-	streaming = true;
+	if (device)
+		streaming = true;
 }
 
 function stop()
@@ -272,7 +276,6 @@ function init(){
 	setAlpha(0.1);
 	setOnFrame(signature);
 	pos = 0;
-
 	start();
 }
 
