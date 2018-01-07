@@ -10,13 +10,12 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
-
+var frame = flex_stream.newFrame();
 
 function unicorn() {       
 	// Unicorn rainbow happy joy 
 	var off = 0;
 	var amp = 150;
-	var frame = flex_stream.newFrame();
 
 	for (i=0; i<flex_stream.getSize(); i++)
 	{   
