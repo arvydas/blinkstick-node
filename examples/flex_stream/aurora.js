@@ -22,9 +22,9 @@ function aurora() {
 	for (i=0; i<flex_stream.getSize(); i++)
 	{    	
 
-		var r = Math.random()*50;
-		var g = (1-Math.random()*.85)*50;
-		var b = (1-Math.random()*.85)*200;   
+		var r = Math.random()*75;
+		var g = (1-Math.random()*.85)*75;
+		var b = (1-Math.random()*.85)*150;   
 
 		if (Math.random()>.75)
 		{
