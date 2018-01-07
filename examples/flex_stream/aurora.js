@@ -10,6 +10,8 @@ module.exports = {
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
+	
+var frame = flex_stream.newFrame();
 function aurora() {       
 
 	//Aurora
@@ -17,15 +19,15 @@ function aurora() {
 	flex_stream.setProducerFramerate(a*2+1);
 	flex_stream.setAlpha(.001+(a/100));
 
-	var frame = flex_stream.newFrame();
+
 
 	for (i=0; i<flex_stream.getSize(); i++)
 	{    			
-		var r = Math.random()*64;
-		var g = (1-Math.random()*.85)*96;
-		var b = (1-Math.random()*.85)*96;   
+		var r = Math.random()*50;
+		var g = (1-Math.random()*.85)*50;
+		var b = (1-Math.random()*.85)*100;   
 		//Borealis
-		if (Math.random()>.9)
+		if (Math.random()>.5)
 		{
 			r=0; g=0; b=0;
 		}
