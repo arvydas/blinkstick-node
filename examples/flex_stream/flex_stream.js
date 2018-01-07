@@ -251,12 +251,6 @@ function onExit(){
 	}); //Turn off LEDs 
 }
 
-if (!streaming && device){
-	producer();
-	consumer();
-	streaming = true;
-}
-
 //Default signature animation
 var pos = 0;
 var signature = function(){
@@ -278,6 +272,8 @@ function init(){
 	setAlpha(0.1);
 	setOnFrame(signature);
 	pos = 0;
+	
+	start();
 }
 
 init();
