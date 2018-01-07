@@ -8,7 +8,7 @@ const ambilight   = require("./ambilight.js");
 const unicorn     = require("./unicorn.js");
 const fireplace   = require("./fireplace.js");
 const aurora      = require("./aurora.js");
-const cpu_meter   = require("./cpu_meter.js");
+const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
 
@@ -42,5 +42,4 @@ app.get('/', function (req, res) {
 var port = process.env.PORT || 5000;
 
 app.listen(port, function() {
-	unicorn.init();
 });
