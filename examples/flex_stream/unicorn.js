@@ -1,6 +1,12 @@
 //Aurora Borealis ambience based on flex_stream.js
 //For Windows, Linux and Mac
 
+module.exports = {
+		init: function() {
+			init(); 
+		}
+}
+
 const os          = require("os");
 const flex_stream = require("./flex_stream.js");
 
@@ -15,7 +21,7 @@ function unicorn() {
 	var off = 0;
 	var amp = 150;
 	var frame = flex_stream.newFrame();
-	
+
 	for (i=0; i<size; i++)
 	{   
 		var r = Math.random()*amp+off;
@@ -30,8 +36,13 @@ function unicorn() {
 }
 
 //Configure stream
-flex_stream.setSize(size);
-flex_stream.setProducerFramerate(producer_framerate);
-flex_stream.setConsumerFramerate(consumer_framerate);
-flex_stream.setAlpha(alpha);
-flex_stream.setOnFrame(unicorn);
+
+function init(){
+	flex_stream.setSize(size);
+	flex_stream.setProducerFramerate(producer_framerate);
+	flex_stream.setConsumerFramerate(consumer_framerate);
+	flex_stream.setAlpha(alpha);
+	flex_stream.setOnFrame(unicorn);
+}
+
+init();
