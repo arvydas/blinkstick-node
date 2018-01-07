@@ -167,6 +167,7 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
+	clearFrame(composite);
 	onFrame = fn;
 }
 
