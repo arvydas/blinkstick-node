@@ -11,7 +11,7 @@ const express     = require('express');
 var app = express()
 
 app.get('/', function (req, res) {
-	var onFrame = req.query.example;
+	var example = req.query.example;
 
 	switch(example) {
 	case "cpu_meter":
