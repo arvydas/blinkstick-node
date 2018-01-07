@@ -181,7 +181,6 @@ function setOnFrame(fn)
 	if (consumer_timer != null)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
-
 }
 
 
