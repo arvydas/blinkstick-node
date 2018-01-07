@@ -94,7 +94,7 @@ function producer(){
 //Stream Consumer
 function consumer(){
 	consumeFrame(); //Render frame to BlinkStick
-	conumser_timer = setTimeout(consumer, 1000/consumer_framerate);
+	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
 }
 
 //Convert to internal BlinkStick buffer
@@ -171,11 +171,11 @@ function setOnFrame(fn)
 {
 	clearFrame(composite);
 	onFrame = fn;
-	
+
 	if (producer_timer != null)
 		clearTimeout(producer_timer);
 	producer_timer = setTimeout(producer, 1000/producer_framerate); 
-	
+
 	if (consumer_timer != null)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
@@ -272,7 +272,7 @@ function init(){
 	setAlpha(0.1);
 	setOnFrame(signature);
 	pos = 0;
-	
+
 	start();
 }
 
