@@ -10,11 +10,13 @@ module.exports = {
 		}
 }
 
+var frame = flex_stream.newFrame();
+
 function fireplace() {   
-	var frame = flex_stream.newFrame();
+
 	for (i=0; i<flex_stream.getSize(); i++)
 	{
-		if (Math.random()<.75)
+		if (Math.random()<.5)
 		{
 			//Red to yellow spectrum
 			var r = Math.random()*230+25;
