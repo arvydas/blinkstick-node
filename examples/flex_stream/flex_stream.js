@@ -86,7 +86,7 @@ var busy               = false; //Semaphore
 //Stream Producer 
 function producer(){
 	onFrame(); //Call user defined function
-	setTimeout(producer, 1000/producer_framerate); 
+    setTimeout(producer, 1000/producer_framerate); 
 }
 
 //Stream Consumer
@@ -167,7 +167,6 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-	clearFrame(composite);
 	onFrame = fn;
 }
 
