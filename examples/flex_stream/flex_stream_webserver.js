@@ -1,5 +1,5 @@
 //Very simple server to switch between examples
-//eg. curl http://localhost:5000/?example=name
+//eg. http://localhost:5000/?example=name
 //Default is the flex stream signature
 
 const express     = require('express');
