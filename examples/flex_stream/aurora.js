@@ -15,8 +15,6 @@ var frame = flex_stream.newFrame();
 function aurora() {       
 	//Aurora
 	a = Math.random();
-	flex_stream.setProducerFramerate(a*2+1);
-	flex_stream.setAlpha(.0001+(a/100));
 
 	for (i=0; i<flex_stream.getSize(); i++)
 	{    			
@@ -40,7 +38,7 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(1);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(1);
+	flex_stream.setAlpha(0.001);
 	flex_stream.setOnFrame(aurora);
 }
 
