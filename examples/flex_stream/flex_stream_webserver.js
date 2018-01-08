@@ -43,7 +43,7 @@ app.get('/', function (req, res) {
 		flex_stream.stop();
 		break;
 	case "start":
-		flex_Stream.start();
+		flex_stream.start();
 		break;
 	default:
 		flex_stream.init();
