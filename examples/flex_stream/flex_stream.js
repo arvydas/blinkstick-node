@@ -199,8 +199,10 @@ function setOnFrame(fn)
 {
 
 	//Hard or soft transition
-	if (!crossFade)
+	if (!crossFade){
 		clearFrame(composite);
+		stream_buffer = [];
+	}
 
 	onFrame = fn;
 
@@ -210,7 +212,6 @@ function setOnFrame(fn)
 //	if (consumer_timer != null)
 //	clearTimeout(consumer_timer);
 
-	stream_buffer = [];
 
 //	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
 //	producer_timer = setTimeout(producer, 1000/producer_framerate); 
