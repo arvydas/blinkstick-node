@@ -45,7 +45,7 @@ function timesquare() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(8);
+	flex_stream.setSize(8,1);
 	flex_stream.setProducerFramerate(8);
 	flex_stream.setConsumerFramerate(60);
 	flex_stream.setOnFrame(timesquare);

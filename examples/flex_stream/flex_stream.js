@@ -57,13 +57,21 @@ module.exports = {
 		{
 			return getConsumerFramerate();
 		},
-		setSize: function(size)
+		setSize: function(w, h)
 		{
-			setSize(size);
+			setSize(w, h);
 		},
 		getSize: function()
 		{
 			return getSize();
+		},
+		getWidth: function()
+		{
+			return width;
+		},
+		getHeight: function()
+		{
+			return height;
 		},
 		setCrossFade: function(fade)
 		{
@@ -90,7 +98,8 @@ module.exports = {
 var blinkstick         = require('blinkstick');
 var device             = blinkstick.findFirst();
 var MAX_SIZE           = 64;    //BlinkStick single channel limit
-var size               = 8;     //Default 8 LEDs.
+var width              = 8;     //Default 8 LEDs in a
+var height             = 1;     //single row.
 var producer_framerate = 20;    //Default low frame production for morphing
 var consumer_framerate = 60;    //Default high frame rendering for morphing
 var alpha              = 0.1;   //Default is transparent frames for morphing
@@ -257,14 +266,15 @@ function getConsumerFramerate()
 	return consumer_framerate;
 }
 
-function setSize(s)
+function setSize(w,h)
 {	
-	size = Math.max(1, Math.min(s, MAX_SIZE)); //Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
+	width  = Math.max(1, Math.min(w, MAX_SIZE));   //Clamp between 1 and MAX_SIZE (64 for BlinkStick single channel)
+	height = Math.max(1, Math.min(h, MAX_SIZE/w)); //Clamp between 1 and MAX_SIZE/width
 }
 
 function getSize()
 {
-	return size;
+	return width*height;
 }
 
 function setAlpha(a)
@@ -323,7 +333,7 @@ var fadeToBlack = function(){
 };
 
 function init(){
-	setSize(8);
+	setSize(8,1);
 	setProducerFramerate(20);
 	setConsumerFramerate(60);
 	setAlpha(0.05);

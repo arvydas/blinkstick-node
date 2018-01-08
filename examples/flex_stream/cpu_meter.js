@@ -69,7 +69,7 @@ function cpuLoad() {
 //Configure stream
 
 function init(){
-	flex_stream.setSize(8);
+	flex_stream.setSize(8,1);
 	flex_stream.setProducerFramerate(30);
 	flex_stream.setConsumerFramerate(60);
 	flex_stream.setOnFrame(cpuMeter);
