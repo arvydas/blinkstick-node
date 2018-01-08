@@ -45,6 +45,9 @@ app.get('/', function (req, res) {
 	case "start":
 		flex_stream.start();
 		break;
+	case "clear":
+		flex_stream.fadeOut();
+		break;
 	default:
 		flex_stream.init();
 	example = "default"
