@@ -152,7 +152,8 @@ function fadeOut(frame){
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
 {
-	if (stream_buffer.length==0) //Skip frame if consumer is falling behind
+	console.log(stream_buffer.length);
+	if (sh==0) //Skip frame if consumer is falling behind
 		stream_buffer.push(frame);
 }
 
