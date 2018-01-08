@@ -330,10 +330,12 @@ function init(){
 	setConsumerFramerate(60);
 	setAlpha(0.05);
 	setOnFrame(signature);
-	producer();
-	consumer();
+
 }
 
 if (device)
+{
 	init();
-
+	producer();
+	consumer();
+}
