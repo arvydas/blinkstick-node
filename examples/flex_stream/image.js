@@ -19,6 +19,8 @@ var    num_frames  = 0; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
+	console.log(num_frames);
+	
 	if (num_frames-- > 0)	
 		flex_stream.produceFrame(frame);
 	else
