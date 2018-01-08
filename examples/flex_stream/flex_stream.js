@@ -239,8 +239,10 @@ function restoreOnFrame(){
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
 	alpha              = prevAlpha;
-	streaming          = prevStreaming;
+
 	setOnFrame(prevOnFrame);
+	
+	streaming = prevStreaming;
 }
 
 //Default onFrame() stub
