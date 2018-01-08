@@ -27,6 +27,10 @@ function image(){
 		flex_stream.setProducerFramerate(oldProducerFramerate);
 		flex_stream.setAlpha(oldAlpha);	
 		flex_stream.setOnFrame(oldOnFrame);
+		
+		console.log(flex_stream.getConsumerFramerate());
+		console.log(flex_stream.getProducerFramerate());
+		console.log(flex_stream.getAlpha());
 	}
 	else
 		flex_stream.produceFrame(frame);
