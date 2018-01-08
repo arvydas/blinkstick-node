@@ -17,7 +17,7 @@ module.exports = {
 			setOnFrame(fn); 
 		},
 		getOnFrame: function() {
-			onFrame; 
+			return onFrame; 
 		},
 		newFrame: function() {
 			return newFrame(); 
@@ -305,7 +305,6 @@ function init(){
 	setConsumerFramerate(60);
 	setAlpha(0.1);
 	setOnFrame(signature);
-	console.log("set");
 }
 
 init();
