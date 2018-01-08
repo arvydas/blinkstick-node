@@ -198,24 +198,24 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-	
+
 	//Hard or soft transition
 	if (!crossFade)
 		clearFrame(composite);
-	
+
 	onFrame = fn;
 
 //	if (producer_timer != null)
-//		clearTimeout(producer_timer);
-//
+//	clearTimeout(producer_timer);
+
 //	if (consumer_timer != null)
-//		clearTimeout(consumer_timer);
-	
+//	clearTimeout(consumer_timer);
+
 	stream_buffer = [];
-	
+
 //	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
 //	producer_timer = setTimeout(producer, 1000/producer_framerate); 
-	
+
 	start();
 }
 
@@ -249,7 +249,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
-	
+
 	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 
@@ -330,7 +330,10 @@ function init(){
 	setConsumerFramerate(60);
 	setAlpha(0.05);
 	setOnFrame(signature);
+	producer();
+	consumer();
 }
 
-init();
+if (device)
+	init();
 
