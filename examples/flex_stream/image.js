@@ -51,7 +51,7 @@ function init(filename, num_frames){
 		flex_stream.setSize(8);
 		flex_stream.setProducerFramerate(30);
 		flex_stream.setConsumerFramerate(60);
-		flex_stream.setAlpha(.9);
+		flex_stream.setAlpha(1);
 		flex_stream.setOnFrame(image);
 	});
 }

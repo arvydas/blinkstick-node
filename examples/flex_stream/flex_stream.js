@@ -13,6 +13,12 @@ module.exports = {
 		fadeOut: function() {
 			fadeOut(); 
 		},
+		signature: function() {
+			return sigature; 
+		},
+		fadeToBlack: function() {
+			return fadeToBlack; 
+		},
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
 		},
