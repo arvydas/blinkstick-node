@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 	var example = req.query.example;
 
 	var filename = "/flex_stream_webserver.html";
-	
+
 	switch(example) {
 	case "cpu_meter":
 		cpu_meter.init();
@@ -41,13 +41,15 @@ app.get('/', function (req, res) {
 		break;
 	default:
 		flex_stream.init();
-	    example = "default"
+	example = "default"
 	}
 
 	res.sendfile(path.join(__dirname + filename));
 })
 
-app.use('/favicon.ico', express.static(path.join(__dirname + '/favicon.ico')));
+app.get('/favicon.ico', function (req, res) {
+	res.sendfile(path.join(__dirname + '/favicon.ico'));
+})
 
 var port = process.env.PORT || 5000;
 
