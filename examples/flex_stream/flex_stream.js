@@ -81,7 +81,7 @@ module.exports = {
 		{
 			return crossFade;
 		},
-		start: function(size)
+		start: function()
 		{
 			start();
 		},
@@ -149,7 +149,7 @@ function newFrame(){
 //Clear a frame
 function clearFrame(frame){
 	if (frame != null)
-		for (i=0; i<size*3; i++)
+		for (i=0; i<getSize()*3; i++)
 			frame[i] =0;
 }
 
