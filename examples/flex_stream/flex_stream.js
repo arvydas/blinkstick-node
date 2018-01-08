@@ -222,22 +222,10 @@ function saveOnFrame(){
 	prevAlpha = alpha;
 }
 function restoreOnFrame(){
-	//Hard or soft transition
-	if (!crossFade)
-		clearFrame(composite);
-	
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
 	alpha              = prevAlpha;
-	onFrame            = prevOnFrame;
-
-	if (producer_timer != null)
-		clearTimeout(producer_timer);
-	producer_timer = setTimeout(producer, 1000/producer_framerate); 
-
-	if (consumer_timer != null)
-		clearTimeout(consumer_timer);
-	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
+	setOnFrame(prevOnFrame);
 }
 
 //Default onFrame() stub
