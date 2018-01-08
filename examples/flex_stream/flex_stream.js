@@ -226,7 +226,7 @@ function saveOnFrame(){
 	prevAlpha = alpha;
 }
 function restoreOnFrame(){
-    console.log("RESTSORE");
+    console.log("RESTORE");
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
 	alpha              = prevAlpha;
