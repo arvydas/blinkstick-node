@@ -41,6 +41,6 @@ function init(filename){
 
 }
 
-console.log(process.argv[0]);
+console.log("ARGV[0]: = "+process.argv[0]);
 
 
