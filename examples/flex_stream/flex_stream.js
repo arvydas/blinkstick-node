@@ -76,7 +76,7 @@ module.exports = {
 		},
 		stop: function()
 		{
-			return stop();
+			stop();
 		},
 		isStreaming: function()
 		{
