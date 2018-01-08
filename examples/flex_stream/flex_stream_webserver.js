@@ -45,6 +45,12 @@ app.get('/', function (req, res) {
 	case "start":
 		flex_stream.start();
 		break;
+	case "crossFadeOn":
+		flex_stream.crossFade(true);
+		break;
+	case "crossFadeOff":
+		flex_stream.crossFade(false);
+		break;
 	case "clear":
 		flex_stream.fadeOut();
 		break;
