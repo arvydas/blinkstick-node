@@ -205,16 +205,16 @@ function setOnFrame(fn)
 	
 	onFrame = fn;
 
-	if (producer_timer != null)
-		clearTimeout(producer_timer);
-
-	if (consumer_timer != null)
-		clearTimeout(consumer_timer);
+//	if (producer_timer != null)
+//		clearTimeout(producer_timer);
+//
+//	if (consumer_timer != null)
+//		clearTimeout(consumer_timer);
 	
 	stream_buffer = [];
 	
-	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
-	producer_timer = setTimeout(producer, 1000/producer_framerate); 
+//	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
+//	producer_timer = setTimeout(producer, 1000/producer_framerate); 
 	
 	start();
 }
