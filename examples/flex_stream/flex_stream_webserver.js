@@ -39,6 +39,12 @@ app.get('/', function (req, res) {
 	case "timesquare":
 		timesquare.init();
 		break;
+	case "stop":
+		flex_stream.stop();
+		break;
+	case "start":
+		flex_Stream.start();
+		break;
 	default:
 		flex_stream.init();
 	example = "default"
