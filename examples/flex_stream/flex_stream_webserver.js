@@ -14,7 +14,6 @@ const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
 
-app.use('/favicon.ico', express.static(path.join(__dirname + '/favicon.ico')));
 
 app.get('*', function (req, res) {
 	var example = req.query.example;
@@ -47,6 +46,8 @@ app.get('*', function (req, res) {
 
 	res.sendfile(path.join(__dirname + filename));
 })
+
+app.use('/favicon.ico', express.static(path.join(__dirname + '/favicon.ico')));
 
 var port = process.env.PORT || 5000;
 
