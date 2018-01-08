@@ -34,9 +34,11 @@ function init(filename, sec){
 
 	if (sec >= 0)
 		num_frames = sec*60;
-	
-	if(!notifying)
+
+	if(!notifying){ 
+		notifying = true;
 		flex_stream.saveOnFrame();
+	}
 
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
