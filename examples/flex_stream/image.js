@@ -6,8 +6,8 @@
 //For Windows, Linux and Mac
 
 module.exports = {
-		init: function(filename, duration) {
-			init(filename, duration); 
+		init: function(filename, sec) {
+			init(filename, sec); 
 		}
 }
 
@@ -15,25 +15,28 @@ const  flex_stream = require("./flex_stream.js");
 const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
 var    frame       = null;
 
-var    duration              = -1; //Default static image.
+var    num_frames  = 0; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	if (duration-- == 0)
-		flex_stream.restoreOnFrame();
-	else
+	if (duration-- > 0)	
 		flex_stream.produceFrame(frame);
+	else
+		flex_stream.restoreOnFrame();
 }
 
 //Configure stream
 
-function init(filename, num_frames){
-	duration = num_frames;
+function init(filename, sec){
+	
+    if (sec >= 0)
+	   num_frames = sec/60;
+    
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 	    flex_stream.saveOnFrame();
 		flex_stream.setSize(8);
-		flex_stream.setProducerFramerate(10);
+		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
 		flex_stream.setOnFrame(image);
