@@ -93,7 +93,7 @@ var composite          = null;  //Composite frame for morphing
 var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
 var busy               = false; //Semaphore
-var crossFade          = false; //Hard or soft transitions.
+var crossFade          = true;  //Hard or soft transitions.
 var producer_timer     = null;
 var consumer_timer     = null;
 
