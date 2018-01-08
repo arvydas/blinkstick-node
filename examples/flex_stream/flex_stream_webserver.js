@@ -14,7 +14,7 @@ const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
 
-app.use('/favicon.ico', express.static('favicon.ico'));
+app.use('/favicon.ico', express.static(path.join(__dirname + '/favicon.ico')));
 
 app.get('*', function (req, res) {
 	var example = req.query.example;
