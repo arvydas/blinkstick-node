@@ -303,7 +303,7 @@ function init(){
 	setSize(8);
 	setProducerFramerate(10);
 	setConsumerFramerate(60);
-	setAlpha(0.1);
+	setAlpha(0.01);
 	setOnFrame(signature);
 }
 
