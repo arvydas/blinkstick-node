@@ -229,15 +229,17 @@ function setOnFrame(fn)
 }
 
 function saveOnFrame(){
-	prevOnFrame = onFrame;
+	prevOnFrame           = onFrame;
 	prevConsumerFramerate = consumer_framerate;
 	prevProducerFramerate = producer_framerate;
-	prevAlpha = alpha;
+	prevAlpha             = alpha;
+	prevStreaming         = streaming
 }
 function restoreOnFrame(){
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
 	alpha              = prevAlpha;
+	streaming          = prevStreaming;
 	setOnFrame(prevOnFrame);
 }
 
