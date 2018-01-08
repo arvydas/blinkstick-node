@@ -16,7 +16,6 @@ const cpu_meter   = require("./cpu_meter.js"); //This starts first
 
 var app = express()
 
-
 app.get('/', function (req, res) {
 	var example = req.query.example;
 
