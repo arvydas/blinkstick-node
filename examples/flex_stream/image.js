@@ -19,6 +19,7 @@ var    duration              = -1; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
+	console.log(duration);
 	if (duration-- == 0)
 		flex_stream.restoreOnFrame();
 	else
