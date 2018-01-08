@@ -1,5 +1,6 @@
 //Very simple server to switch between examples
-//eg. http://localhost:5000/?example=ambilight
+//eg. http://localhost:5000 for the UI
+//eg. http://localhost:5000/?example=ambilight for a specific example
 //Default is the flex stream signature
 
 const express     = require('express');
