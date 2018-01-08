@@ -53,8 +53,7 @@ function init(filename, num_frames){
 	});
 }
 
-//Run from commandline
-if (!module.parent)
+
 	init(process.argv[2], process.argv[3]);
 
 
