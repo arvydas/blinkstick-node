@@ -180,6 +180,7 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
+	
 	//Hard or soft transition
 	if (!crossFade)
 		clearFrame(composite);
@@ -193,6 +194,8 @@ function setOnFrame(fn)
 	if (consumer_timer != null)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
+	
+	streaming = true;
 }
 
 
