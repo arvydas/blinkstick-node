@@ -19,7 +19,7 @@ var    num_frames  = 0; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	if (duration-- > 0)	
+	if (num_frames-- > 0)	
 		flex_stream.produceFrame(frame);
 	else
 		flex_stream.restoreOnFrame();
@@ -30,7 +30,7 @@ function image(){
 function init(filename, sec){
 	
     if (sec >= 0)
-	   num_frames = sec/60;
+	   num_frames = sec*60;
     
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
