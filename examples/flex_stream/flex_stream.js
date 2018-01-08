@@ -98,6 +98,7 @@ var stream_buffer      = [];    //Stream buffer for frames
 var composite          = null;  //Composite frame for morphing
 var currentFrame       = null;  //Latest frame from stream
 var streaming          = false; //Pause
+var transitioning      = false; //Semaphore
 var busy               = false; //Semaphore
 var crossFade          = true;  //Hard or soft transitions.
 var producer_timer     = null;
@@ -116,9 +117,10 @@ function producer(){
 
 //Stream Consumer
 function consumer(){
-	if (streaming)
+	if (streaming && !transitioning)
 		consumeFrame(); //Render frame to BlinkStick
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
+	transitioning = true;
 }
 
 //Convert to internal BlinkStick buffer
@@ -197,7 +199,7 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-
+    transitioning = true;
 	//Hard or soft transition
 	if (!crossFade){
 		clearFrame(composite);
