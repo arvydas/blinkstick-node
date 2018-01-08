@@ -305,6 +305,7 @@ function init(){
 	setConsumerFramerate(60);
 	setAlpha(0.1);
 	setOnFrame(signature);
+	console.log("set");
 }
 
 init();
