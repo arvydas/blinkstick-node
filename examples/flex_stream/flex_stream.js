@@ -14,7 +14,7 @@ module.exports = {
 			fadeOut(); 
 		},
 		signature: function() {
-			return sigature; 
+			return signature; 
 		},
 		fadeToBlack: function() {
 			return fadeToBlack; 
