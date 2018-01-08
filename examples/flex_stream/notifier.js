@@ -43,7 +43,7 @@ function init(filename, sec){
 		flex_stream.saveOnFrame();
 	}
 
-	sharp(filename).resize(flex_stream.getWidth(),getHeight()).ignoreAspectRatio().raw().toBuffer().then(data => {
+	sharp(filename).resize(flex_stream.getWidth(),flex_stream.getHeight()).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		flex_stream.setSize(8,1);
 		flex_stream.setProducerFramerate(60);
