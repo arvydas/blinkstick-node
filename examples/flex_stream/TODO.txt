@@ -1,0 +1,3 @@
+Specify width and height for matrices, setSize(W,H) getSize()==>WxH
+ - Sharp package's rasterized buffers already compatible with rasterized matrices
+ Add more notification images (s3d, vrip, twitter, etc)
