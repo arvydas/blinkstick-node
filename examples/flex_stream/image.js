@@ -28,10 +28,9 @@ function image(){
 //Configure stream
 
 function init(filename, num_frames){
-	
+	duration = num_frames;
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
-		duration = num_frames;
 	    flex_stream.saveOnFrame();
 		flex_stream.setSize(8);
 		flex_stream.setProducerFramerate(10);
