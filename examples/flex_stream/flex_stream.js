@@ -13,17 +13,14 @@ module.exports = {
 		fadeOut: function() {
 			fadeOut(); 
 		},
-		signature: function() {
-			return signature; 
-		},
-		fadeToBlack: function() {
-			return fadeToBlack; 
-		},
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
 		},
-		getOnFrame: function() {
-			return onFrame; 
+		saveOnFrame: function() {
+			saveOnFrame(); 
+		},
+		restoreOnFrame: function() {
+			restoreOnFrame(); 
 		},
 		newFrame: function() {
 			return newFrame(); 
@@ -105,6 +102,10 @@ var busy               = false; //Semaphore
 var crossFade          = true;  //Hard or soft transitions.
 var producer_timer     = null;
 var consumer_timer     = null;
+var prevOnFrame            = null;
+var prevConsumerFramerate  = 0;
+var prevProducerFramerate  = 0;
+var prevAlpha              = 0;
 
 //Stream Producer 
 function producer(){
@@ -200,7 +201,7 @@ function setOnFrame(fn)
 	//Hard or soft transition
 	if (!crossFade)
 		clearFrame(composite);
-
+	
 	onFrame = fn;
 
 	if (producer_timer != null)
@@ -214,6 +215,30 @@ function setOnFrame(fn)
 	start();
 }
 
+function saveOnFrame(){
+	prevOnFrame = onFrame;
+	prevConsumerFramerate = consumer_framerate;
+	prevProducerFramerate = producer_framerate;
+	prevAlpha = alpha;
+}
+function restoreOnFrame(){
+	//Hard or soft transition
+	if (!crossFade)
+		clearFrame(composite);
+	
+	consumer_framerate = prevConsumerFramerate;
+	producer_framerate = prevProducerFramerate;
+	prevAlpha = alpha;
+	onFrame = prevOnFrame;
+
+	if (producer_timer != null)
+		clearTimeout(producer_timer);
+	producer_timer = setTimeout(producer, 1000/producer_framerate); 
+
+	if (consumer_timer != null)
+		clearTimeout(consumer_timer);
+	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
+}
 
 //Default onFrame() stub
 
@@ -231,6 +256,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
+	
 	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 

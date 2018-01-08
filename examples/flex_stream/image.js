@@ -14,24 +14,13 @@ module.exports = {
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                                                                                                                                                         
 const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
 var    frame       = null;
-var    oldOnFrame            = null;
-var    oldConsumerFramerate  = 0;
-var    oldProducerFramerate  = 0;
-var    oldAlpha              = 0;
+
 var    duration              = -1; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	if (true){
-		flex_stream.setProducerFramerate(oldProducerFramerate);
-		flex_stream.setConsumerFramerate(oldConsumerFramerate);
-		flex_stream.setAlpha(oldAlpha);	
-		flex_stream.setOnFrame(oldOnFrame);
-		
-		console.log(flex_stream.getConsumerFramerate());
-		console.log(flex_stream.getProducerFramerate());
-		console.log(flex_stream.getAlpha());
-	}
+	if (duration-- == 0)
+		flex_stream.restoreOnFrame();
 	else
 		flex_stream.produceFrame(frame);
 }
@@ -40,14 +29,10 @@ function image(){
 
 function init(filename, num_frames){
 	
-	oldOnFrame            = flex_stream.getOnFrame();
-	oldConsumerFramerate  = flex_stream.getConsumerFramerate();
-	oldProducerFramerate  = flex_stream.getProducerFramerate();
-	oldAlpha              = flex_stream.getAlpha();
-	
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		duration = num_frames;
+		flex_stream.saveOnFrame();
 		flex_stream.setSize(8);
 		flex_stream.setProducerFramerate(30);
 		flex_stream.setConsumerFramerate(60);
