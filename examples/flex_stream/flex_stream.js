@@ -292,8 +292,6 @@ var signature = function(){
 
 //Fade to Black used with fadeOut()
 var fadeToBlack = function(){   
-	setProducerFramerate(10);
-	setConsumerFramerate(60);
 	var frame = newFrame();
 	produceFrame(frame);
 };
