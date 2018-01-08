@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 		cpu_meter.init();
 		break;
 	case "notifier":
-		notifier.init("img/flex_stream.jpg", .3); // .3 secs
+		notifier.init(path.join(__dirname + "img/flex_stream.jpg"), .3); // .3 secs
 		break;
 	case "aurora":
 		aurora.init();
