@@ -39,6 +39,7 @@ function image(){
 function init(filename, num_frames){
 	flex_stream.setSize(8);
 
+	oldOnFrame            = flex_stream.getOnFrame();
 	oldConsumerFramerate  = flex_stream.getConsumerFramerate();
 	oldProducerFramerate  = flex_stream.getProducerFramerate();
 	oldAlpha              = flex_stream.getAlpha();
