@@ -70,6 +70,9 @@ app.get('/favicon.ico', function (req, res) {
 	res.sendfile(path.join(__dirname + '/favicon.ico'));
 })
 
+app.get('img/flex_stream.png', function (req, res) {
+	res.sendfile(path.join(__dirname + '/img/flex_stream.png'));
+})
 
 
 var port = process.env.PORT || 5000;
