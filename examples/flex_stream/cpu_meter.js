@@ -31,8 +31,8 @@ function cpuMeter() {
 	
 	cpu_avg = (cpu_avg+percentageCPU)/2;
 	
-	//Vary the producer framerate by percentage CPU load (10 to 60 fps)
-	framerate = cpu_avg*0.50+10;
+	//Vary the producer framerate by percentage CPU load (15 to 60 fps)
+	framerate = cpu_avg*0.45+15;
 
 	//Bounce particle off edges of LED strip
 	if (pos<=0 || pos>=flex_stream.getSize()-1)
@@ -71,7 +71,7 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(30);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(0.3);
+	flex_stream.setAlpha(0.25);
 	flex_stream.setOnFrame(cpuMeter);
 	startMeasure  = cpuLoad();
 	percentageCPU = 0;
