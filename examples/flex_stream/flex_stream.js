@@ -120,7 +120,7 @@ function consumer(){
 	if (streaming && !transitioning)
 		consumeFrame(); //Render frame to BlinkStick
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
-	transitioning = true;
+	transitioning = false;
 }
 
 //Convert to internal BlinkStick buffer
