@@ -38,6 +38,7 @@ function timesquare() {
 	frame[(size-1)*3+1] = Math.floor(g);  //G
 	frame[(size-1)*3+2] = Math.floor(b);  //B
 	
+	flex_stream.setAlpha(0.1);
 	flex_stream.produceFrame(frame);     
 }
 
@@ -47,7 +48,6 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(8);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(0.1);
 	flex_stream.setOnFrame(timesquare);
 }
 

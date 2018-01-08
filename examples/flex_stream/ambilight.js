@@ -21,6 +21,7 @@ const  sharp       = require('sharp');              //Available at npmjs.com
 function ambilight(){
 	screenshot().then((img) => {
 		sharp(img).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
+			flex_stream.setAlpha(0.1);
 			flex_stream.produceFrame(data);
 		})
 	});
@@ -32,7 +33,6 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(5);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(0.1);
 	flex_stream.setOnFrame(ambilight);
 }
 

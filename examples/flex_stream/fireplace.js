@@ -26,11 +26,12 @@ function fireplace() {
 			frame[i*3+2] = 0;              //B
 		}
 
-		//Flickering flames
-		f = Math.random();
-		flex_stream.setProducerFramerate(f*10+2);
-		flex_stream.setAlpha(.05+(f/20));
+
 	}
+	//Flickering flames
+	f = Math.random();
+	flex_stream.setProducerFramerate(f*10+2);
+	flex_stream.setAlpha(.05+(f/20));
 	flex_stream.produceFrame(frame);     
 }
 
@@ -40,7 +41,6 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(15);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(1);
 	flex_stream.setOnFrame(fireplace);
 }
 

@@ -46,6 +46,7 @@ function cpuMeter() {
 	frame[pos*3+2] = 2;                         //B
 
 	flex_stream.setProducerFramerate(framerate);
+	flex_stream.setAlpha(0.25);
 	flex_stream.produceFrame(frame);     
 }
 
@@ -71,7 +72,6 @@ function init(){
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(30);
 	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(0.25);
 	flex_stream.setOnFrame(cpuMeter);
 }
 
