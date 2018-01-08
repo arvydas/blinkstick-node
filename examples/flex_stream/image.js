@@ -17,11 +17,7 @@ var    frame       = null;
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	screenshot().then((img) => {
-		sharp(img).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
-			flex_stream.produceFrame(frame);
-		})
-	});
+	flex_stream.produceFrame(frame);
 }
 
 //Configure stream
@@ -41,6 +37,6 @@ function init(filename){
 
 }
 
-console.log("ARGV[2]: = "+process.argv[2]);
+init(process.argv[2]);
 
 
