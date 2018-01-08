@@ -310,6 +310,7 @@ var signature = function(){
 	frame[pos*3+1] = 255; //G
 	frame[pos*3+2] = 255; //B
 
+	console.log(stream_buffer.length);
 	produceFrame(frame);
 };
 
