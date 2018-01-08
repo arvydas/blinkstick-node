@@ -50,10 +50,12 @@ function init(filename, num_frames){
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
+		flex_stream.setOnFrame(image);
 	});
 }
 
-
+//Run from commandline
+if (!module.parent)
 	init(process.argv[2], process.argv[3]);
 
 
