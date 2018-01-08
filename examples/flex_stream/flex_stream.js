@@ -152,7 +152,6 @@ function fadeOut(frame){
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
 {
-	console.log(stream_buffer.length);
 	if (stream_buffer.length<2) //Skip frame if consumer is falling behind
 		stream_buffer.push(frame);
 }
@@ -294,7 +293,6 @@ process.on('SIGTERM', onExit);
 process.on('SIGINT',  onExit);
 
 function onExit(){
-	console.log("FLEX STREAM EXIT");
 	stop(); //Disable streaming to ensure no pending frames are set after LEDs are turned off
 	var frame = newFrame();	
 	clearFrame(frame);
