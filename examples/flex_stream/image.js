@@ -37,13 +37,16 @@ function image(){
 function init(filename, num_frames){
 	flex_stream.setSize(8);
 
+	oldConsumerFramerate  = flex_stream.getConsumerFramerate();
+	oldProducerFramerate  = flex_stream.getProducerFramerate();
+	oldAlpha              = flex_stream.getAlpha();
+	
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		duration = num_frames;
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
-	
 	});
 }
 
