@@ -230,10 +230,11 @@ function setOnFrame(fn)
 
 function saveOnFrame(){
 	prevOnFrame           = onFrame;
+	prevStreaming         = streaming
 	prevConsumerFramerate = consumer_framerate;
 	prevProducerFramerate = producer_framerate;
 	prevAlpha             = alpha;
-	prevStreaming         = streaming
+	
 }
 function restoreOnFrame(){
 	consumer_framerate = prevConsumerFramerate;
@@ -241,7 +242,6 @@ function restoreOnFrame(){
 	alpha              = prevAlpha;
 
 	setOnFrame(prevOnFrame);
-	
 	streaming = prevStreaming;
 }
 
