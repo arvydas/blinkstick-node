@@ -16,6 +16,9 @@ module.exports = {
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
 		},
+		getOnFrame: function() {
+			onFrame; 
+		},
 		newFrame: function() {
 			return newFrame(); 
 		},

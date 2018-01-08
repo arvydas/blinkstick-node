@@ -14,26 +14,40 @@ module.exports = {
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                                                                                                                                                         
 const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
 var    frame       = null;
+var    oldOnFrame  = flex_stream.getOnFrame();
+var    oldConsumerFramerate  = flex_stream.getConsumerFramerate();
+var    oldProducerFramerate  = flex_stream.getProducerFramerate();
+var    oldAlpha              = flex_stream.getAlpha();
+var    duration              = -1; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	flex_stream.produceFrame(frame);
+	if (duration-- == 0){
+		flex_stream.setConsumerFramerate(oldConsumerFramerate);
+		flex_stream.setProducerFramerate(oldProducerFramerate);
+		flex_stream.setAlpha(oldAlpha);
+	}
+	else
+		flex_stream.produceFrame(frame);
 }
 
 //Configure stream
 
-function init(filename){
+function init(filename, duration){
 	flex_stream.setSize(8);
-	flex_stream.setProducerFramerate(10);
-	flex_stream.setConsumerFramerate(60);
-	flex_stream.setAlpha(1);
 
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
+		num_frames = duration;
+		flex_stream.setProducerFramerate(60);
+		flex_stream.setConsumerFramerate(60);
+		flex_stream.setAlpha(1);
 		flex_stream.setOnFrame(image);
 	});
 }
 
-init(process.argv[2]);
+//Run from commandline
+if (!module.parent)
+	init(process.argv[2], process.argv[3]);
 
 
