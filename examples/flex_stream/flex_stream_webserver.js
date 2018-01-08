@@ -47,12 +47,12 @@ app.get('/', function (req, res) {
 	res.sendfile(path.join(__dirname + filename));
 })
 
-//app.get('/favicon.ico', function (req, res) {
-//	console.log("FAVICO");
-//	res.sendfile(path.join(__dirname + '/favicon.ico'));
-//})
+app.get('/favicon.ico', function (req, res) {
+	console.log("FAVICO");
+	res.sendfile(path.join(__dirname + '/favicon.ico'));
+})
 
-app.use(express.favicon());
+
 
 var port = process.env.PORT || 5000;
 
