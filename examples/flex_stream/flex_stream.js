@@ -291,7 +291,6 @@ var signature = function(){
 		frame[pos*3+2] = 255; //B
 	}
 	produceFrame(frame);
-	console.log(pos);
 };
 
 //Fade to Black used with fadeOut()

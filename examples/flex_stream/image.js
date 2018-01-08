@@ -39,7 +39,7 @@ function image(){
 //Configure stream
 
 function init(filename, num_frames){
-	flex_stream.setSize(8);
+	
 
 	oldOnFrame            = flex_stream.getOnFrame();
 	oldConsumerFramerate  = flex_stream.getConsumerFramerate();
@@ -49,7 +49,8 @@ function init(filename, num_frames){
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		duration = num_frames;
-		flex_stream.setProducerFramerate(60);
+		flex_stream.setSize(8);
+		flex_stream.setProducerFramerate(30);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
 		flex_stream.setOnFrame(image);
