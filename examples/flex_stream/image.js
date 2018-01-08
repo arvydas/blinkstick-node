@@ -25,7 +25,8 @@ function image(){
 	if (duration-- == 0){
 		flex_stream.setConsumerFramerate(oldConsumerFramerate);
 		flex_stream.setProducerFramerate(oldProducerFramerate);
-		flex_stream.setAlpha(oldAlpha);
+		flex_stream.setAlpha(oldAlpha);	
+		flex_stream.setOnFrame(oldOnFrame);
 	}
 	else
 		flex_stream.produceFrame(frame);
@@ -42,7 +43,7 @@ function init(filename, num_frames){
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
-		flex_stream.setOnFrame(image);
+	
 	});
 }
 
