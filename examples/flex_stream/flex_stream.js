@@ -211,7 +211,7 @@ function setOnFrame(fn)
 
 //Default onFrame() stub
 
-var onFrame = signature;
+var onFrame = function(){};
 
 function setProducerFramerate(framerate)
 {
