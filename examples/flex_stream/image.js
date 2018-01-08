@@ -30,6 +30,8 @@ function image(){
 	}
 	else
 		flex_stream.produceFrame(frame);
+	
+	console.log(duration);
 }
 
 //Configure stream
