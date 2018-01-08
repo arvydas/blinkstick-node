@@ -40,7 +40,6 @@ function image(){
 
 function init(filename, num_frames){
 	
-
 	oldOnFrame            = flex_stream.getOnFrame();
 	oldConsumerFramerate  = flex_stream.getConsumerFramerate();
 	oldProducerFramerate  = flex_stream.getProducerFramerate();

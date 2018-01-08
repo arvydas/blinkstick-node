@@ -283,7 +283,7 @@ function onExit(){
 var pos = 0;
 var signature = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= size+20) pos=0;       
+	if (pos++ >= getSize()+20) pos=0;       
 	var frame = newFrame();
 	if(pos < size){
 		frame[pos*3+0] = 255; //R
