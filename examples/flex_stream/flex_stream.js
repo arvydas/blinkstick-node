@@ -219,13 +219,14 @@ function setOnFrame(fn)
 }
 
 function saveOnFrame(){
+	 console.log("RESTSORE");
 	prevOnFrame = onFrame;
 	prevConsumerFramerate = consumer_framerate;
 	prevProducerFramerate = producer_framerate;
 	prevAlpha = alpha;
 }
 function restoreOnFrame(){
-
+    console.log("RESTSORE");
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
 	alpha              = prevAlpha;

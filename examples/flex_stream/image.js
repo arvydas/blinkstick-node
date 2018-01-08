@@ -29,7 +29,6 @@ function image(){
 
 function init(filename, num_frames){
 	
-	
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		duration = num_frames;
@@ -42,7 +41,7 @@ function init(filename, num_frames){
 	});
 }
 
-//Run from commandline
+//Run from command line
 if (!module.parent)
 	init(process.argv[2], process.argv[3]);
 
