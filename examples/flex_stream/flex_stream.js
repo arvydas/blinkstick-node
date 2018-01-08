@@ -166,7 +166,7 @@ function consumeFrame()
 		var grb = convert_grb(rgb);
 		currentFrame = grb;
 	}
-	if (currentFrame != null)
+	if (currentFrame != null && !transitioning)
 		morphFrame(currentFrame); //Morph to the current frame
 }
 
