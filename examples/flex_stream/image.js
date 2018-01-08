@@ -6,8 +6,8 @@
 //For Windows, Linux and Mac
 
 module.exports = {
-		init: function(filename) {
-			init(filename); 
+		init: function(filename, duration) {
+			init(filename, duration); 
 		}
 }
 
@@ -19,7 +19,6 @@ var    duration              = -1; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
-	console.log(duration);
 	if (duration-- == 0)
 		flex_stream.restoreOnFrame();
 	else
