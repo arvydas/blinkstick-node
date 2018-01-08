@@ -7,7 +7,7 @@ const express     = require('express');
 var   path        = require('path');
 const flex_stream = require("./flex_stream.js");
 const ambilight   = require("./ambilight.js");
-const image      = require("./image.js");
+const notifier    = require("./notifier.js");
 const unicorn     = require("./unicorn.js");
 const fireplace   = require("./fireplace.js");
 const aurora      = require("./aurora.js");
@@ -26,8 +26,8 @@ app.get('/', function (req, res) {
 	case "cpu_meter":
 		cpu_meter.init();
 		break;
-	case "image":
-		image.init("img/flex_stream.jpg", .1);
+	case "notifier":
+		notifier.init("img/flex_stream.jpg", .1);
 		break;
 	case "aurora":
 		aurora.init();
