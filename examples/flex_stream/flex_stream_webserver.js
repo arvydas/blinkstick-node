@@ -48,6 +48,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/favicon.ico', function (req, res) {
+	console.log("FAVICO");
 	res.sendfile(path.join(__dirname + '/favicon.ico'));
 })
 
