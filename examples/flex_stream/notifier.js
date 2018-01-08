@@ -21,7 +21,7 @@ var    num_frames  = 0; //Default static image.
 function notifier(){
 	if (num_frames-- > 0)
 	{
-		flex_stream.setAlpha(.5);	
+		flex_stream.setAlpha(.25);	
 		flex_stream.produceFrame(frame);
 	}
 	else
