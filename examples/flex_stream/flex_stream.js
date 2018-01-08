@@ -294,7 +294,6 @@ var signature = function(){
 var fadeToBlack = function(){   
 	setProducerFramerate(10);
 	setConsumerFramerate(60);
-	setAlpha(0.1);
 	var frame = newFrame();
 	produceFrame(frame);
 };
