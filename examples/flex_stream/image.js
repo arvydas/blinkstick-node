@@ -23,8 +23,8 @@ var    duration              = -1; //Default static image.
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function image(){
 	if (duration-- == 0){
-		flex_stream.setConsumerFramerate(oldConsumerFramerate);
 		flex_stream.setProducerFramerate(oldProducerFramerate);
+		flex_stream.setConsumerFramerate(oldConsumerFramerate);
 		flex_stream.setAlpha(oldAlpha);	
 		flex_stream.setOnFrame(oldOnFrame);
 		
