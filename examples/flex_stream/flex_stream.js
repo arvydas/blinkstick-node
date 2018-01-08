@@ -197,11 +197,11 @@ function morphFrame(current)
 
 function setOnFrame(fn)
 {
-	
+
 	//Hard or soft transition
 	if (!crossFade)
 		clearFrame(composite);
-	
+
 	onFrame = fn;
 
 	if (producer_timer != null)
@@ -211,7 +211,7 @@ function setOnFrame(fn)
 	if (consumer_timer != null)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
-	
+
 	start();
 }
 
@@ -244,7 +244,7 @@ function getProducerFramerate()
 
 function setConsumerFramerate(framerate)
 {
-	
+
 	consumer_framerate = Math.max(1, Math.min(framerate, 60));	//Clamp between 1 and 60 fps
 }
 
@@ -303,13 +303,13 @@ function onExit(){
 var pos = 0;
 var signature = function(){
 	//Bounce particle off edges of LED strip
-	if (pos++ >= getSize()+20) pos=0;       
+	if (pos++ >= getSize()) pos=0;       
 	var frame = newFrame();
-	if(pos < size){
-		frame[pos*3+0] = 255; //R
-		frame[pos*3+1] = 255; //G
-		frame[pos*3+2] = 255; //B
-	}
+
+	frame[pos*3+0] = 255; //R
+	frame[pos*3+1] = 255; //G
+	frame[pos*3+2] = 255; //B
+
 	produceFrame(frame);
 };
 
