@@ -47,6 +47,11 @@ app.get('/', function (req, res) {
 	res.sendfile(path.join(__dirname + filename));
 })
 
+app.get('/favicon.ico', function (req, res) {
+	res.sendfile(path.join(__dirname + '/favicon.ico'));
+})
+
+
 
 var port = process.env.PORT || 5000;
 
