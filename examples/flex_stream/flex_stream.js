@@ -228,8 +228,8 @@ function restoreOnFrame(){
 	
 	consumer_framerate = prevConsumerFramerate;
 	producer_framerate = prevProducerFramerate;
-	prevAlpha = alpha;
-	onFrame = prevOnFrame;
+	alpha              = prevAlpha;
+	onFrame            = prevOnFrame;
 
 	if (producer_timer != null)
 		clearTimeout(producer_timer);
