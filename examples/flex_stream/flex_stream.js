@@ -96,13 +96,15 @@ var consumer_timer     = null;
 
 //Stream Producer 
 function producer(){
-	onFrame(); //Call user defined function
+	if (streaming)
+		onFrame(); //Call user defined function
 	producer_timer = setTimeout(producer, 1000/producer_framerate); 
 }
 
 //Stream Consumer
 function consumer(){
-	consumeFrame(); //Render frame to BlinkStick
+	if (streaming)
+		consumeFrame(); //Render frame to BlinkStick
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate);
 }
 
@@ -164,7 +166,7 @@ function morphFrame(current)
 		}
 	}
 
-	if (streaming && !busy)
+	if (!busy)
 	{ 
 		busy = true;
 		device.setColors(0, composite, function(err, composite) { 
@@ -179,9 +181,9 @@ function morphFrame(current)
 function setOnFrame(fn)
 {
 	//Hard or soft transition
-    if (!crossFade)
-    	clearFrame(composite);
-    
+	if (!crossFade)
+		clearFrame(composite);
+
 	onFrame = fn;
 
 	if (producer_timer != null)
