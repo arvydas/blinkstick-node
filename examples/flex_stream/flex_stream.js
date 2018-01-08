@@ -10,6 +10,9 @@ module.exports = {
 		init: function() {
 			init(); 
 		},
+		clearAll: function() {
+			clearAll(); 
+		},
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
 		},
@@ -124,12 +127,19 @@ function newFrame(){
 	return new Uint8Array(getSize()*3);
 }
 
-//Create an empty frame
+//Clear a frame
 function clearFrame(frame){
 	if (frame != null)
 		for (i=0; i<size*3; i++)
 			frame[i] =0;
 }
+
+//Clear all LEDs
+function clearAll(frame){
+	setOnFrame(fadeOut);
+}
+
+
 
 
 //Produce frame on stream - called from user-defined OnFrame()
@@ -280,6 +290,15 @@ var signature = function(){
 		frame[pos*3+1] = 255; //G
 		frame[pos*3+2] = 255; //B
 	}
+	produceFrame(frame);
+};
+
+//Fade to Black
+var fadeOut = function(){   
+	setProducerFramerate(10);
+	setConsumerFramerate(60);
+	setAlpha(0.1);
+	var frame = newFrame();
 	produceFrame(frame);
 };
 
