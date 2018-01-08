@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
 		cpu_meter.init();
 		break;
 	case "image":
-		image.init("img/flex_stream.jpg", 60);
+		image.init("img/flex_stream.jpg", 10);
 		break;
 	case "aurora":
 		aurora.init();
