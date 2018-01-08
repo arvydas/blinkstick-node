@@ -10,8 +10,8 @@ module.exports = {
 		init: function() {
 			init(); 
 		},
-		clearAll: function() {
-			clearAll(); 
+		fadeOut: function() {
+			fadeOut(); 
 		},
 		setOnFrame: function(fn) {
 			setOnFrame(fn); 
@@ -135,12 +135,9 @@ function clearFrame(frame){
 }
 
 //Clear all LEDs
-function clearAll(frame){
-	setOnFrame(fadeOut);
+function fadeOut(frame){
+	setOnFrame(fadeToBlack);
 }
-
-
-
 
 //Produce frame on stream - called from user-defined OnFrame()
 function produceFrame(frame)
@@ -293,8 +290,8 @@ var signature = function(){
 	produceFrame(frame);
 };
 
-//Fade to Black
-var fadeOut = function(){   
+//Fade to Black used with fadeOut()
+var fadeToBlack = function(){   
 	setProducerFramerate(10);
 	setConsumerFramerate(60);
 	setAlpha(0.1);
