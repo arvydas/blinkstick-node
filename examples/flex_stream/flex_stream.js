@@ -301,7 +301,7 @@ var fadeToBlack = function(){
 
 function init(){
 	setSize(8);
-	setProducerFramerate(20);
+	setProducerFramerate(10);
 	setConsumerFramerate(60);
 	setAlpha(0.1);
 	setOnFrame(signature);
