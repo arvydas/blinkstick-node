@@ -195,7 +195,7 @@ function setOnFrame(fn)
 		clearTimeout(consumer_timer);
 	consumer_timer = setTimeout(consumer, 1000/consumer_framerate); 
 	
-	streaming = true;
+	start();
 }
 
 
@@ -290,7 +290,6 @@ function init(){
 	setAlpha(0.1);
 	setOnFrame(signature);
 	pos = 0;
-	start();
 }
 
 init();
