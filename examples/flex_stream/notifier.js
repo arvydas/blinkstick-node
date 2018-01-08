@@ -45,7 +45,7 @@ function init(filename, sec){
 		flex_stream.setSize(8);
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
-		flex_stream.setAlpha(0.5);
+		flex_stream.setAlpha(0.1);
 		flex_stream.setOnFrame(notifier);
 	});
 }
