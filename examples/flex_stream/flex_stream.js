@@ -318,7 +318,7 @@ var signature = function(){
 	//Bounce particle off edges of LED strip
 	if (pos++ >= getSize()+20) pos=0;       
 	var frame = newFrame();
-	if(pos < size){
+	if(pos < getSize()){
 		frame[pos*3+0] = 255; //R
 		frame[pos*3+1] = 255; //G
 		frame[pos*3+2] = 255; //B
