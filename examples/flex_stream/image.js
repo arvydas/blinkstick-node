@@ -33,12 +33,12 @@ function image(){
 
 //Configure stream
 
-function init(filename, duration){
+function init(filename, num_frames){
 	flex_stream.setSize(8);
 
 	sharp(filename).resize(flex_stream.getSize(),1).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
-		num_frames = duration;
+		duration = num_frames;
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
