@@ -19,8 +19,11 @@ var    num_frames  = 0; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
 function notifier(){
-	if (num_frames-- > 0)	
+	if (num_frames-- > 0)
+	{
+		flex_stream.setAlpha(0.1);	
 		flex_stream.produceFrame(frame);
+	}
 	else
 	{
 		flex_stream.restoreOnFrame();
@@ -45,7 +48,6 @@ function init(filename, sec){
 		flex_stream.setSize(8);
 		flex_stream.setProducerFramerate(60);
 		flex_stream.setConsumerFramerate(60);
-		flex_stream.setAlpha(0.1);
 		flex_stream.setOnFrame(notifier);
 	});
 }
