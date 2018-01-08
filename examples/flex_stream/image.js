@@ -23,7 +23,6 @@ function image(){
 //Configure stream
 
 function init(filename){
-
 	flex_stream.setSize(8);
 	flex_stream.setProducerFramerate(10);
 	flex_stream.setConsumerFramerate(60);
@@ -33,8 +32,6 @@ function init(filename){
 		frame = data;
 		flex_stream.setOnFrame(image);
 	});
-
-
 }
 
 init(process.argv[2]);
