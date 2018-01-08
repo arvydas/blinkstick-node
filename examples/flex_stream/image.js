@@ -14,10 +14,10 @@ module.exports = {
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                                                                                                                                                         
 const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
 var    frame       = null;
-var    oldOnFrame            = flex_stream.getOnFrame();
-var    oldConsumerFramerate  = flex_stream.getConsumerFramerate();
-var    oldProducerFramerate  = flex_stream.getProducerFramerate();
-var    oldAlpha              = flex_stream.getAlpha();
+var    oldOnFrame            = null;
+var    oldConsumerFramerate  = 0;
+var    oldProducerFramerate  = 0;
+var    oldAlpha              = 0;
 var    duration              = -1; //Default static image.
 
 //Stream scaled desktop (size x 1) to BlinkStick via async futures pipeline
