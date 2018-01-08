@@ -35,7 +35,7 @@ function init(filename, num_frames){
 		duration = num_frames;
 	    flex_stream.saveOnFrame();
 		flex_stream.setSize(8);
-		flex_stream.setProducerFramerate(60);
+		flex_stream.setProducerFramerate(10);
 		flex_stream.setConsumerFramerate(60);
 		flex_stream.setAlpha(1);
 		flex_stream.setOnFrame(image);
