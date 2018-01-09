@@ -1,7 +1,7 @@
 TODO
 Multi-channel support
 - Might require firmware changes to setColors() to send all channels in one call.
-- Possibly not
+Refactor as npm project
 
 
 Make web UI prettier
@@ -9,4 +9,4 @@ Make web UI prettier
  DONE
  Specify width and height for matrices, setSize(W,H) getSize()==>WxH
  - Sharp package's rasterized buffers already compatible with rasterized matrices
- - Add more notification images (s3d, vrip, twitter, etc)
+ Add more notification images (s3d, vrip, twitter, etc)
