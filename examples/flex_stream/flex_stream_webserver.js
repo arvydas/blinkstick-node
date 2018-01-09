@@ -19,14 +19,16 @@ var app = express()
 app.get('/', function (req, res) {
 	var example = req.query.example;
 
-	var filename = "/flex_stream_webserver.html";
+
+	var ui = "/flex_stream_webserver.html";
 
 	switch(example) {
 	case "cpu_meter":
 		cpu_meter.init();
 		break;
 	case "notifier":
-		notifier.init(path.join(__dirname + "/img/flex_stream.jpg"), .3); // .3 secs
+		var filename = req.query.filename;
+		notifier.init(path.join(__dirname + filename), .3); // .3 secs
 		break;
 	case "aurora":
 		aurora.init();
@@ -63,7 +65,7 @@ app.get('/', function (req, res) {
 	example = "default"
 	}
 
-	res.sendfile(path.join(__dirname + filename));
+	res.sendfile(path.join(__dirname + ui));
 })
 
 app.get('/favicon.ico', function (req, res) {
