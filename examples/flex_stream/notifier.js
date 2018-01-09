@@ -12,7 +12,7 @@ module.exports = {
 }
 
 const  flex_stream = require("./flex_stream.js");                                                                                                                                                                                                                                                                                                         
-const  sharp       = require('sharp');              //Available at npmjs.com                                                                                                                                             
+const  sharp       = require('sharp'); //Available at npmjs.com                                                                                                                                             
 var    frame       = null;
 var    notifying   = false;
 var    num_frames  = 0; //Default static image.
