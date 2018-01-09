@@ -27,8 +27,9 @@ app.get('/', function (req, res) {
 		cpu_meter.init();
 		break;
 	case "notifier":
-		var filename = req.query.filename;
-		notifier.init(path.join(__dirname + "/" + filename), .3); // .3 secs
+		var filename = path.join(__dirname + "/" + req.query.filename);
+		console.log(filename);
+		notifier.init(filename, .3); // .3 secs
 		break;
 	case "aurora":
 		aurora.init();
