@@ -1,4 +1,5 @@
 TODO
+Add audio to notifiers
 Multi-channel support
 - Might require firmware changes to setColors() to send all channels in one call.
 RGBA layers
