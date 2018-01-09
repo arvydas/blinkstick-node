@@ -1,4 +1,4 @@
-//Image display flex_stream.js     
+//Image Notifiers     
 //User defined OnFrame() converts images, and morphs scaled frames to BlinkStick
 //Minimum Requirements: 
 //- Latest version of nodejs (tested with v8.9.3)
