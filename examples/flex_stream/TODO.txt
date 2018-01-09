@@ -1,8 +1,9 @@
 TODO
 Multi-channel support
 - Might require firmware changes to setColors() to send all channels in one call.
+RGBA layers
 Refactor as npm project
-RGB Matrix Emulator (websockets - standalone or in parallel with BlinkStick)
+RGB Emulator Matrix REM (websockets - standalone or in parallel with BlinkStick)
 
 Make web UI prettier
  
