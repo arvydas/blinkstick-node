@@ -17,7 +17,7 @@ var    frame       = null;
 var    notifying   = false;
 var    num_frames  = 0; //Default static image.
 
-//Stream scaled image (W x H) to BlinkStick via async futures pipeline
+//Stream scaled image (W x H) to BlinkStick
 function notifier(){
 	if (num_frames-- > 0)
 	{
@@ -43,6 +43,7 @@ function init(filename, sec){
 		flex_stream.saveOnFrame();
 	}
 
+	//Scale image (W x H)
 	sharp(filename).resize(flex_stream.getWidth(),flex_stream.getHeight()).ignoreAspectRatio().raw().toBuffer().then(data => {
 		frame = data;
 		flex_stream.setSize(8,1);
