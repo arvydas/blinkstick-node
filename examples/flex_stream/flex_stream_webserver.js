@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 		break;
 	case "notifier":
 		var filename = req.query.filename;
-		notifier.init(path.join(__dirname + filename), .3); // .3 secs
+		notifier.init(path.join(__dirname + "/" + filename), .3); // .3 secs
 		break;
 	case "aurora":
 		aurora.init();
