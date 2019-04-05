@@ -4,20 +4,10 @@
  * @module blinkstick
  */
 
-var isWin = /^win/.test(process.platform),
-    usb;
+var isWin = /^win/.test(process.platform);
 
-if (isWin) {
-	//v0.11.13 of Node.js introduced changes to the API which require 
-	//a new version of precompiled HID.node for Windows platforms
-	if (compareVersions(process.version, '0.11.13')) {
-		usb = require('./platform/windows/HID_0.3.2-patched.node');
-	} else {
-		usb = require('./platform/windows/HID.node');
-	}
-} else {
-    usb = require('usb');
-}
+const usb = require("usb");
+const HID = require("node-hid");
 
 var VENDOR_ID = 0x20a0,
     PRODUCT_ID = 0x41e5,
@@ -191,8 +181,13 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
 
     if (isWin) {
         if (device) {
-            this.device = new usb.HID(device);
-            this.serial = serialNumber;
+            this.hidDevice = new HID.HID(
+                device.deviceDescriptor.idVendor, 
+                device.deviceDescriptor.idProduct);
+
+            device.open();
+            this.device = device;
+
             this.manufacturer = manufacturer;
             this.product = product;
         }
@@ -245,7 +240,18 @@ function BlinkStick (device, serialNumber, manufacturer, product) {
  */
 BlinkStick.prototype.getSerial = function (callback) {
     if (isWin) {
-        if (callback) callback(undefined, this.serial);
+        var self = this;
+        let device = this.device;
+        device.getStringDescriptor(device.deviceDescriptor.iSerialNumber, function(err, buf) {
+            if (err == null) {
+                const result = buf.toString('utf8');
+
+                self.serial = result;
+                if (callback) callback(err, result);
+            } else {
+                throw err;
+            }
+        });
     } else {
         var self = this;
         this.device.getStringDescriptor(3, function(err, result) {
@@ -773,7 +779,7 @@ BlinkStick.prototype.getColorString = function (index, callback) {
  * @param {Function} callback Callback to which to pass the value.
  */
 function getInfoBlock (device, location, callback) {
-    getFeatureReport(location, 33, function (err, buffer) {
+    device.getFeatureReport(location, 33, function (err, buffer) {
         if (typeof(err) !== 'undefined')
         {
             callback(err);
@@ -829,7 +835,7 @@ function setInfoBlock (device, location, data, callback) {
     for (i = 0; i < l; i++) buffer[i + 1] = data.charCodeAt(i);
     for (i = l; i < 33; i++) buffer[i + 1] = 0;
 
-    setFeatureReport(location, buffer, callback);
+    device.setFeatureReport(location, buffer, callback);
 }
 
 
@@ -1260,16 +1266,16 @@ function findBlinkSticks (filter) {
     var result = [], device, i, devices;
 
     if (isWin) {
-        devices = usb.devices();
+        devices = usb.getDeviceList();
 
         for (i in devices) {
             device = devices[i];
 
-            if (device.vendorId === VENDOR_ID &&
-                device.productId === PRODUCT_ID &&
+            if (device.deviceDescriptor.idVendor === VENDOR_ID &&
+                device.deviceDescriptor.idProduct === PRODUCT_ID &&
                     filter(device))
                 {
-                    result.push(new BlinkStick(device.path, device.serialNumber, device.manufacturer, device.product));
+                    result.push(new BlinkStick(device, device.deviceDescriptor.iSerialNumber, device.deviceDescriptor.iManufacturer, device.deviceDescriptor.idProduct));
                 }
         }
 
@@ -1314,7 +1320,7 @@ BlinkStick.prototype.setFeatureReport = function (reportId, data, callback) {
 
         try {
             if (isWin) {
-                self.device.sendFeatureReport(data);
+                self.hidDevice.sendFeatureReport(data);
                 if (callback) { callback(); }
             } else {
                 self.device.controlTransfer(0x20, 0x9, reportId, 0, new Buffer(data), function (err) {
@@ -1369,7 +1375,7 @@ BlinkStick.prototype.getFeatureReport = function (reportId, length, callback) {
 
         try {
             if (isWin) {
-                var buffer = self.device.getFeatureReport(reportId, length);
+                var buffer = self.hidDevice.getFeatureReport(reportId, length);
                 if (callback) callback(undefined, buffer);
             } else {
                 self.device.controlTransfer(0x80 | 0x20, 0x1, reportId, 0, length, function (err, data) {
