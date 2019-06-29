@@ -1,25 +1,27 @@
-var blinkstick = require('blinkstick'),
-    device = blinkstick.findFirst();
+var blinkstick = require('../../blinkstick'),
+  device = blinkstick.findFirst();
 
 if (device) {
-    var finished = false;
+  var finished = false;
 
-    device.setColor("#ff0000");
+  device.setColor('#ff0000');
+
+  setTimeout(function() {
+    device.setColor('#00ff00');
 
     setTimeout(function() {
-        device.setColor("#00ff00");
+      device.setColor('#0000ff');
 
-        setTimeout(function() {
-            device.setColor("#0000ff");
-
-            setTimeout(function() {
-                device.setColor("#000000", function () {
-                    finished = true;
-                });
-            }, 500);
-        }, 500);
+      setTimeout(function() {
+        device.setColor('#000000', function() {
+          finished = true;
+        });
+      }, 500);
     }, 500);
+  }, 500);
 
-    var wait = function () { if (!finished) setTimeout(wait, 100)}
-    wait();
+  var wait = function() {
+    if (!finished) setTimeout(wait, 100);
+  };
+  wait();
 }
