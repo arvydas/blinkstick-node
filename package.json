@@ -21,10 +21,10 @@
     "node": ">=4.0.0"
   },
   "licenses": [
-   {
-       "type": "MIT",
-       "url": "https://raw.githubusercontent.com/arvydas/blinkstick-node/master/LICENSE"
-   }
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/arvydas/blinkstick-node/master/LICENSE"
+    }
   ],
   "main": "./blinkstick",
   "repository": {
@@ -32,6 +32,6 @@
     "url": "https://github.com/arvydas/blinkstick-node"
   },
   "dependencies": {
-	"node-hid": "0.5.1"
+    "node-hid": "1.1.0"
   }
 }
