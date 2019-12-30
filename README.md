@@ -38,22 +38,19 @@ to your PATH environment variable.
 $> sudo apt-get install libusb nodejs npm
 ```
 
+For the most up to date version of Node.js, use [Node Version Manager](https://github.com/nvm-sh/nvm).
+
+```
+$> nvm install --lts
+```
+
 #### Raspberry Pi
 
-The apt repositories keep a very old version of NodeJS.  Please install the
-[Node ARM Binaries](http://nodejs.org/download/) from the official site. Run the
-following command to confirm the architecture of your Raspberry Pi.
+Install `libudev` and `libusb` development packages:
 
 ```
-$> uname -m
+$> sudo apt-get install libusb-1.0-0-dev libudev-dev -y
 ```
-
-Addionally, you will need to install `libudev-dev` rather than `libusb`.
-
-```
-$> sudo apt-get install libudev-dev -y
-```
-
 
 ## Install BlinkStick node module
 
@@ -88,11 +85,11 @@ https://github.com/arvydas/blinkstick-node/wiki
 
 If you get an error message on Linux:
 
-    Error: LIBUSB_ERROR_ACCESS
+    Error: cannot open device with path /dev/hidraw0
 
 Please run the following command and restart your computer:
 
-    echo "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTR{idVendor}==\"20a0\", ATTR{idProduct}==\"41e5\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/85-blinkstick-hid.rules
+    echo "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{idVendor}==\"20a0\", ATTRS{idProduct}==\"41e5\", MODE=\"0666\"" | sudo tee /etc/udev/rules.d/85-blinkstick-hid.rules
 
 ## Maintainers
 
