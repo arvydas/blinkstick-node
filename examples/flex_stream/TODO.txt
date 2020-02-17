@@ -1,0 +1,14 @@
+TODO
+Add audio to notifiers
+Multi-channel support
+- Might require firmware changes to setColors() to send all channels in one call.
+RGBA layers
+Refactor as npm project
+RGB Emulator Matrix REM (websockets - standalone or in parallel with BlinkStick)
+
+Make web UI prettier
+ 
+ DONE
+ Specify width and height for matrices, setSize(W,H) getSize()==>WxH
+ - Sharp package's rasterized buffers already compatible with rasterized matrices
+ Add more notification images (s3d, vrip, twitter, etc)
