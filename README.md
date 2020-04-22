@@ -70,9 +70,9 @@ To get the first blinkstick on your system:
 
 To set the color:
 
-    led.blink('random', function(){
-        led.pulse('random', function(){
-            led.setColor('red', function(){
+    device.blink('random', function(){
+        device.pulse('random', function(){
+            device.setColor('red', function(){
             });
         });
     });
