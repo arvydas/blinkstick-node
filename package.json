@@ -27,6 +27,6 @@
     "url": "https://github.com/arvydas/blinkstick-node"
   },
   "dependencies": {
-    "node-hid": "1.1.0"
+    "node-hid": "2.1.2"
   }
 }
